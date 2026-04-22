@@ -95,10 +95,10 @@
         </div>
 
         <!-- 核心內容區 -->
-        <div class="grid grid-cols-1 lg:grid-cols-12 gap-4 lg:gap-6" :class="{ 'is-capturing': isCapturing }">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-4 lg:gap-6">
             
             <!-- 左側：輸入表單區 (截圖時自動隱藏) -->
-            <div class="lg:col-span-4 space-y-4 lg:space-y-6" v-show="!isCapturing">
+            <div class="lg:col-span-4 space-y-4 lg:space-y-6">
                 
                 <!-- 基本資訊卡片 -->
                 <div class="fintech-card p-4 sm:p-5 rounded-2xl relative overflow-hidden">
@@ -180,13 +180,13 @@
             </div>
 
             <!-- 右側：展示主畫面區 (RWD 完美排版，截圖時以此區為主) -->
-            <div :class="isCapturing ? 'col-span-12' : 'lg:col-span-8'" class="flex flex-col h-full transition-all duration-300">
+            <div class="lg:col-span-8 flex flex-col h-full transition-all duration-300">
                 
                 <div id="capture-area" class="fintech-card-strong rounded-2xl p-5 sm:p-6 md:p-8 flex-1 flex flex-col relative overflow-hidden bg-white border-t-4 border-t-brand-600">
                     
-                    <!-- 背景裝飾光暈 -->
-                    <div class="absolute top-0 right-0 w-64 h-64 bg-brand-50 rounded-full blur-3xl opacity-60 pointer-events-none transform translate-x-1/2 -translate-y-1/2"></div>
-                    <div class="absolute bottom-0 left-0 w-48 h-48 bg-accent-50 rounded-full blur-3xl opacity-50 pointer-events-none transform -translate-x-1/2 translate-y-1/2"></div>
+                    <!-- 背景裝飾光暈 (加入 data-html2canvas-ignore="true" 防止截圖時出現色塊破圖) -->
+                    <div data-html2canvas-ignore="true" class="absolute top-0 right-0 w-64 h-64 bg-brand-50 rounded-full blur-3xl opacity-60 pointer-events-none transform translate-x-1/2 -translate-y-1/2"></div>
+                    <div data-html2canvas-ignore="true" class="absolute bottom-0 left-0 w-48 h-48 bg-accent-50 rounded-full blur-3xl opacity-50 pointer-events-none transform -translate-x-1/2 translate-y-1/2"></div>
 
                     <!-- 標題與車輛 -->
                     <div class="flex justify-between items-start mb-6 sm:mb-8 relative z-10 border-b border-slate-100 pb-4">
@@ -287,7 +287,6 @@
                             
                             <!-- 方案一：21000專案 -->
                             <div @click="selectedPlanId = 1" 
-                                 v-show="!isCapturing || selectedPlanId === 1"
                                  class="relative cursor-pointer rounded-2xl p-4 sm:p-5 border-2 transition-all duration-300 flex flex-col"
                                  :class="selectedPlanId === 1 ? 'border-brand-500 bg-brand-50 shadow-md shadow-brand-500/10' : 'border-slate-200 bg-white hover:border-brand-300 hover:shadow-sm'">
                                 <div v-if="selectedPlanId === 1" class="absolute -top-3 left-1/2 transform -translate-x-1/2 bg-brand-100 text-brand-700 text-[10px] sm:text-xs font-black px-3 py-1 rounded-full shadow-sm whitespace-nowrap border border-brand-200">
@@ -305,7 +304,6 @@
 
                             <!-- 方案二：標準方案 -->
                             <div @click="selectedPlanId = 2" 
-                                 v-show="!isCapturing || selectedPlanId === 2"
                                  class="relative cursor-pointer rounded-2xl p-4 sm:p-5 border-2 transition-all duration-300 flex flex-col transform md:-translate-y-2"
                                  :class="selectedPlanId === 2 ? 'border-accent-500 bg-white shadow-xl shadow-accent-500/10' : 'border-slate-200 bg-white hover:border-brand-300 hover:shadow-sm'">
                                 <div class="absolute -top-3 sm:-top-4 left-1/2 transform -translate-x-1/2 bg-gradient-to-r from-accent-500 to-accent-600 text-white text-xs sm:text-sm font-black px-4 py-1 rounded-full shadow-md border border-accent-400 whitespace-nowrap">
@@ -314,7 +312,7 @@
                                 <h4 class="text-slate-800 font-black text-center text-base sm:text-lg mt-2 mb-1">標準分期專案</h4>
                                 <p class="text-[10px] sm:text-xs text-slate-500 text-center mb-3">最受客戶歡迎的配置</p>
                                 
-                                <div class="flex justify-center gap-2 mb-4 text-xs" :class="{ 'capturing-hide': isCapturing }">
+                                <div class="flex justify-center gap-2 mb-4 text-xs">
                                     <select v-model.number="standardPeriods" class="bg-white border border-slate-300 text-slate-700 rounded px-2 py-1 outline-none focus:border-accent-400 focus:ring-1 focus:ring-accent-400 font-medium">
                                         <option value="12">12 期</option><option value="24">24 期</option>
                                         <option value="36">36 期</option><option value="48">48 期</option>
@@ -325,9 +323,6 @@
                                         <input type="number" v-model.number="standardRate" step="0.1" class="bg-transparent text-slate-700 w-10 text-center outline-none text-xs sm:text-sm font-medium">
                                         <span class="text-slate-400 font-bold">%</span>
                                     </div>
-                                </div>
-                                <div v-if="isCapturing" class="text-center text-brand-700 bg-brand-50 rounded px-2 py-1 text-xs sm:text-sm mb-4 font-bold border border-brand-100 mx-auto">
-                                    {{ standardPeriods }} 期 / 利率 {{ standardRate }}%
                                 </div>
 
                                 <div class="mt-auto text-center rounded-xl p-3 border" :class="selectedPlanId === 2 ? 'bg-accent-50 border-accent-200 shadow-inner' : 'bg-slate-50 border-slate-200'">
@@ -341,7 +336,6 @@
 
                             <!-- 方案三：轟動50 -->
                             <div @click="selectedPlanId = 3" 
-                                 v-show="!isCapturing || selectedPlanId === 3"
                                  class="relative cursor-pointer rounded-2xl p-4 sm:p-5 border-2 transition-all duration-300 flex flex-col"
                                  :class="selectedPlanId === 3 ? 'border-brand-500 bg-brand-50 shadow-md shadow-brand-500/10' : 'border-slate-200 bg-white hover:border-brand-300 hover:shadow-sm'">
                                 <div v-if="selectedPlanId === 3" class="absolute -top-3 left-1/2 transform -translate-x-1/2 bg-brand-100 text-brand-700 text-[10px] sm:text-xs font-black px-3 py-1 rounded-full shadow-sm whitespace-nowrap border border-brand-200">
@@ -366,7 +360,7 @@
                         </div>
                     </div>
 
-                    <div class="mt-auto pt-6 sm:pt-8 text-center text-[10px] sm:text-xs text-slate-400 font-medium" v-show="isCapturing">
+                    <div class="mt-auto pt-6 sm:pt-8 text-center text-[10px] sm:text-xs text-slate-400 font-medium">
                         本數位報價單僅供參考，實際價格與配備以最終簽訂之正式合約為準。
                     </div>
                 </div>
@@ -564,11 +558,8 @@
                                 useCORS: true,
                                 backgroundColor: '#ffffff', // 改為純白底色
                                 logging: false,
-                                scrollY: -window.scrollY, 
-                                windowWidth: element.scrollWidth,
-                                windowHeight: element.scrollHeight,
-                                width: element.scrollWidth,
-                                height: element.scrollHeight
+                                scrollY: (window.scrollY || window.pageYOffset) * -1
+                                // 移除強制指定的寬高，讓它自然適應元素的原始大小
                             });
                             
                             const link = document.createElement('a');
