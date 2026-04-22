@@ -1,1 +1,534 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>匯豐汽車報價工具</title>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['"Noto Sans TC"', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: { 50: '#eff6ff', 100: '#dbeafe', 200: '#bfdbfe', 300: '#93c5fd', 400: '#60a5fa', 500: '#3b82f6', 600: '#2563eb', 700: '#1d4ed8', 800: '#1e40af', 900: '#1e3a8a' },
+                        accent: { 50: '#fff7ed', 100: '#ffedd5', 200: '#fed7aa', 300: '#fdba74', 400: '#fb923c', 500: '#f97316', 600: '#ea580c', 700: '#c2410c' }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { background-color: #f8fafc; color: #334155; }
+        /* 隱藏捲軸但可捲動 */
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        /* 輸入框聚焦效果 */
+        input:focus, select:focus { outline: none; border-color: #3b82f6; box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1); }
+        /* 保證截圖時的列印品質 */
+        .print-break-inside-avoid { break-inside: avoid; }
+    </style>
+</head>
+<body class="min-h-screen">
+    <div id="app" class="pb-24 lg:pb-8">
+        <!-- 頂部導覽列 -->
+        <header class="bg-white shadow-sm sticky top-0 z-40 border-b border-slate-200">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
+                <div class="flex items-center gap-2">
+                    <div class="w-8 h-8 bg-brand-600 rounded-lg flex items-center justify-center shadow-inner">
+                        <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"></path></svg>
+                    </div>
+                    <h1 class="text-xl font-bold text-slate-800 tracking-tight">匯豐汽車報價工具</h1>
+                </div>
+                <!-- 電腦版操作按鈕 -->
+                <div class="hidden lg:flex items-center gap-3">
+                    <button @click="clearData" class="px-4 py-2 text-sm font-medium text-slate-600 bg-slate-100 rounded-lg hover:bg-slate-200 transition">↻ 清除重填</button>
+                    <button @click="generateImage" class="px-5 py-2 text-sm font-bold text-white bg-brand-600 rounded-lg hover:bg-brand-700 shadow-md shadow-brand-500/30 transition flex items-center gap-2">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"></path></svg>
+                        轉成圖片
+                    </button>
+                </div>
+            </div>
+        </header>
 
+        <main class="max-w-7xl mx-auto px-4 sm:px-6 py-6 sm:py-8">
+            <div class="flex flex-col lg:flex-row gap-6 lg:gap-8">
+                
+                <!-- ================= 左側：資料輸入區 ================= -->
+                <div class="w-full lg:w-[400px] xl:w-[450px] shrink-0 space-y-5">
+                    
+                    <!-- 1. 客戶資訊 -->
+                    <div class="bg-white rounded-2xl p-5 border border-slate-200 shadow-sm">
+                        <h2 class="text-sm font-bold text-slate-500 uppercase tracking-wider mb-4 flex items-center gap-2">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
+                            基本資料
+                        </h2>
+                        <div class="space-y-4">
+                            <div class="grid grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block text-xs font-medium text-slate-500 mb-1">客戶姓名</label>
+                                    <input type="text" v-model="customer.name" placeholder="請輸入姓名" class="w-full bg-slate-50 border border-slate-200 text-slate-800 text-sm rounded-lg px-3 py-2">
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-medium text-slate-500 mb-1">報價日期</label>
+                                    <input type="date" v-model="customer.date" class="w-full bg-slate-50 border border-slate-200 text-slate-800 text-sm rounded-lg px-3 py-2">
+                                </div>
+                            </div>
+                            <div class="grid grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block text-xs font-medium text-slate-500 mb-1">車型</label>
+                                    <input type="text" v-model="customer.carModel" placeholder="請輸入車型" class="w-full bg-slate-50 border border-slate-200 text-slate-800 text-sm rounded-lg px-3 py-2">
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-medium text-slate-500 mb-1">等級</label>
+                                    <input type="text" v-model="customer.carTrim" placeholder="選填" class="w-full bg-slate-50 border border-slate-200 text-slate-800 text-sm rounded-lg px-3 py-2">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 2. 車輛價格與貸款 -->
+                    <div class="bg-white rounded-2xl p-5 border border-slate-200 shadow-sm relative overflow-hidden">
+                        <div class="absolute top-0 right-0 w-24 h-24 bg-brand-50 rounded-bl-full -z-10"></div>
+                        <h2 class="text-sm font-bold text-slate-500 uppercase tracking-wider mb-4 flex items-center gap-2">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                            車價與貸款總額
+                        </h2>
+                        <div class="space-y-4">
+                            <div>
+                                <label class="block text-xs font-medium text-slate-500 mb-1">原廠建議售價</label>
+                                <div class="relative">
+                                    <span class="absolute left-3 top-2 text-slate-400">$</span>
+                                    <input type="number" v-model="pricing.originalPrice" placeholder="0" class="w-full bg-slate-50 border border-slate-200 text-slate-800 text-sm rounded-lg pl-7 pr-3 py-2 font-medium">
+                                </div>
+                            </div>
+                            <div class="grid grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block text-xs font-medium text-accent-600 mb-1 font-bold">限時優惠折扣</label>
+                                    <div class="relative">
+                                        <span class="absolute left-3 top-2 text-slate-400">$</span>
+                                        <input type="number" v-model="pricing.discount" placeholder="0" class="w-full bg-accent-50 border border-accent-200 text-accent-700 text-sm rounded-lg pl-7 pr-3 py-2 font-bold">
+                                    </div>
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-medium text-brand-600 mb-1 font-bold">自訂貸款金額</label>
+                                    <div class="relative">
+                                        <span class="absolute left-3 top-2 text-slate-400">$</span>
+                                        <input type="number" v-model="pricing.loanAmount" placeholder="0" class="w-full bg-brand-50 border border-brand-200 text-brand-700 text-sm rounded-lg pl-7 pr-3 py-2 font-bold">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="pt-3 border-t border-slate-100 flex justify-between items-center">
+                                <span class="text-sm font-medium text-slate-600">系統試算頭期款</span>
+                                <span class="text-lg font-bold text-slate-800">{{ formatCurrency(downPayment) }}</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 3. 配件與規費 -->
+                    <div class="bg-white rounded-2xl p-5 border border-slate-200 shadow-sm">
+                        <h2 class="text-sm font-bold text-slate-500 uppercase tracking-wider mb-4 flex items-center gap-2">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"></path></svg>
+                            配件與規費
+                        </h2>
+                        
+                        <!-- 10格配件清單 -->
+                        <div class="mb-5">
+                            <label class="block text-xs font-bold text-slate-700 mb-2 bg-slate-100 py-1 px-2 rounded">精選配件套餐 (最多10項)</label>
+                            <div class="space-y-2 max-h-[250px] overflow-y-auto pr-1 no-scrollbar">
+                                <div v-for="(item, index) in additional.accessoriesList" :key="index" class="flex gap-2">
+                                    <input type="text" v-model="item.name" :placeholder="'配件 ' + (index + 1)" class="w-3/5 bg-slate-50 border border-slate-200 text-slate-800 text-sm rounded-lg px-3 py-1.5 placeholder-slate-300">
+                                    <div class="relative w-2/5">
+                                        <span class="absolute left-2 top-1.5 text-slate-400 text-xs">$</span>
+                                        <input type="number" v-model="item.price" placeholder="金額 (0為贈送)" class="w-full bg-slate-50 border border-slate-200 text-slate-800 text-sm rounded-lg pl-6 pr-2 py-1.5">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="text-right mt-2 text-xs text-slate-500 font-medium">配件總計: <span class="text-slate-700">{{ formatCurrency(totalAccessoriesPrice) }}</span></div>
+                        </div>
+
+                        <div class="grid grid-cols-2 gap-4 pt-4 border-t border-slate-100">
+                            <div>
+                                <label class="block text-xs font-medium text-slate-500 mb-1">保險預估 (代收)</label>
+                                <div class="relative">
+                                    <span class="absolute left-3 top-2 text-slate-400">$</span>
+                                    <input type="number" v-model="additional.insurance" placeholder="0" class="w-full bg-slate-50 border border-slate-200 text-slate-800 text-sm rounded-lg pl-7 pr-3 py-2">
+                                </div>
+                            </div>
+                            <div>
+                                <label class="block text-xs font-medium text-slate-500 mb-1">規費領牌 (代收)</label>
+                                <div class="relative">
+                                    <span class="absolute left-3 top-2 text-slate-400">$</span>
+                                    <input type="number" v-model="additional.fees" placeholder="0" class="w-full bg-slate-50 border border-slate-200 text-slate-800 text-sm rounded-lg pl-7 pr-3 py-2">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ================= 右側：展示與截圖區 ================= -->
+                <div class="flex-1">
+                    <!-- 給客戶看的截圖主體，確保純白背景與清晰邊界 -->
+                    <div id="preview-container" class="bg-white rounded-2xl shadow-sm border border-slate-200 p-5 sm:p-8 relative">
+                        
+                        <!-- 標題區 -->
+                        <div class="text-center mb-8 border-b border-slate-100 pb-6 relative">
+                            <h2 class="text-2xl sm:text-3xl font-black text-brand-900 tracking-tight mb-2">{{ customer.carModel || '請選擇車型' }} <span class="text-xl font-bold text-slate-500">{{ customer.carTrim }}</span></h2>
+                            <p class="text-brand-600 font-medium text-sm tracking-widest bg-brand-50 inline-block px-4 py-1 rounded-full">VIP 專屬尊榮購車建議</p>
+                            <div class="absolute top-0 right-0 text-right hidden sm:block">
+                                <p class="text-[11px] text-slate-400 font-medium">報價日期</p>
+                                <p class="text-sm font-bold text-slate-700">{{ customer.date }}</p>
+                            </div>
+                            <div class="absolute top-0 left-0 text-left hidden sm:block">
+                                <p class="text-[11px] text-slate-400 font-medium">貴賓姓名</p>
+                                <p class="text-sm font-bold text-slate-700">{{ customer.name || 'VIP 貴賓' }}</p>
+                            </div>
+                        </div>
+
+                        <!-- 價格明細總覽 -->
+                        <div class="grid grid-cols-3 gap-3 mb-8">
+                            <div class="bg-slate-50 rounded-xl p-4 text-center border border-slate-100">
+                                <p class="text-xs font-medium text-slate-500 mb-1">原廠建議售價</p>
+                                <p class="text-base sm:text-lg font-bold text-slate-400 line-through decoration-slate-300">{{ formatCurrency(pricing.originalPrice) || '---' }}</p>
+                            </div>
+                            <div class="bg-brand-50 rounded-xl p-4 text-center border border-brand-100 ring-1 ring-brand-200">
+                                <p class="text-xs font-bold text-brand-600 mb-1 flex justify-center items-center gap-1">
+                                    <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
+                                    自訂貸款額
+                                </p>
+                                <p class="text-lg sm:text-xl font-black text-brand-800">{{ formatCurrency(pricing.loanAmount) || '---' }}</p>
+                            </div>
+                            <div class="bg-accent-50 rounded-xl p-4 text-center border border-accent-100 ring-1 ring-accent-200 shadow-sm">
+                                <p class="text-xs font-bold text-accent-600 mb-1">準備頭期款</p>
+                                <p class="text-lg sm:text-xl font-black text-accent-700">{{ formatCurrency(downPayment) }}</p>
+                            </div>
+                        </div>
+
+                        <!-- 預覽配件區 (完美修復截字版) -->
+                        <div v-if="hasAccessories" class="bg-slate-50 rounded-xl p-5 border border-slate-200 mb-6 relative">
+                            <h3 class="text-brand-800 font-bold mb-4 flex items-center gap-2 text-sm sm:text-base border-b border-slate-200 pb-3">
+                                <div class="bg-brand-100 p-1 rounded">
+                                    <svg class="w-4 h-4 text-brand-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                                </div>
+                                精選升級配備
+                            </h3>
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-2">
+                                <template v-for="(acc, index) in additional.accessoriesList" :key="'preview-'+index">
+                                    <!-- 使用 items-start 與 padding-y 確保高度充裕不切字 -->
+                                    <div v-if="acc.name" class="flex justify-between items-start border-b border-slate-200/60 py-2.5 border-dashed print-break-inside-avoid">
+                                        <span class="text-slate-700 text-sm font-medium pr-3 flex items-start gap-2 leading-relaxed break-words whitespace-normal">
+                                            <span class="w-1.5 h-1.5 rounded-full bg-brand-400 mt-2 shrink-0"></span>
+                                            <span>{{ acc.name }}</span>
+                                        </span>
+                                        <span v-if="acc.price" class="text-slate-600 text-sm font-bold whitespace-nowrap ml-2 mt-0.5">{{ formatCurrency(acc.price) }}</span>
+                                        <span v-else class="text-accent-600 text-xs font-bold bg-accent-100 px-2 py-1 rounded border border-accent-200 whitespace-nowrap ml-2 mt-0.5">業務贈送</span>
+                                    </div>
+                                </template>
+                            </div>
+                        </div>
+
+                        <!-- 保險與規費區 -->
+                        <div v-if="additional.insurance || additional.fees" class="bg-slate-50 rounded-xl p-5 border border-slate-200 mb-8 relative">
+                            <h3 class="text-brand-800 font-bold mb-4 flex items-center gap-2 text-sm sm:text-base border-b border-slate-200 pb-3">
+                                <div class="bg-brand-100 p-1 rounded">
+                                    <svg class="w-4 h-4 text-brand-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
+                                </div>
+                                保險與規費預估 <span class="text-slate-400 text-xs font-normal ml-2">(實報實銷，多退少補)</span>
+                            </h3>
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-2">
+                                <div v-if="additional.insurance" class="flex justify-between items-center border-b border-slate-200/60 py-2.5 border-dashed print-break-inside-avoid">
+                                    <span class="text-slate-700 text-sm font-medium flex items-center gap-2">
+                                        <span class="w-1.5 h-1.5 rounded-full bg-brand-400 shrink-0"></span>
+                                        保險預估 (代收)
+                                    </span>
+                                    <span class="text-slate-600 text-sm font-bold">{{ formatCurrency(additional.insurance) }}</span>
+                                </div>
+                                <div v-if="additional.fees" class="flex justify-between items-center border-b border-slate-200/60 py-2.5 border-dashed print-break-inside-avoid">
+                                    <span class="text-slate-700 text-sm font-medium flex items-center gap-2">
+                                        <span class="w-1.5 h-1.5 rounded-full bg-brand-400 shrink-0"></span>
+                                        規費領牌 (代收)
+                                    </span>
+                                    <span class="text-slate-600 text-sm font-bold">{{ formatCurrency(additional.fees) }}</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 方案選擇區 (三欄排版) -->
+                        <div class="space-y-4">
+                            <h3 class="text-center font-bold text-slate-700 mb-6 flex items-center justify-center gap-3">
+                                <span class="h-px w-12 bg-slate-300"></span>
+                                請選擇專屬購車方案
+                                <span class="h-px w-12 bg-slate-300"></span>
+                            </h3>
+                            
+                            <!-- 電腦三欄，手機直排 -->
+                            <div class="flex flex-col md:flex-row gap-4 items-stretch">
+                                
+                                <!-- 方案一：21000 專案 -->
+                                <div class="flex-1 bg-white rounded-xl border-2 p-5 text-center transition-all relative print-break-inside-avoid"
+                                     :class="selectedPlan === 1 ? 'border-brand-500 shadow-md ring-4 ring-brand-50' : 'border-slate-200'">
+                                    <div class="absolute -top-3 left-1/2 -translate-x-1/2 bg-slate-600 text-white text-xs font-bold px-3 py-1 rounded-full whitespace-nowrap shadow-sm">
+                                        超低月付
+                                    </div>
+                                    <h3 class="text-slate-700 font-bold mb-1 mt-2">21000 貸回家</h3>
+                                    <p class="text-xs text-slate-400 mb-4 h-4">前段輕鬆繳款</p>
+                                    <div class="mb-4">
+                                        <p class="text-[10px] text-slate-500 mb-1">每期月付額</p>
+                                        <div class="text-2xl font-black text-brand-700">
+                                            {{ plan21000 > 0 ? formatCurrency(plan21000) : '--' }}
+                                        </div>
+                                    </div>
+                                    <div class="bg-red-50 text-red-600 text-xs py-1.5 px-2 rounded font-bold border border-red-100">
+                                        尾款依實際合約為準
+                                    </div>
+                                    <button @click="selectedPlan = 1" class="mt-4 w-full py-2 rounded-lg text-sm font-bold transition-colors"
+                                            :class="selectedPlan === 1 ? 'bg-brand-600 text-white' : 'bg-slate-100 text-slate-500'">
+                                        {{ selectedPlan === 1 ? '已選擇' : '選擇此方案' }}
+                                    </button>
+                                </div>
+
+                                <!-- 方案二：標準方案 (主推) -->
+                                <div class="flex-1 bg-white rounded-xl border-2 p-5 text-center transition-all relative md:-mt-4 md:mb-0 print-break-inside-avoid"
+                                     :class="selectedPlan === 2 ? 'border-accent-500 shadow-lg ring-4 ring-accent-50 z-10 bg-accent-50/10' : 'border-slate-200 mt-0'">
+                                    <div class="absolute -top-3 left-1/2 -translate-x-1/2 bg-accent-500 text-white text-xs font-bold px-4 py-1 rounded-full whitespace-nowrap shadow-sm flex items-center gap-1">
+                                        <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
+                                        經典首選
+                                    </div>
+                                    <h3 class="text-slate-800 font-black mb-1 mt-3">標準分期方案</h3>
+                                    
+                                    <!-- 利率期數調整器 -->
+                                    <div class="flex items-center justify-center gap-2 mb-4 h-4">
+                                        <select v-model="standardPlan.term" class="bg-transparent text-xs font-bold text-slate-600 border-b border-slate-300 focus:border-brand-500 cursor-pointer">
+                                            <option :value="12">12期</option><option :value="24">24期</option><option :value="36">36期</option><option :value="48">48期</option><option :value="60">60期</option>
+                                        </select>
+                                        <span class="text-xs text-slate-400">/</span>
+                                        <select v-model="standardPlan.rate" class="bg-transparent text-xs font-bold text-slate-600 border-b border-slate-300 focus:border-brand-500 cursor-pointer">
+                                            <option :value="0">0 利率</option><option :value="2.5">2.5%</option><option :value="3.5">3.5%</option><option :value="4.5">4.5%</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <p class="text-[10px] text-slate-500 mb-1">每月輕鬆繳</p>
+                                        <div class="text-3xl font-black text-accent-600 tracking-tight">
+                                            {{ planStandardMonthly > 0 ? formatCurrency(planStandardMonthly) : '--' }}
+                                        </div>
+                                    </div>
+                                    <div class="bg-brand-50 text-brand-700 text-xs py-1 rounded-full font-bold inline-block px-3">
+                                        一天只要 {{ planStandardMonthly > 0 ? Math.round(planStandardMonthly/30) : '--' }} 元
+                                    </div>
+                                    <button @click="selectedPlan = 2" class="mt-4 w-full py-2.5 rounded-lg text-sm font-bold transition-all shadow-sm"
+                                            :class="selectedPlan === 2 ? 'bg-accent-500 text-white shadow-accent-500/30' : 'bg-slate-100 text-slate-500'">
+                                        {{ selectedPlan === 2 ? '已選擇此方案' : '選擇此方案' }}
+                                    </button>
+                                </div>
+
+                                <!-- 方案三：轟動50 -->
+                                <div class="flex-1 bg-white rounded-xl border-2 p-5 text-center transition-all relative print-break-inside-avoid"
+                                     :class="selectedPlan === 3 ? 'border-brand-500 shadow-md ring-4 ring-brand-50' : 'border-slate-200'">
+                                    <div class="absolute -top-3 left-1/2 -translate-x-1/2 bg-slate-600 text-white text-xs font-bold px-3 py-1 rounded-full whitespace-nowrap shadow-sm">
+                                        階梯專案
+                                    </div>
+                                    <h3 class="text-slate-700 font-bold mb-1 mt-2">轟動50專案</h3>
+                                    <p class="text-[10px] text-slate-400 mb-3 h-4">首年超低月付，資金靈活</p>
+                                    <div class="mb-3">
+                                        <p class="text-[10px] text-brand-600 font-bold mb-1">第 1~12 期最低月付</p>
+                                        <div class="text-2xl font-black text-slate-800">
+                                            {{ planStep50 ? formatCurrency(planStep50.stage1) : '--' }}
+                                        </div>
+                                    </div>
+                                    <div class="bg-slate-50 text-slate-600 text-[10px] py-1 px-2 rounded border border-slate-200 text-left space-y-1">
+                                        <div class="flex justify-between"><span>第 13-24 期</span><span class="font-bold">{{ planStep50 ? formatCurrency(planStep50.stage2) : '--' }}</span></div>
+                                        <div class="flex justify-between"><span>第 25-49 期</span><span class="font-bold">{{ planStep50 ? formatCurrency(planStep50.stage3) : '--' }}</span></div>
+                                        <div class="flex justify-between text-brand-600"><span>第 50 期尾款</span><span class="font-bold">依合約</span></div>
+                                    </div>
+                                    <button @click="selectedPlan = 3" class="mt-3 w-full py-2 rounded-lg text-sm font-bold transition-colors"
+                                            :class="selectedPlan === 3 ? 'bg-brand-600 text-white' : 'bg-slate-100 text-slate-500'">
+                                        {{ selectedPlan === 3 ? '已選擇' : '選擇此方案' }}
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 法律聲明 -->
+                        <div class="mt-8 pt-4 border-t border-slate-100 text-center">
+                            <p class="text-[10px] text-slate-400">※ 本報價單僅供參考，實際成交金額、貸款利率及月付金以最終簽約及銀行核准為準。配件及保險項目依實際需求調整。</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- 手機版懸浮操作列 (截圖時會自動隱藏) -->
+        <div class="lg:hidden fixed bottom-0 left-0 right-0 p-4 bg-white/80 backdrop-blur-md border-t border-slate-200 z-50 flex gap-3 shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.05)]" data-html2canvas-ignore>
+            <button @click="clearData" class="w-1/3 py-3 text-sm font-bold text-slate-600 bg-slate-100 rounded-xl">重填</button>
+            <button @click="generateImage" class="w-2/3 py-3 text-sm font-bold text-white bg-brand-600 rounded-xl shadow-lg shadow-brand-500/30 flex items-center justify-center gap-2">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"></path></svg>
+                轉成精美圖片
+            </button>
+        </div>
+    </div>
+
+    <script>
+        const { createApp } = Vue;
+
+        createApp({
+            data() {
+                return {
+                    customer: {
+                        name: '',
+                        date: new Date().toISOString().split('T')[0],
+                        carModel: '',
+                        carTrim: ''
+                    },
+                    pricing: {
+                        originalPrice: null,
+                        discount: null,
+                        loanAmount: null
+                    },
+                    additional: {
+                        accessoriesList: Array(10).fill().map(() => ({ name: '', price: null })),
+                        insurance: null,
+                        fees: null
+                    },
+                    standardPlan: {
+                        rate: 3.5,
+                        term: 60
+                    },
+                    selectedPlan: 2
+                }
+            },
+            computed: {
+                totalAccessoriesPrice() {
+                    return this.additional.accessoriesList.reduce((sum, item) => sum + (Number(item.price) || 0), 0);
+                },
+                hasAccessories() {
+                    return this.additional.accessoriesList.some(item => item.name.trim() !== '');
+                },
+                actualPrice() {
+                    return (Number(this.pricing.originalPrice) || 0) - (Number(this.pricing.discount) || 0);
+                },
+                totalCost() {
+                    return this.actualPrice + this.totalAccessoriesPrice + (Number(this.additional.insurance) || 0) + (Number(this.additional.fees) || 0);
+                },
+                downPayment() {
+                    const loan = Number(this.pricing.loanAmount) || 0;
+                    return Math.max(0, this.totalCost - loan);
+                },
+                plan21000() {
+                    const loan = Number(this.pricing.loanAmount) || 0;
+                    if (loan >= 300000 && loan < 400000) return 5000;
+                    if (loan >= 400000 && loan < 500000) return 6000;
+                    if (loan >= 500000 && loan < 600000) return 8000;
+                    if (loan >= 600000 && loan < 700000) return 10000;
+                    if (loan >= 700000 && loan < 800000) return 12000;
+                    if (loan >= 800000 && loan < 900000) return 13000;
+                    if (loan >= 900000) return 14000;
+                    return 0;
+                },
+                planStandardMonthly() {
+                    const loan = Number(this.pricing.loanAmount) || 0;
+                    if (!loan) return 0;
+                    const r = (this.standardPlan.rate / 100) / 12;
+                    const n = this.standardPlan.term;
+                    if (r === 0) return Math.round(loan / n);
+                    return Math.round((loan * r * Math.pow(1 + r, n)) / (Math.pow(1 + r, n) - 1));
+                },
+                planStep50() {
+                    const loan = Number(this.pricing.loanAmount) || 0;
+                    if (loan < 400000) return null;
+                    if (loan < 500000) return { stage1: 5000, stage2: 7000, stage3: 9000 };
+                    if (loan < 600000) return { stage1: 7000, stage2: 9000, stage3: 11000 };
+                    if (loan < 700000) return { stage1: 9000, stage2: 11000, stage3: 13000 };
+                    if (loan < 800000) return { stage1: 11000, stage2: 13000, stage3: 15000 };
+                    return { stage1: 12000, stage2: 14000, stage3: 16000 };
+                }
+            },
+            watch: {
+                $data: {
+                    handler() { this.saveData(); },
+                    deep: true
+                }
+            },
+            mounted() {
+                this.loadData();
+            },
+            methods: {
+                formatCurrency(value) {
+                    if (!value && value !== 0) return '';
+                    return '$' + Number(value).toLocaleString();
+                },
+                saveData() {
+                    localStorage.setItem('hsbcCarQuoteV2', JSON.stringify(this.$data));
+                },
+                loadData() {
+                    const saved = localStorage.getItem('hsbcCarQuoteV2');
+                    if (saved) {
+                        try {
+                            const parsed = JSON.parse(saved);
+                            Object.assign(this.$data, parsed);
+                            // 確保配件一定有10格
+                            if (!this.additional.accessoriesList || this.additional.accessoriesList.length === 0) {
+                                this.additional.accessoriesList = Array(10).fill().map(() => ({ name: '', price: null }));
+                            }
+                        } catch (e) {
+                            console.error("讀取資料失敗", e);
+                        }
+                    }
+                },
+                clearData() {
+                    this.customer = { name: '', date: new Date().toISOString().split('T')[0], carModel: '', carTrim: '' };
+                    this.pricing = { originalPrice: null, discount: null, loanAmount: null };
+                    this.additional = { accessoriesList: Array(10).fill().map(() => ({ name: '', price: null })), insurance: null, fees: null };
+                    this.standardPlan = { rate: 3.5, term: 60 };
+                    this.selectedPlan = 2;
+                    localStorage.removeItem('hsbcCarQuoteV2');
+                },
+                async generateImage() {
+                    const container = document.getElementById('preview-container');
+                    
+                    // 暫存原本的樣式
+                    const originalHeight = container.style.height;
+                    const originalOverflow = container.style.overflow;
+                    
+                    // 強制解開高度限制，讓畫面可以完整延伸
+                    container.style.height = 'max-content';
+                    container.style.overflow = 'visible';
+                    
+                    // 等待 300 毫秒讓瀏覽器確實重新渲染排版
+                    await new Promise(resolve => setTimeout(resolve, 300));
+                    
+                    try {
+                        const canvas = await html2canvas(container, {
+                            scale: 2,          // 高畫質
+                            useCORS: true,
+                            backgroundColor: '#ffffff', // 指定純白背景
+                            scrollY: -window.scrollY    // 修正滾動造成的偏移缺角
+                        });
+                        
+                        const link = document.createElement('a');
+                        link.download = `匯豐汽車報價_${this.customer.name || 'VIP'}.png`;
+                        link.href = canvas.toDataURL('image/png');
+                        link.click();
+                    } catch (error) {
+                        console.error("截圖發生錯誤:", error);
+                        // 自訂對話框替代 alert
+                        const errorMsg = document.createElement('div');
+                        errorMsg.innerHTML = `<div style="position:fixed;top:20px;left:50%;transform:translateX(-50%);background:#ef4444;color:white;padding:12px 24px;border-radius:8px;z-index:9999;box-shadow:0 4px 6px -1px rgba(0,0,0,0.1);font-weight:bold;">截圖處理失敗，請稍後重試</div>`;
+                        document.body.appendChild(errorMsg);
+                        setTimeout(() => errorMsg.remove(), 3000);
+                    } finally {
+                        // 恢復原本狀態
+                        container.style.height = originalHeight;
+                        container.style.overflow = originalOverflow;
+                    }
+                }
+            }
+        }).mount('#app');
+    </script>
+</body>
+</html>
