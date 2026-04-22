@@ -5,25 +5,42 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>匯豐汽車報價工具</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;800;900&display=swap" rel="stylesheet">
     <script>
         tailwind.config = {
             theme: {
                 extend: {
                     fontFamily: { sans: ['Inter', 'sans-serif'] },
                     colors: {
-                        gold: { 300: '#FDE047', 400: '#FACC15', 500: '#EAB308', 600: '#CA8A04' },
-                        dark: { 800: '#1F2937', 900: '#111827' }
+                        brand: { 50: '#eff6ff', 100: '#dbeafe', 200: '#bfdbfe', 300: '#93c5fd', 400: '#60a5fa', 500: '#3b82f6', 600: '#2563eb', 700: '#1d4ed8', 800: '#1e40af', 900: '#1e3a8a' },
+                        accent: { 50: '#fff7ed', 100: '#ffedd5', 200: '#fed7aa', 300: '#fdba74', 400: '#fb923c', 500: '#f97316', 600: '#ea580c', 700: '#c2410c' },
+                        slate: { 50: '#f8fafc', 100: '#f1f5f9', 200: '#e2e8f0', 300: '#cbd5e1', 400: '#94a3b8', 500: '#64748b', 600: '#475569', 700: '#334155', 800: '#1e293b', 900: '#0f172a' }
                     }
                 }
             }
         }
     </script>
     <style>
-        body { background-color: #111827; color: #f3f4f6; }
-        .glass-panel { background: rgba(31, 41, 55, 0.7); backdrop-filter: blur(10px); border: 1px solid rgba(75, 85, 99, 0.4); }
-        .input-dark { background: rgba(17, 24, 39, 0.8); border: 1px solid #374151; color: #f3f4f6; border-radius: 0.5rem; padding: 0.5rem 0.75rem; width: 100%; transition: all 0.2s; }
-        .input-dark:focus { outline: none; border-color: #FACC15; box-shadow: 0 0 0 2px rgba(250, 204, 21, 0.2); }
+        body { background-color: #f8fafc; color: #334155; }
+        .fintech-card { background: #ffffff; border: 1px solid #e2e8f0; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03); }
+        .fintech-card-strong { background: #ffffff; box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.08), 0 4px 6px -2px rgba(0, 0, 0, 0.04); }
+        
+        .input-fintech { 
+            background: #ffffff; 
+            border: 1px solid #cbd5e1; 
+            color: #1e293b; 
+            border-radius: 0.5rem; 
+            padding: 0.5rem 0.75rem; 
+            width: 100%; 
+            transition: all 0.2s ease; 
+        }
+        .input-fintech:focus { 
+            outline: none; 
+            border-color: #3b82f6; 
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15); 
+        }
+        .input-fintech::placeholder { color: #94a3b8; }
+        
         .hide-scrollbar::-webkit-scrollbar { display: none; }
         .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
         
@@ -35,227 +52,289 @@
 <body class="min-h-screen p-3 sm:p-4 md:p-8 font-sans pb-24 md:pb-8">
     <div id="app" v-cloak class="max-w-6xl mx-auto">
         
-        <!-- 頂部控制列 (桌機/平板顯示，手機簡化) -->
+        <!-- 自訂對話框 (取代 alert/confirm) -->
+        <div v-if="modal.show" class="fixed inset-0 z-[100] flex items-center justify-center bg-slate-900/50 backdrop-blur-sm px-4">
+            <div class="bg-white rounded-2xl p-6 w-full max-w-sm shadow-2xl transform scale-100 transition-all">
+                <div class="flex items-center gap-3 mb-4">
+                    <div class="w-10 h-10 rounded-full flex items-center justify-center shrink-0" 
+                         :class="modal.type === 'confirm' ? 'bg-brand-100 text-brand-600' : 'bg-accent-100 text-accent-600'">
+                        <svg v-if="modal.type === 'confirm'" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                        <svg v-else class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+                    </div>
+                    <h3 class="text-lg font-bold text-slate-800">{{ modal.type === 'confirm' ? '請確認' : '系統提示' }}</h3>
+                </div>
+                <p class="text-slate-600 mb-6">{{ modal.message }}</p>
+                <div class="flex justify-end gap-3">
+                    <button v-if="modal.type === 'confirm'" @click="cancelModal" class="px-4 py-2 text-slate-600 bg-slate-100 hover:bg-slate-200 rounded-lg font-medium transition-colors">取消</button>
+                    <button @click="confirmModal" class="px-4 py-2 text-white rounded-lg font-medium transition-colors"
+                            :class="modal.type === 'confirm' ? 'bg-brand-600 hover:bg-brand-700' : 'bg-accent-600 hover:bg-accent-700'">
+                        確定
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 頂部控制列 -->
         <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-4 md:mb-6 gap-4">
             <div>
-                <h1 class="text-xl sm:text-2xl font-black text-white flex items-center gap-2">
-                    <span class="w-1.5 h-6 sm:w-2 sm:h-8 bg-gold-400 rounded-full"></span>
+                <h1 class="text-xl sm:text-2xl font-black text-slate-800 flex items-center gap-2">
+                    <span class="w-1.5 h-6 sm:w-2 sm:h-8 bg-brand-600 rounded-full"></span>
                     匯豐汽車報價工具
                 </h1>
-                <p class="text-gray-400 text-xs sm:text-sm mt-1">VIP 專屬尊榮購車建議</p>
+                <p class="text-slate-500 text-xs sm:text-sm mt-1">VIP 專屬尊榮購車建議</p>
             </div>
-            <!-- 桌機版按鈕，手機版隱藏(改用底部懸浮) -->
             <div class="hidden md:flex gap-3 w-full md:w-auto">
-                <button @click="resetData" class="px-4 py-2 bg-gray-800 hover:bg-gray-700 text-white rounded-lg font-bold text-sm transition-colors border border-gray-700">
+                <button @click="handleReset" class="px-4 py-2 bg-white hover:bg-slate-50 text-slate-600 rounded-lg font-bold text-sm transition-colors border border-slate-300 shadow-sm">
                     ↻ 清除重填
                 </button>
-                <button @click="generateImage" class="px-6 py-2 bg-gradient-to-r from-gold-400 to-gold-600 text-dark-900 rounded-lg font-black shadow-lg shadow-gold-500/20 hover:scale-105 transition-transform flex items-center justify-center gap-2">
+                <button @click="generateImage" class="px-6 py-2 bg-gradient-to-r from-accent-500 to-accent-600 text-white rounded-lg font-black shadow-md shadow-accent-500/20 hover:scale-105 transition-transform flex items-center justify-center gap-2 border border-accent-600">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"></path></svg>
                     轉成圖片 (LINE)
                 </button>
             </div>
         </div>
 
-        <!-- 核心內容區 (響應式：手機單欄 -> 桌機雙欄 4:8) -->
+        <!-- 核心內容區 -->
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-4 lg:gap-6" :class="{ 'is-capturing': isCapturing }">
             
-            <!-- 左側：輸入表單區 -->
-            <div class="lg:col-span-4 space-y-4 lg:space-y-6">
+            <!-- 左側：輸入表單區 (截圖時自動隱藏) -->
+            <div class="lg:col-span-4 space-y-4 lg:space-y-6" v-show="!isCapturing">
                 
                 <!-- 基本資訊卡片 -->
-                <div class="glass-panel p-4 sm:p-5 rounded-2xl">
-                    <div class="flex justify-between items-end mb-4 border-b border-gray-700 pb-2">
-                        <h2 class="text-base sm:text-lg font-bold text-gold-400">基本資訊</h2>
-                        <span class="text-xs text-gray-500">報價日期：{{ currentDate }}</span>
+                <div class="fintech-card p-4 sm:p-5 rounded-2xl relative overflow-hidden">
+                    <div class="absolute top-0 left-0 w-1 h-full bg-brand-500"></div>
+                    <div class="flex justify-between items-end mb-4 border-b border-slate-100 pb-3">
+                        <h2 class="text-base sm:text-lg font-bold text-brand-800">基本資訊</h2>
+                        <span class="text-xs font-medium text-slate-400 bg-slate-100 px-2 py-1 rounded-md">報價日期：{{ currentDate }}</span>
                     </div>
                     <div class="space-y-3 sm:space-y-4">
                         <div class="flex flex-col sm:flex-row gap-3">
-                            <input type="text" v-model="customer.name" placeholder="貴賓姓名" class="input-dark w-full sm:w-1/2 text-sm sm:text-base">
-                            <input type="tel" v-model="customer.phone" placeholder="聯絡電話" class="input-dark w-full sm:w-1/2 text-sm sm:text-base">
+                            <input type="text" v-model="customer.name" placeholder="貴賓姓名" class="input-fintech w-full sm:w-1/2 text-sm sm:text-base">
+                            <input type="tel" v-model="customer.phone" placeholder="聯絡電話" class="input-fintech w-full sm:w-1/2 text-sm sm:text-base">
                         </div>
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                            <input type="text" v-model="car.brand" placeholder="品牌" class="input-dark sm:col-span-2 text-sm sm:text-base">
-                            <input type="text" v-model="car.model" placeholder="請輸入車型" class="input-dark text-sm sm:text-base">
-                            <input type="text" v-model="car.trim" placeholder="請輸入等級" class="input-dark text-sm sm:text-base">
+                            <input type="text" v-model="car.brand" placeholder="品牌" class="input-fintech sm:col-span-2 text-sm sm:text-base">
+                            <input type="text" v-model="car.model" placeholder="請輸入車型" class="input-fintech text-sm sm:text-base">
+                            <input type="text" v-model="car.trim" placeholder="請輸入等級" class="input-fintech text-sm sm:text-base">
                         </div>
                     </div>
                 </div>
 
                 <!-- 報價明細卡片 -->
-                <div class="glass-panel p-4 sm:p-5 rounded-2xl relative overflow-hidden">
-                    <div class="absolute top-0 right-0 bg-red-600 text-white text-[10px] font-bold px-2 py-1 sm:px-3 sm:py-1 rounded-bl-lg">內部試算</div>
-                    <h2 class="text-base sm:text-lg font-bold text-gold-400 mb-4 border-b border-gray-700 pb-2">報價明細</h2>
+                <div class="fintech-card p-4 sm:p-5 rounded-2xl relative overflow-hidden">
+                    <div class="absolute top-0 left-0 w-1 h-full bg-accent-500"></div>
+                    <div class="absolute top-0 right-0 bg-slate-100 text-slate-500 text-[10px] font-bold px-2 py-1 sm:px-3 sm:py-1 rounded-bl-lg border-b border-l border-slate-200">內部試算區</div>
+                    <h2 class="text-base sm:text-lg font-bold text-brand-800 mb-4 border-b border-slate-100 pb-3">金額與配件</h2>
                     
                     <div class="space-y-3">
                         <div class="flex items-center justify-between">
-                            <span class="text-gray-300 text-xs sm:text-sm">原廠建議售價</span>
-                            <input type="number" v-model.number="car.price" class="input-dark w-28 sm:w-32 text-right font-bold text-sm sm:text-base" placeholder="金額">
+                            <span class="text-slate-600 text-xs sm:text-sm font-medium">原廠建議售價</span>
+                            <input type="number" v-model.number="car.price" class="input-fintech w-28 sm:w-32 text-right font-bold text-sm sm:text-base" placeholder="金額">
                         </div>
                         <div class="flex items-center justify-between">
-                            <span class="text-red-400 text-xs sm:text-sm">本月專屬折扣 (-)</span>
-                            <input type="number" v-model.number="discount" class="input-dark w-28 sm:w-32 text-right text-red-400 font-bold text-sm sm:text-base" placeholder="折扣">
+                            <span class="text-accent-600 text-xs sm:text-sm font-bold">本月專屬折扣 (-)</span>
+                            <input type="number" v-model.number="discount" class="input-fintech w-28 sm:w-32 text-right text-accent-600 font-bold text-sm sm:text-base border-accent-200 bg-accent-50 focus:border-accent-500 focus:shadow-[0_0_0_3px_rgba(249,115,22,0.15)]" placeholder="折扣">
                         </div>
                         
-                        <!-- 精選配件 10 格 (RWD 優化寬度) -->
-                        <div class="pt-3 border-t border-gray-700/50 mt-2">
-                            <div class="text-xs sm:text-sm text-gray-400 mb-2 flex justify-between items-center">
-                                <span>精選配件套餐</span>
-                                <span class="text-gold-400 font-bold">{{ formatCurrency(totalAccessories) }}</span>
+                        <!-- 精選配件 10 格 -->
+                        <div class="pt-4 border-t border-slate-100 mt-2">
+                            <div class="text-xs sm:text-sm text-slate-500 mb-3 flex justify-between items-center">
+                                <span class="font-medium">精選配件套餐</span>
+                                <span class="text-brand-600 font-bold bg-brand-50 px-2 py-0.5 rounded">{{ formatCurrency(totalAccessories) }}</span>
                             </div>
-                            <div class="space-y-1.5">
+                            <div class="space-y-2">
                                 <div v-for="(acc, index) in additional.accessoriesList" :key="index" class="flex items-center gap-1 sm:gap-2">
-                                    <span class="text-gray-600 text-[10px] sm:text-xs w-3 sm:w-4 text-center">{{ index + 1 }}</span>
-                                    <input type="text" v-model="acc.name" class="input-dark min-w-0 flex-1 text-xs py-1 px-2" placeholder="配件名稱">
-                                    <input type="number" v-model.number="acc.price" class="input-dark w-20 sm:w-24 text-right text-xs py-1 px-2" placeholder="金額(可空)">
+                                    <span class="text-slate-400 text-[10px] sm:text-xs w-3 sm:w-4 text-center font-medium">{{ index + 1 }}</span>
+                                    <input type="text" v-model="acc.name" class="input-fintech min-w-0 flex-1 text-xs py-1.5 px-2 bg-slate-50 border-slate-200" placeholder="配件名稱">
+                                    <input type="number" v-model.number="acc.price" class="input-fintech w-20 sm:w-24 text-right text-xs py-1.5 px-2 bg-slate-50 border-slate-200" placeholder="金額(可空)">
                                 </div>
                             </div>
                         </div>
 
-                        <div class="flex items-center justify-between pt-3 border-t border-gray-700/50">
-                            <span class="text-gray-400 text-xs sm:text-sm">保險預估 (代收)</span>
-                            <input type="number" v-model.number="additional.insurance" class="input-dark w-28 sm:w-32 text-right text-xs sm:text-sm" placeholder="金額">
+                        <div class="flex items-center justify-between pt-4 border-t border-slate-100">
+                            <span class="text-slate-500 text-xs sm:text-sm">保險預估 (代收)</span>
+                            <input type="number" v-model.number="additional.insurance" class="input-fintech w-28 sm:w-32 text-right text-xs sm:text-sm" placeholder="金額">
                         </div>
                         <div class="flex items-center justify-between">
-                            <span class="text-gray-400 text-xs sm:text-sm">規費領牌 (代收)</span>
-                            <input type="number" v-model.number="additional.fees" class="input-dark w-28 sm:w-32 text-right text-xs sm:text-sm" placeholder="金額">
+                            <span class="text-slate-500 text-xs sm:text-sm">規費領牌 (代收)</span>
+                            <input type="number" v-model.number="additional.fees" class="input-fintech w-28 sm:w-32 text-right text-xs sm:text-sm" placeholder="金額">
                         </div>
                         
                         <!-- 總計與貸款設定 -->
-                        <div class="bg-dark-900 p-3 sm:p-4 rounded-lg flex flex-col mt-4 border border-gray-700">
-                            <div class="flex justify-between items-center mb-2">
-                                <span class="text-gray-300 font-bold text-xs sm:text-sm">總成交金額</span>
-                                <div class="text-right text-lg sm:text-xl font-black text-gold-400">{{ formatCurrency(totalCost) }}</div>
+                        <div class="bg-brand-50 p-3 sm:p-4 rounded-xl flex flex-col mt-4 border border-brand-100">
+                            <div class="flex justify-between items-center mb-3">
+                                <span class="text-brand-800 font-bold text-xs sm:text-sm">總成交金額</span>
+                                <div class="text-right text-lg sm:text-xl font-black text-brand-700">{{ formatCurrency(totalCost) }}</div>
                             </div>
                             <!-- 自訂貸款金額 -->
-                            <div class="flex justify-between items-center border-t border-gray-700 pt-2 mt-1">
-                                <span class="text-blue-400 font-bold text-xs sm:text-sm">自訂貸款金額</span>
-                                <input type="number" v-model.number="loanAmount" class="input-dark w-28 sm:w-32 text-right text-blue-400 font-bold py-1 text-sm sm:text-base" placeholder="輸入貸款額">
+                            <div class="flex justify-between items-center border-t border-brand-200/50 pt-3">
+                                <span class="text-brand-700 font-bold text-xs sm:text-sm flex items-center gap-1">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                                    預計貸款金額
+                                </span>
+                                <input type="number" v-model.number="loanAmount" class="input-fintech w-28 sm:w-32 text-right text-brand-700 font-bold py-1 text-sm sm:text-base border-brand-300 focus:border-brand-500" placeholder="輸入貸款額">
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- 右側：截圖預覽展示區 (RWD 完美排版) -->
-            <div class="lg:col-span-8 flex flex-col h-full">
+            <!-- 右側：展示主畫面區 (RWD 完美排版，截圖時以此區為主) -->
+            <div :class="isCapturing ? 'col-span-12' : 'lg:col-span-8'" class="flex flex-col h-full transition-all duration-300">
                 
-                <div id="capture-area" class="glass-panel rounded-2xl p-4 sm:p-6 md:p-8 flex-1 flex flex-col bg-gradient-to-br from-gray-800 to-dark-900 shadow-2xl relative overflow-hidden">
+                <div id="capture-area" class="fintech-card-strong rounded-2xl p-5 sm:p-6 md:p-8 flex-1 flex flex-col relative overflow-hidden bg-white border-t-4 border-t-brand-600">
                     
-                    <!-- 裝飾光暈 -->
-                    <div class="absolute -top-20 -right-20 w-48 h-48 sm:w-64 sm:h-64 bg-gold-500/10 rounded-full blur-3xl pointer-events-none"></div>
+                    <!-- 背景裝飾光暈 -->
+                    <div class="absolute top-0 right-0 w-64 h-64 bg-brand-50 rounded-full blur-3xl opacity-60 pointer-events-none transform translate-x-1/2 -translate-y-1/2"></div>
+                    <div class="absolute bottom-0 left-0 w-48 h-48 bg-accent-50 rounded-full blur-3xl opacity-50 pointer-events-none transform -translate-x-1/2 translate-y-1/2"></div>
 
-                    <!-- 標題與車輛 (響應式文字) -->
-                    <div class="flex justify-between items-start mb-4 sm:mb-6 relative z-10">
+                    <!-- 標題與車輛 -->
+                    <div class="flex justify-between items-start mb-6 sm:mb-8 relative z-10 border-b border-slate-100 pb-4">
                         <div>
-                            <div class="inline-block px-2 py-1 sm:px-3 sm:py-1 bg-red-600/20 text-red-400 text-[10px] sm:text-xs font-bold rounded-full border border-red-500/30 mb-2 sm:mb-3 animate-pulse">
+                            <div class="inline-block px-3 py-1 sm:px-3 sm:py-1 bg-accent-100 text-accent-700 text-[10px] sm:text-xs font-bold rounded-full border border-accent-200 mb-3 animate-pulse shadow-sm">
                                 🔥 本月促銷優惠限時倒數：{{ daysLeft }} 天
                             </div>
-                            <h2 class="text-2xl sm:text-3xl md:text-4xl font-black text-white tracking-tight mb-1 sm:mb-2 leading-tight">
-                                <span class="text-gray-400">{{ car.brand || '' }}</span> <br class="sm:hidden"/>
-                                <span class="text-gold-400">{{ car.model || '' }}</span>
+                            <h2 class="text-2xl sm:text-3xl md:text-4xl font-black text-brand-900 tracking-tight mb-1 sm:mb-2 leading-tight">
+                                <span class="text-slate-500 font-bold">{{ car.brand || '品牌' }}</span> <br class="sm:hidden"/>
+                                <span class="text-brand-700">{{ car.model || '車型' }}</span>
                             </h2>
-                            <p class="text-gray-400 font-medium text-sm sm:text-base">{{ car.trim || '' }}</p>
+                            <p class="text-slate-500 font-medium text-sm sm:text-base">{{ car.trim || '等級規格' }}</p>
                         </div>
-                        <div class="text-right">
-                            <p class="text-[10px] sm:text-sm text-gray-500 mb-0.5 sm:mb-1">專屬貴賓</p>
-                            <p class="text-lg sm:text-xl font-bold text-white">{{ customer.name || '' }}</p>
-                            <p class="text-xs sm:text-sm text-gray-400">{{ customer.phone }}</p>
+                        <div class="text-right bg-slate-50 p-3 rounded-xl border border-slate-100 min-w-[120px]">
+                            <p class="text-[10px] sm:text-xs text-slate-400 mb-0.5 sm:mb-1 font-medium tracking-wider">尊榮貴賓</p>
+                            <p class="text-lg sm:text-xl font-bold text-slate-800">{{ customer.name || 'VIP' }}</p>
+                            <p class="text-xs sm:text-sm text-slate-500 mt-1">{{ customer.phone }}</p>
                         </div>
                     </div>
 
-                    <!-- 總價大看板 (手機版自動折行) -->
-                    <div class="bg-dark-900/80 rounded-xl p-4 sm:p-6 border border-gray-700/50 mb-4 sm:mb-6 flex flex-col md:flex-row justify-between items-center gap-3 sm:gap-4 relative z-10">
+                    <!-- 總價大看板 -->
+                    <div class="bg-gradient-to-br from-slate-50 to-white rounded-2xl p-5 sm:p-6 border border-slate-200 mb-6 flex flex-col md:flex-row justify-between items-center gap-4 sm:gap-6 relative z-10 shadow-sm">
                         <div class="flex flex-col gap-1 w-full md:w-auto text-center md:text-left">
-                            <p class="text-gray-400 text-xs sm:text-sm">原廠建議售價 <span class="line-through ml-2">${{ (car.price || 0).toLocaleString() }}</span></p>
-                            <div class="flex flex-col sm:flex-row items-center sm:items-end gap-1 sm:gap-3">
-                                <span class="text-gray-200 text-sm sm:text-lg font-bold">今日限定成交價</span>
-                                <span class="text-3xl sm:text-4xl md:text-5xl font-black text-gold-400 drop-shadow-md">{{ formatCurrency(totalCost) }}</span>
+                            <p class="text-slate-500 text-xs sm:text-sm font-medium">原廠建議售價 <span class="line-through ml-2 text-slate-400">${{ (car.price || 0).toLocaleString() }}</span></p>
+                            <div class="flex flex-col sm:flex-row items-center sm:items-baseline gap-1 sm:gap-3 mt-1">
+                                <span class="text-slate-700 text-sm sm:text-lg font-bold">今日限定成交價</span>
+                                <span class="text-4xl sm:text-5xl md:text-6xl font-black text-accent-600 drop-shadow-sm tracking-tight">{{ formatCurrency(totalCost) }}</span>
                             </div>
                         </div>
-                        <div class="w-full h-px md:w-px md:h-12 bg-gray-700 block md:hidden opacity-50"></div>
-                        <div class="w-px h-12 bg-gray-700 hidden md:block"></div>
-                        <div class="flex flex-col items-center md:items-end w-full md:w-auto bg-gray-800/50 p-2 sm:p-3 rounded-lg border border-gray-600/30">
-                            <span class="text-gray-400 text-xs sm:text-sm font-medium mb-1">試算頭期款 (含規費/保險)</span>
-                            <span class="text-2xl sm:text-3xl font-black text-white">{{ formatCurrency(calculatedDownPayment) }}</span>
+                        
+                        <div class="w-full h-px md:w-px md:h-16 bg-slate-200 block md:hidden opacity-50"></div>
+                        <div class="w-px h-16 bg-slate-200 hidden md:block"></div>
+                        
+                        <div class="flex flex-col items-center md:items-end w-full md:w-auto bg-brand-50/50 p-3 sm:p-4 rounded-xl border border-brand-100">
+                            <span class="text-brand-800 text-xs sm:text-sm font-bold mb-1">試算頭期款 <span class="text-[10px] text-brand-600 font-normal">(含規費/保險)</span></span>
+                            <span class="text-2xl sm:text-3xl font-black text-brand-700">{{ formatCurrency(calculatedDownPayment) }}</span>
                         </div>
                     </div>
 
-                    <!-- 預覽配件區 (只要有填名稱就顯示) -->
-                    <div v-if="hasAccessories" class="bg-gray-800/60 rounded-xl p-3 sm:p-4 border border-gray-700/50 mb-4 sm:mb-6 relative z-10">
-                        <h3 class="text-gray-300 font-bold mb-2 sm:mb-3 flex items-center gap-2 text-xs sm:text-sm border-b border-gray-700/50 pb-2">
-                            <svg class="w-3 h-3 sm:w-4 sm:h-4 text-gold-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"></path></svg>
+                    <!-- 預覽配件區 -->
+                    <div v-if="hasAccessories" class="bg-white rounded-xl p-4 sm:p-5 border border-slate-200 mb-6 relative z-10 shadow-sm">
+                        <h3 class="text-brand-800 font-bold mb-3 sm:mb-4 flex items-center gap-2 text-sm sm:text-base border-b border-slate-100 pb-2">
+                            <div class="bg-brand-100 p-1 rounded">
+                                <svg class="w-4 h-4 text-brand-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                            </div>
                             精選升級配備
                         </h3>
-                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-x-4 sm:gap-x-6 gap-y-1.5 sm:gap-y-2">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-x-6 sm:gap-x-8 gap-y-2 sm:gap-y-3">
                             <template v-for="(acc, index) in additional.accessoriesList" :key="'preview-'+index">
-                                <div v-if="acc.name" class="flex justify-between items-center border-b border-gray-700/30 pb-1 border-dashed">
-                                    <span class="text-gray-200 text-xs sm:text-sm truncate pr-2">{{ acc.name }}</span>
-                                    <span v-if="acc.price" class="text-gray-400 text-xs sm:text-sm font-medium whitespace-nowrap">{{ formatCurrency(acc.price) }}</span>
-                                    <span v-else class="text-gold-400 text-[10px] sm:text-xs font-bold bg-gold-400/10 px-1.5 sm:px-2 py-0.5 rounded border border-gold-500/30 whitespace-nowrap">業務贈送</span>
+                                <div v-if="acc.name" class="flex justify-between items-center border-b border-slate-100 pb-1.5 border-dashed">
+                                    <span class="text-slate-700 text-xs sm:text-sm font-medium truncate pr-2 flex items-center gap-2">
+                                        <span class="w-1.5 h-1.5 rounded-full bg-brand-300"></span>
+                                        {{ acc.name }}
+                                    </span>
+                                    <span v-if="acc.price" class="text-slate-500 text-xs sm:text-sm font-bold whitespace-nowrap">{{ formatCurrency(acc.price) }}</span>
+                                    <span v-else class="text-accent-600 text-[10px] sm:text-xs font-bold bg-accent-50 px-2 py-0.5 rounded border border-accent-200 whitespace-nowrap shadow-sm">業務贈送</span>
                                 </div>
                             </template>
                         </div>
                     </div>
 
-                    <!-- 方案選擇區 (RWD 手機版堆疊，桌機版並排) -->
-                    <div class="mb-2 relative z-10">
-                        <h3 class="text-gray-300 font-bold mb-3 sm:mb-4 flex items-center gap-2 text-sm sm:text-base">
-                            <svg class="w-4 h-4 sm:w-5 sm:h-5 text-gold-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                            專屬購車方案分析
+                    <!-- 保險與規費區 (新增) -->
+                    <div v-if="additional.insurance || additional.fees" class="bg-white rounded-xl p-4 sm:p-5 border border-slate-200 mb-6 relative z-10 shadow-sm">
+                        <h3 class="text-brand-800 font-bold mb-3 sm:mb-4 flex items-center gap-2 text-sm sm:text-base border-b border-slate-100 pb-2">
+                            <div class="bg-brand-100 p-1 rounded">
+                                <svg class="w-4 h-4 text-brand-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
+                            </div>
+                            保險與規費預估 <span class="text-slate-400 text-xs font-normal ml-2">(實報實銷，多退少補)</span>
                         </h3>
-                        <!-- 截圖時若為手機版且要保留三欄，可以用 sm:grid-cols-3 強制並排，但這裡讓畫面自然適應最佳 -->
-                        <div class="grid grid-cols-1 md:grid-cols-3 gap-3 sm:gap-4">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-x-6 sm:gap-x-8 gap-y-2 sm:gap-y-3">
+                            <div v-if="additional.insurance" class="flex justify-between items-center border-b border-slate-100 pb-1.5 border-dashed">
+                                <span class="text-slate-700 text-xs sm:text-sm font-medium flex items-center gap-2">
+                                    <span class="w-1.5 h-1.5 rounded-full bg-brand-300"></span>
+                                    保險預估 (代收)
+                                </span>
+                                <span class="text-slate-500 text-xs sm:text-sm font-bold whitespace-nowrap">{{ formatCurrency(additional.insurance) }}</span>
+                            </div>
+                            <div v-if="additional.fees" class="flex justify-between items-center border-b border-slate-100 pb-1.5 border-dashed">
+                                <span class="text-slate-700 text-xs sm:text-sm font-medium flex items-center gap-2">
+                                    <span class="w-1.5 h-1.5 rounded-full bg-brand-300"></span>
+                                    規費領牌 (代收)
+                                </span>
+                                <span class="text-slate-500 text-xs sm:text-sm font-bold whitespace-nowrap">{{ formatCurrency(additional.fees) }}</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 方案選擇區 -->
+                    <div class="mb-2 relative z-10">
+                        <h3 class="text-brand-800 font-bold mb-4 flex items-center gap-2 text-sm sm:text-base">
+                            <div class="bg-brand-100 p-1 rounded">
+                                <svg class="w-4 h-4 text-brand-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                            </div>
+                            專屬購車方案分析 <span class="text-slate-400 text-xs font-normal ml-2">(以貸款 {{ formatCurrency(Number(loanAmount) || 0) }} 試算)</span>
+                        </h3>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-5">
                             
                             <!-- 方案一：21000專案 -->
                             <div @click="selectedPlanId = 1" 
                                  v-show="!isCapturing || selectedPlanId === 1"
-                                 class="relative cursor-pointer rounded-xl p-3 sm:p-4 border-2 transition-all duration-300 flex flex-col"
-                                 :class="selectedPlanId === 1 ? 'border-gold-400 bg-gray-800/80 shadow-lg shadow-gold-500/10' : 'border-gray-700 bg-dark-900/50 hover:border-gray-500'">
-                                <div v-if="selectedPlanId === 1" class="absolute -top-3 left-1/2 transform -translate-x-1/2 bg-gold-400 text-dark-900 text-[10px] sm:text-xs font-black px-2 sm:px-3 py-0.5 sm:py-1 rounded-full shadow-md whitespace-nowrap">
+                                 class="relative cursor-pointer rounded-2xl p-4 sm:p-5 border-2 transition-all duration-300 flex flex-col"
+                                 :class="selectedPlanId === 1 ? 'border-brand-500 bg-brand-50 shadow-md shadow-brand-500/10' : 'border-slate-200 bg-white hover:border-brand-300 hover:shadow-sm'">
+                                <div v-if="selectedPlanId === 1" class="absolute -top-3 left-1/2 transform -translate-x-1/2 bg-brand-100 text-brand-700 text-[10px] sm:text-xs font-black px-3 py-1 rounded-full shadow-sm whitespace-nowrap border border-brand-200">
                                     超低負擔
                                 </div>
-                                <h4 class="text-white font-bold text-center mb-0.5 sm:mb-1 text-sm sm:text-base">21000 貸回家</h4>
-                                <p class="text-[10px] sm:text-xs text-gray-400 text-center mb-3 sm:mb-4">預算先決，輕鬆入主</p>
+                                <h4 class="text-brand-900 font-bold text-center mb-1 text-sm sm:text-base mt-1">21000 貸回家</h4>
+                                <p class="text-[10px] sm:text-xs text-slate-500 text-center mb-4">預算先決，輕鬆入主</p>
                                 
-                                <div class="mt-auto text-center bg-dark-900 rounded-lg p-2 sm:p-3 border border-gray-700">
-                                    <p class="text-[10px] sm:text-xs text-gray-400 mb-1">月付金</p>
-                                    <p class="text-xl sm:text-2xl font-black text-white mb-1">{{ plan1Monthly > 0 ? formatCurrency(plan1Monthly) : '--' }}</p>
-                                    <p class="text-red-400 text-[9px] sm:text-[10px] font-bold mt-1 sm:mt-2">※ 尾款依實際合約為準</p>
+                                <div class="mt-auto text-center rounded-xl p-3 border" :class="selectedPlanId === 1 ? 'bg-white border-brand-200 shadow-inner' : 'bg-slate-50 border-slate-200'">
+                                    <p class="text-[10px] sm:text-xs text-slate-500 mb-1 font-medium">固定月付金</p>
+                                    <p class="text-2xl sm:text-3xl font-black text-brand-700 mb-1">{{ plan1Monthly > 0 ? formatCurrency(plan1Monthly) : '--' }}</p>
+                                    <p class="text-accent-600 text-[10px] font-bold mt-2 bg-accent-50 rounded px-1 py-0.5 inline-block border border-accent-100">※ 尾款依實際合約</p>
                                 </div>
                             </div>
 
                             <!-- 方案二：標準方案 -->
                             <div @click="selectedPlanId = 2" 
                                  v-show="!isCapturing || selectedPlanId === 2"
-                                 class="relative cursor-pointer rounded-xl p-4 sm:p-5 border-2 transition-all duration-300 flex flex-col transform md:-translate-y-2"
-                                 :class="selectedPlanId === 2 ? 'border-gold-400 bg-gray-800 shadow-xl shadow-gold-500/20' : 'border-gray-700 bg-dark-900/50 hover:border-gray-500'">
-                                <div class="absolute -top-3 sm:-top-4 left-1/2 transform -translate-x-1/2 bg-gradient-to-r from-red-500 to-red-600 text-white text-xs sm:text-sm font-black px-3 sm:px-4 py-0.5 sm:py-1 rounded-full shadow-lg border border-red-400 whitespace-nowrap">
+                                 class="relative cursor-pointer rounded-2xl p-4 sm:p-5 border-2 transition-all duration-300 flex flex-col transform md:-translate-y-2"
+                                 :class="selectedPlanId === 2 ? 'border-accent-500 bg-white shadow-xl shadow-accent-500/10' : 'border-slate-200 bg-white hover:border-brand-300 hover:shadow-sm'">
+                                <div class="absolute -top-3 sm:-top-4 left-1/2 transform -translate-x-1/2 bg-gradient-to-r from-accent-500 to-accent-600 text-white text-xs sm:text-sm font-black px-4 py-1 rounded-full shadow-md border border-accent-400 whitespace-nowrap">
                                     經典首選
                                 </div>
-                                <h4 class="text-white font-black text-center text-base sm:text-lg mt-1 mb-0.5 sm:mb-1">標準分期專案</h4>
-                                <p class="text-[10px] sm:text-xs text-gray-400 text-center mb-2 sm:mb-3">最受客戶歡迎的配置</p>
+                                <h4 class="text-slate-800 font-black text-center text-base sm:text-lg mt-2 mb-1">標準分期專案</h4>
+                                <p class="text-[10px] sm:text-xs text-slate-500 text-center mb-3">最受客戶歡迎的配置</p>
                                 
-                                <div class="flex justify-center gap-1 sm:gap-2 mb-3 sm:mb-4 text-xs" :class="{ 'capturing-hide': isCapturing }">
-                                    <select v-model.number="standardPeriods" class="bg-dark-900 border border-gray-600 text-white rounded px-1 sm:px-2 py-1 outline-none">
+                                <div class="flex justify-center gap-2 mb-4 text-xs" :class="{ 'capturing-hide': isCapturing }">
+                                    <select v-model.number="standardPeriods" class="bg-white border border-slate-300 text-slate-700 rounded px-2 py-1 outline-none focus:border-accent-400 focus:ring-1 focus:ring-accent-400 font-medium">
                                         <option value="12">12 期</option><option value="24">24 期</option>
                                         <option value="36">36 期</option><option value="48">48 期</option>
                                         <option value="60">60 期</option><option value="72">72 期</option>
                                         <option value="84">84 期</option>
                                     </select>
-                                    <div class="flex items-center bg-dark-900 border border-gray-600 rounded px-1 sm:px-2 py-1">
-                                        <input type="number" v-model.number="standardRate" step="0.1" class="bg-transparent text-white w-8 sm:w-10 text-center outline-none text-xs sm:text-sm">
-                                        <span class="text-gray-400">%</span>
+                                    <div class="flex items-center bg-white border border-slate-300 rounded px-2 py-1 focus-within:border-accent-400 focus-within:ring-1 focus-within:ring-accent-400">
+                                        <input type="number" v-model.number="standardRate" step="0.1" class="bg-transparent text-slate-700 w-10 text-center outline-none text-xs sm:text-sm font-medium">
+                                        <span class="text-slate-400 font-bold">%</span>
                                     </div>
                                 </div>
-                                <div v-if="isCapturing" class="text-center text-gray-300 text-xs sm:text-sm mb-3 sm:mb-4 font-bold">
+                                <div v-if="isCapturing" class="text-center text-brand-700 bg-brand-50 rounded px-2 py-1 text-xs sm:text-sm mb-4 font-bold border border-brand-100 mx-auto">
                                     {{ standardPeriods }} 期 / 利率 {{ standardRate }}%
                                 </div>
 
-                                <div class="mt-auto text-center bg-dark-900 rounded-lg p-2 sm:p-3 border border-gold-500/30">
-                                    <p class="text-[10px] sm:text-xs text-gold-400 font-bold mb-1">月付金 (平均攤還)</p>
-                                    <p class="text-2xl sm:text-3xl font-black text-gold-400 mb-1">{{ formatCurrency(plan2Monthly) }}</p>
-                                    <div class="text-[9px] sm:text-[10px] text-gray-400 bg-gray-800 rounded px-1.5 sm:px-2 py-0.5 sm:py-1 inline-block mt-1">
-                                        一天只要 <span class="text-white font-bold">{{ Math.round(plan2Monthly / 30) || 0 }}</span> 元
+                                <div class="mt-auto text-center rounded-xl p-3 border" :class="selectedPlanId === 2 ? 'bg-accent-50 border-accent-200 shadow-inner' : 'bg-slate-50 border-slate-200'">
+                                    <p class="text-[10px] sm:text-xs text-accent-700 font-bold mb-1">月付金 (平均攤還)</p>
+                                    <p class="text-3xl sm:text-4xl font-black text-accent-600 mb-1 drop-shadow-sm">{{ formatCurrency(plan2Monthly) }}</p>
+                                    <div class="text-[10px] sm:text-xs text-slate-600 bg-white rounded-md px-2 py-1 inline-block mt-2 shadow-sm border border-slate-100 font-medium">
+                                        一天只要 <span class="text-accent-600 font-black text-sm">{{ Math.round(plan2Monthly / 30) || 0 }}</span> 元
                                     </div>
                                 </div>
                             </div>
@@ -263,23 +342,23 @@
                             <!-- 方案三：轟動50 -->
                             <div @click="selectedPlanId = 3" 
                                  v-show="!isCapturing || selectedPlanId === 3"
-                                 class="relative cursor-pointer rounded-xl p-3 sm:p-4 border-2 transition-all duration-300 flex flex-col"
-                                 :class="selectedPlanId === 3 ? 'border-gold-400 bg-gray-800/80 shadow-lg shadow-gold-500/10' : 'border-gray-700 bg-dark-900/50 hover:border-gray-500'">
-                                <div v-if="selectedPlanId === 3" class="absolute -top-3 left-1/2 transform -translate-x-1/2 bg-gold-400 text-dark-900 text-[10px] sm:text-xs font-black px-2 sm:px-3 py-0.5 sm:py-1 rounded-full shadow-md whitespace-nowrap">
+                                 class="relative cursor-pointer rounded-2xl p-4 sm:p-5 border-2 transition-all duration-300 flex flex-col"
+                                 :class="selectedPlanId === 3 ? 'border-brand-500 bg-brand-50 shadow-md shadow-brand-500/10' : 'border-slate-200 bg-white hover:border-brand-300 hover:shadow-sm'">
+                                <div v-if="selectedPlanId === 3" class="absolute -top-3 left-1/2 transform -translate-x-1/2 bg-brand-100 text-brand-700 text-[10px] sm:text-xs font-black px-3 py-1 rounded-full shadow-sm whitespace-nowrap border border-brand-200">
                                     階梯輕鬆付
                                 </div>
-                                <h4 class="text-white font-bold text-center mb-0.5 sm:mb-1 text-sm sm:text-base">轟動 50 專案</h4>
-                                <p class="text-[10px] sm:text-xs text-gray-400 text-center mb-3 sm:mb-4">首年低月付，資金最靈活</p>
+                                <h4 class="text-brand-900 font-bold text-center mb-1 text-sm sm:text-base mt-1">轟動 50 專案</h4>
+                                <p class="text-[10px] sm:text-xs text-slate-500 text-center mb-4">首年低月付，資金最靈活</p>
                                 
-                                <div class="mt-auto text-center bg-dark-900 rounded-lg p-2 sm:p-3 border border-gray-700">
-                                    <p class="text-[10px] sm:text-xs text-gray-400 mb-1">首年月付 (第 1-12 期)</p>
-                                    <p class="text-xl sm:text-2xl font-black text-white mb-2">{{ plan3Info.p1 ? formatCurrency(plan3Info.p1) : '--' }}</p>
+                                <div class="mt-auto text-center rounded-xl p-3 border flex flex-col justify-center" :class="selectedPlanId === 3 ? 'bg-white border-brand-200 shadow-inner' : 'bg-slate-50 border-slate-200'">
+                                    <p class="text-[10px] sm:text-xs text-slate-500 mb-1 font-medium">首年月付</p>
+                                    <p class="text-2xl sm:text-3xl font-black text-brand-700 mb-2">{{ plan3Info.p1 ? formatCurrency(plan3Info.p1) : '--' }}</p>
                                     
-                                    <div class="text-[9px] sm:text-[10px] text-gray-400 text-left space-y-1 bg-gray-800 p-1.5 sm:p-2 rounded">
-                                        <div class="flex justify-between items-center"><span>第 1-12 期</span><span class="text-gray-300 font-bold">{{ plan3Info.p1 ? formatCurrency(plan3Info.p1) : '--' }}</span></div>
-                                        <div class="flex justify-between items-center"><span>第 13-24 期</span><span class="text-gray-300 font-bold">{{ plan3Info.p2 ? formatCurrency(plan3Info.p2) : '--' }}</span></div>
-                                        <div class="flex justify-between items-center"><span>第 25-49 期</span><span class="text-gray-300 font-bold">{{ plan3Info.p3 ? formatCurrency(plan3Info.p3) : '--' }}</span></div>
-                                        <div class="text-red-400 mt-1 pt-1 border-t border-gray-700 text-center">※ 第 50 期尾款依實際合約</div>
+                                    <div class="text-[10px] text-slate-600 text-left space-y-1.5 bg-slate-100 p-2 rounded-lg font-medium border border-slate-200">
+                                        <div class="flex justify-between items-center"><span>第 1-12 期</span><span class="text-brand-700 font-bold">{{ plan3Info.p1 ? formatCurrency(plan3Info.p1) : '--' }}</span></div>
+                                        <div class="flex justify-between items-center"><span>第 13-24 期</span><span class="text-brand-700 font-bold">{{ plan3Info.p2 ? formatCurrency(plan3Info.p2) : '--' }}</span></div>
+                                        <div class="flex justify-between items-center"><span>第 25-49 期</span><span class="text-brand-700 font-bold">{{ plan3Info.p3 ? formatCurrency(plan3Info.p3) : '--' }}</span></div>
+                                        <div class="text-accent-600 mt-1.5 pt-1.5 border-t border-slate-300 text-center text-[9px] font-bold">※ 第 50 期尾款依實際合約</div>
                                     </div>
                                 </div>
                             </div>
@@ -287,22 +366,22 @@
                         </div>
                     </div>
 
-                    <div class="mt-auto pt-4 sm:pt-6 text-center text-[9px] sm:text-[10px] text-gray-500" v-show="isCapturing">
-                        本報價單僅供參考，實際價格與配備以最終簽訂之正式合約為準。
+                    <div class="mt-auto pt-6 sm:pt-8 text-center text-[10px] sm:text-xs text-slate-400 font-medium" v-show="isCapturing">
+                        本數位報價單僅供參考，實際價格與配備以最終簽訂之正式合約為準。
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- RWD 手機版底部懸浮行動列 (截圖時自動隱藏因為他在 capture-area 之外，且使用了 md:hidden) -->
-    <div v-cloak id="mobile-action-bar" class="fixed bottom-0 left-0 right-0 p-3 bg-gray-900/95 backdrop-blur-md border-t border-gray-800 z-50 md:hidden flex gap-3 shadow-[0_-10px_20px_rgba(0,0,0,0.3)]">
-        <button onclick="document.querySelector('button[title=\'reset\']').click()" class="flex-1 py-3 bg-gray-800 active:bg-gray-700 text-white rounded-lg font-bold text-sm border border-gray-700">
+    <!-- 手機版底部懸浮行動列 (白底風格) -->
+    <div v-cloak id="mobile-action-bar" class="fixed bottom-0 left-0 right-0 p-3 bg-white/95 backdrop-blur-md border-t border-slate-200 z-50 md:hidden flex gap-3 shadow-[0_-10px_20px_rgba(0,0,0,0.05)]">
+        <button onclick="document.querySelector('button[title=\'reset\']').click()" class="flex-1 py-3 bg-slate-50 active:bg-slate-100 text-slate-700 rounded-lg font-bold text-sm border border-slate-200 shadow-sm transition-colors">
             清除重填
         </button>
-        <button onclick="document.querySelector('button[title=\'capture\']').click()" class="flex-[2] py-3 bg-gradient-to-r from-gold-400 to-gold-600 text-dark-900 rounded-lg font-black shadow-lg shadow-gold-500/20 active:scale-95 transition-transform flex items-center justify-center gap-2">
+        <button onclick="document.querySelector('button[title=\'capture\']').click()" class="flex-[2] py-3 bg-gradient-to-r from-accent-500 to-accent-600 text-white rounded-lg font-black shadow-md shadow-accent-500/30 active:scale-95 transition-transform flex items-center justify-center gap-2 border border-accent-600">
             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"></path></svg>
-            轉成圖片 (LINE)
+            轉成圖片
         </button>
     </div>
 
@@ -316,6 +395,26 @@
                 const isCapturing = ref(false);
                 const currentDate = ref(new Date().toLocaleDateString('zh-TW'));
                 
+                // 自訂對話框狀態
+                const modal = ref({ show: false, type: 'alert', message: '', onConfirm: null });
+
+                const showAlert = (msg) => {
+                    modal.value = { show: true, type: 'alert', message: msg, onConfirm: null };
+                };
+
+                const showConfirm = (msg, callback) => {
+                    modal.value = { show: true, type: 'confirm', message: msg, onConfirm: callback };
+                };
+
+                const confirmModal = () => {
+                    if (modal.value.onConfirm) modal.value.onConfirm();
+                    modal.value.show = false;
+                };
+
+                const cancelModal = () => {
+                    modal.value.show = false;
+                };
+
                 const daysLeft = computed(() => {
                     const today = new Date();
                     const lastDay = new Date(today.getFullYear(), today.getMonth() + 1, 0);
@@ -405,8 +504,8 @@
                     return new Intl.NumberFormat('zh-TW', { style: 'currency', currency: 'TWD', minimumFractionDigits: 0, maximumFractionDigits: 0 }).format(value);
                 };
 
-                const resetData = () => {
-                    if(confirm('確定要清除並重置所有資料嗎？')) {
+                const handleReset = () => {
+                    showConfirm('確定要清除並重置所有資料嗎？', () => {
                         customer.value = {...defaultData.customer};
                         car.value = {...defaultData.car};
                         discount.value = defaultData.discount;
@@ -415,15 +514,14 @@
                         loanAmount.value = defaultData.loanAmount;
                         standardPeriods.value = defaultData.standardPeriods;
                         standardRate.value = defaultData.standardRate;
-                    }
+                    });
                 };
 
-                // 將按鈕功能綁定給隱藏的鉤子，讓手機版底部按鈕也能觸發
                 onMounted(() => {
                     document.querySelector('.hidden.md\\:flex button:first-child').setAttribute('title', 'reset');
                     document.querySelector('.hidden.md\\:flex button:last-child').setAttribute('title', 'capture');
                     
-                    const saved = localStorage.getItem('autoQuoteData_v4');
+                    const saved = localStorage.getItem('autoQuoteData_v5_light');
                     if (saved) {
                         try {
                             const parsed = JSON.parse(saved);
@@ -444,7 +542,7 @@
 
                 watch([customer, car, discount, additional, selectedPlanId, loanAmount, standardPeriods, standardRate], () => {
                     const state = { customer: customer.value, car: car.value, discount: discount.value, additional: additional.value, selectedPlanId: selectedPlanId.value, loanAmount: loanAmount.value, standardPeriods: standardPeriods.value, standardRate: standardRate.value };
-                    localStorage.setItem('autoQuoteData_v4', JSON.stringify(state));
+                    localStorage.setItem('autoQuoteData_v5_light', JSON.stringify(state));
                 }, { deep: true });
 
                 const generateImage = async () => {
@@ -462,9 +560,9 @@
                     setTimeout(async () => {
                         try {
                             const canvas = await html2canvas(element, {
-                                scale: window.innerWidth < 768 ? 3 : 2, // 手機版提高解析度讓畫質更清晰
+                                scale: window.innerWidth < 768 ? 3 : 2, 
                                 useCORS: true,
-                                backgroundColor: '#1F2937', 
+                                backgroundColor: '#ffffff', // 改為純白底色
                                 logging: false,
                                 scrollY: -window.scrollY, 
                                 windowWidth: element.scrollWidth,
@@ -479,7 +577,7 @@
                             link.click();
                         } catch (error) {
                             console.error('截圖失敗:', error);
-                            alert('圖片產生失敗，請稍後再試。');
+                            showAlert('圖片產生失敗，請稍後再試。');
                         } finally {
                             element.style.height = originalHeight;
                             element.style.overflow = originalOverflow;
@@ -491,7 +589,8 @@
                 return {
                     isCapturing, currentDate, daysLeft, customer, car, discount, additional, selectedPlanId, loanAmount,
                     standardPeriods, standardRate, hasAccessories, totalCost, totalAccessories, calculatedDownPayment,
-                    plan1Monthly, plan2Monthly, plan3Info, formatCurrency, resetData, generateImage
+                    plan1Monthly, plan2Monthly, plan3Info, formatCurrency, handleReset, generateImage,
+                    modal, confirmModal, cancelModal
                 };
             }
         }).mount('#app');
