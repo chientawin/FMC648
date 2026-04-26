@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="zh-TW">
 <head>
@@ -155,6 +154,41 @@
       max-width: 480px;
       line-height: 1.7;
       animation: fadeUp 0.7s 0.3s ease both;
+    }
+
+    .hero-stats {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      margin-top: 36px;
+      animation: fadeUp 0.7s 0.35s ease both;
+    }
+
+    .hero-stat {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .hero-stat-num {
+      font-family: 'Archivo', sans-serif;
+      font-size: clamp(28px, 6vw, 40px);
+      font-weight: 700;
+      color: #fff;
+      line-height: 1;
+    }
+
+    .hero-stat-label {
+      font-size: 12px;
+      color: rgba(255,255,255,0.4);
+      letter-spacing: 0.08em;
+    }
+
+    .hero-stat-divider {
+      width: 1px;
+      height: 36px;
+      background: rgba(255,255,255,0.12);
     }
 
     .hero-cta-group {
@@ -423,6 +457,114 @@
     }
 
 
+    /* ── TESTIMONIALS ── */
+    .testimonial-section {
+      padding: 80px 24px;
+      background: var(--primary);
+    }
+
+    .testimonial-inner {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .testimonial-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-top: 40px;
+    }
+
+    @media (max-width: 768px) {
+      .testimonial-grid { grid-template-columns: 1fr; }
+    }
+
+    .testimonial-card {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: var(--radius);
+      padding: 28px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: border-color 0.2s ease;
+    }
+
+    .testimonial-card:hover {
+      border-color: rgba(204,0,0,0.3);
+    }
+
+    .testimonial-card.visible {
+      animation: cardIn 0.5s ease forwards;
+    }
+
+    .testimonial-stars {
+      display: flex;
+      gap: 3px;
+    }
+
+    .testimonial-stars svg {
+      width: 16px;
+      height: 16px;
+      fill: #F59E0B;
+      stroke: none;
+    }
+
+    .testimonial-text {
+      font-size: 14px;
+      line-height: 1.75;
+      color: rgba(255,255,255,0.7);
+      flex: 1;
+    }
+
+    .testimonial-text::before {
+      content: '"';
+      font-family: 'Archivo', sans-serif;
+      font-size: 40px;
+      color: var(--accent);
+      line-height: 0;
+      vertical-align: -14px;
+      margin-right: 4px;
+    }
+
+    .testimonial-author {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding-top: 16px;
+      border-top: 1px solid rgba(255,255,255,0.06);
+    }
+
+    .testimonial-avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: rgba(204,0,0,0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Archivo', sans-serif;
+      font-size: 15px;
+      font-weight: 700;
+      color: #FF6666;
+      flex-shrink: 0;
+    }
+
+    .testimonial-name {
+      font-family: 'Archivo', sans-serif;
+      font-size: 14px;
+      font-weight: 600;
+      color: #fff;
+    }
+
+    .testimonial-tag {
+      font-size: 12px;
+      color: rgba(255,255,255,0.35);
+      margin-top: 2px;
+    }
+
     /* ── CONTACT ── */
     .contact-section {
       background: var(--primary);
@@ -573,16 +715,30 @@
       中華三菱 Mitsubishi
     </div>
 
-    <h1 class="hero-name">
-      <span>Sales Manager</span>
-      黃建達
-    </h1>
+    <h1 class="hero-name">黃建達</h1>
 
-    <p class="hero-title">銷售經理</p>
+    <p class="hero-title">中華三菱 · 銷售經理</p>
 
     <div class="hero-divider" aria-hidden="true"></div>
 
-    <p class="hero-tagline">讓你購車不慌不忙，全台皆有服務</p>
+    <p class="hero-tagline">8 年銷售經驗，累積超過 300 台交車紀錄<br>讓你購車不慌不忙，全台皆有服務</p>
+
+    <div class="hero-stats" aria-label="銷售成績">
+      <div class="hero-stat">
+        <span class="hero-stat-num">8</span>
+        <span class="hero-stat-label">年資歷</span>
+      </div>
+      <div class="hero-stat-divider" aria-hidden="true"></div>
+      <div class="hero-stat">
+        <span class="hero-stat-num">300<span style="font-size:0.6em">+</span></span>
+        <span class="hero-stat-label">累積交車</span>
+      </div>
+      <div class="hero-stat-divider" aria-hidden="true"></div>
+      <div class="hero-stat">
+        <span class="hero-stat-num">9</span>
+        <span class="hero-stat-label">款車型</span>
+      </div>
+    </div>
 
     <div class="hero-cta-group">
       <a href="tel:0919318933" class="btn btn-primary" aria-label="撥打電話給黃建達">
@@ -608,9 +764,16 @@
 
     <div class="about-intro js-reveal">
       <p>
-        在 <strong>中華三菱</strong>，我提供一系列完整的購車流程，不論你想買
-        <strong>商用貨車</strong> 還是 <strong>休旅車</strong>，都能讓你從選車到交車，
-        每一步都輕鬆清楚、<strong>購車不慌不忙</strong>。
+        我選擇賣車，是因為<strong>喜歡與人接觸</strong>。每一位走進來的客戶，都有不同的故事、不同的需求，這份工作讓我每天都能認識新朋友。
+      </p>
+      <p style="margin-top: 20px;">
+        8 年下來，我學到最重要的一件事——<strong>溝通比推銷更重要</strong>。我不急著成交，而是先聽懂你真正需要什麼，再幫你找到最合適的答案。
+      </p>
+      <p style="margin-top: 20px;">
+        曾經有個客戶，因為看了我的網路分享，主動找上門，<strong>沒有多說什麼就決定簽約</strong>。那一刻我才明白，信任不是靠話術建立的，而是靠日積月累的真誠。
+      </p>
+      <p style="margin-top: 20px;">
+        跟我買車，我只有一個承諾：<strong>讓你信任我，也讓你買得安心。</strong>
       </p>
     </div>
 
@@ -665,7 +828,23 @@
           <svg viewBox="0 0 24 24"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
         </div>
         <h3>完整購車流程</h3>
-        <p>從詢價、試駕、貸款規劃到交車，每個環節都有專業引導。</p>
+        <ol style="margin-top:10px; padding-left:0; list-style:none; display:flex; flex-direction:column; gap:8px;">
+          <li style="font-size:13px; color:var(--text-muted); display:flex; align-items:flex-start; gap:10px;">
+            <span style="min-width:20px;height:20px;border-radius:50%;background:var(--accent);color:#fff;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;">1</span>免費諮詢需求，了解你的用途與預算
+          </li>
+          <li style="font-size:13px; color:var(--text-muted); display:flex; align-items:flex-start; gap:10px;">
+            <span style="min-width:20px;height:20px;border-radius:50%;background:var(--accent);color:#fff;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;">2</span>推薦適合車款，安排試駕體驗
+          </li>
+          <li style="font-size:13px; color:var(--text-muted); display:flex; align-items:flex-start; gap:10px;">
+            <span style="min-width:20px;height:20px;border-radius:50%;background:var(--accent);color:#fff;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;">3</span>貸款試算與分期規劃，透明無隱費
+          </li>
+          <li style="font-size:13px; color:var(--text-muted); display:flex; align-items:flex-start; gap:10px;">
+            <span style="min-width:20px;height:20px;border-radius:50%;background:var(--accent);color:#fff;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;">4</span>合約簽署，確認每項細節
+          </li>
+          <li style="font-size:13px; color:var(--text-muted); display:flex; align-items:flex-start; gap:10px;">
+            <span style="min-width:20px;height:20px;border-radius:50%;background:var(--accent);color:#fff;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;">5</span>到府交車，說明操作並持續售後關心
+          </li>
+        </ol>
       </div>
 
       <div class="about-card js-reveal" style="--delay: 0.2s">
@@ -673,7 +852,19 @@
           <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
         </div>
         <h3>全台服務</h3>
-        <p>不分縣市，全台皆有服務人員，讓你在地購車零距離。</p>
+        <p style="font-size:13px; color:var(--text-muted); line-height:1.7; margin-bottom:12px;">主要服務區域：</p>
+        <ul style="padding-left:0; list-style:none; display:flex; flex-direction:column; gap:6px;">
+          <li style="font-size:13px; color:var(--text-muted); display:flex; align-items:center; gap:8px;">
+            <span style="width:5px;height:5px;border-radius:50%;background:var(--accent);flex-shrink:0;display:inline-block;"></span>台中市
+          </li>
+          <li style="font-size:13px; color:var(--text-muted); display:flex; align-items:center; gap:8px;">
+            <span style="width:5px;height:5px;border-radius:50%;background:var(--accent);flex-shrink:0;display:inline-block;"></span>彰化縣
+          </li>
+          <li style="font-size:13px; color:var(--text-muted); display:flex; align-items:center; gap:8px;">
+            <span style="width:5px;height:5px;border-radius:50%;background:var(--accent);flex-shrink:0;display:inline-block;"></span>南投縣
+          </li>
+        </ul>
+        <p style="font-size:12px; color:var(--text-muted); margin-top:12px; padding-top:12px; border-top:1px solid var(--border);">其他縣市亦可服務，歡迎直接詢問。</p>
       </div>
     </div>
   </section>
@@ -685,6 +876,16 @@
       <h2 class="section-title">交車見證</h2>
 
       <div class="gallery-grid" id="galleryGrid"></div>
+    </div>
+  </section>
+
+  <!-- TESTIMONIALS -->
+  <section class="testimonial-section" aria-label="客戶推薦">
+    <div class="testimonial-inner">
+      <p class="section-label" style="color:#FF6666">Reviews</p>
+      <h2 class="section-title" style="color:#fff">客戶這樣說</h2>
+
+      <div class="testimonial-grid" id="testimonialGrid"></div>
     </div>
   </section>
 
@@ -737,7 +938,9 @@
 
     const photos = [
       'car-01.jpg', 'car-02.jpg', 'car-03.jpg',
-      'car-04.jpg', 'car-05.jpg', 'car-06.jpg', 'car-07.jpg'
+      'car-04.jpg', 'car-05.jpg', 'car-06.jpg', 'car-07.jpg',
+      'car-08.jpg', 'car-09.jpg', 'car-10.jpg', 'car-11.jpg',
+      'car-12.jpg', 'car-13.jpg', 'car-14.jpg', 'car-15.jpg'
     ];
     const TOTAL_SLOTS = 9;
     const grid = document.getElementById('galleryGrid');
@@ -766,6 +969,43 @@
       }
       grid.appendChild(div);
     }
+
+    const testimonials = [
+      { name: '林先生',  tag: '購入 J SPACE 廂車 · 台中',       text: '第一次買貨車完全不懂，建達哥很有耐心幫我說明每款差異，也幫我試算貸款方案，最後選到最適合我的車，交車當天還特別到場說明操作，非常感謝！' },
+      { name: '陳老闆',  tag: '購入 J SPACE 貨車 · 高雄',      text: '跨縣市買車本來很擔心售後問題，但建達告訴我全台都有服務據點，讓我放心許多。整個流程很順暢，從下訂到交車不到兩週，效率很高！' },
+      { name: '王小姐',  tag: '購入 OUTLANDER · 台北',          text: '家裡需要一台兼顧載貨和家用的車，建達推薦 OUTLANDER，空間大又省油。他很了解我的需求，沒有強迫推銷，聊完就決定了，下次換車還是找他！' },
+      { name: '張老闆',  tag: '購入 P350 油電混合 · 桃園',      text: '做工程的需要耐用又省油的車，建達幫我分析油電混合的長期油耗優勢，說服我嘗試新車款。開了半年超滿意，省下不少油錢，朋友都來問我在哪買的。' },
+      { name: '李先生',  tag: '購入 DELICA 廂車 · 台南',        text: '買了第三台車都是找建達，他記得我每次的需求，這次直接幫我縮小選項，省了很多時間。服務態度始終如一，是我最信任的業務。' },
+      { name: '黃小姐',  tag: '購入 X FORCE · 新竹',            text: '一個人去看車很怕被亂推銷，但建達完全沒有這種感覺，很客觀地介紹每款優缺點。最後選了 X FORCE，外型和配備都很滿意，非常推薦！' },
+      { name: '吳先生',  tag: '購入 ZINGER 商旅車 · 彰化',      text: '公司需要接送員工的商旅車，建達幫我評估座位數和使用需求，推薦 ZINGER 渦輪版。動力充足，員工都說坐起來很舒適，老闆也說買對了！' },
+      { name: '劉老闆',  tag: '購入 E300 電動車 · 台中',        text: '本身自己開Tesla，很清楚電車的優勢，找建達省了我很多麻煩。他懂的東西比我想像的還多，交車後還有追蹤關心，服務很到位。' },
+      { name: '許先生',  tag: '購入 COLT PLUS · 嘉義',          text: '第一次買新車，預算有限，建達幫我規劃最適合的分期方案，讓我不用一次拿出太多錢。整個過程都很透明，沒有隱藏費用，買得很安心。' },
+      { name: '蔡老闆',  tag: '購入 J SPACE 貨車 · 屏東',       text: '在屏東買車，原本擔心跨區服務麻煩，沒想到建達安排得非常周全，親自到府交車。專業又負責，下次還要再介紹朋友來找他！' },
+    ];
+
+    const starSVG = `<svg viewBox="0 0 24 24" style="width:16px;height:16px;fill:#F59E0B;stroke:none"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>`;
+
+    const shuffled = [...testimonials].sort(() => Math.random() - 0.5);
+    const picked = shuffled.slice(0, 3);
+    const tGrid = document.getElementById('testimonialGrid');
+
+    picked.forEach((t, i) => {
+      const card = document.createElement('div');
+      card.className = 'testimonial-card js-reveal';
+      card.style.setProperty('--delay', (i * 0.08) + 's');
+      card.innerHTML = `
+        <div class="testimonial-stars" aria-label="五顆星">${starSVG.repeat(5)}</div>
+        <p class="testimonial-text">${t.text}</p>
+        <div class="testimonial-author">
+          <div class="testimonial-avatar" aria-hidden="true">${t.name[0]}</div>
+          <div>
+            <p class="testimonial-name">${t.name}</p>
+            <p class="testimonial-tag">${t.tag}</p>
+          </div>
+        </div>
+      `;
+      tGrid.appendChild(card);
+    });
 
     document.querySelectorAll('.js-reveal').forEach(el => observer.observe(el));
 
