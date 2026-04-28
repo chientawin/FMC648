@@ -458,23 +458,36 @@ const TESTIMONIALS = [
 // 新增照片：複製一筆 { photo: '你的路徑/檔名.jpg' } 貼到下方即可
 // ==================================================================
 const DEALS = [
-  { photo:'car-01.jpg' },
-  { photo:'car-02.jpg' },
-  { photo:'car-03.jpg' },
-  { photo:'car-04.jpg' },
-  { photo:'car-05.jpg' },
-  { photo:'car-06.jpg' },
-  { photo:'car-07.jpg' },
-  { photo:'car-08.jpg' },
-  // { photo: 'Personal Profile/car-09.jpg' },   ← 之後新增照片從這裡加
-  // { photo: 'Personal Profile/car-10.jpg' },
-  // { photo: 'Personal Profile/car-11.jpg' },
-  /*
-    ★ 新增方式：
-       1. 把照片放進 Personal Profile 資料夾
-       2. 複製上面任一行，把路徑改成新檔名
-       3. 移除該行前面的 // 注解符號
-  */
+  { photo: 'car-01.jpg' },
+  { photo: 'car-02.jpg' },
+  { photo: 'car-03.jpg' },
+  { photo: 'car-04.jpg' },
+  { photo: 'car-05.jpg' },
+  { photo: 'car-06.jpg' },
+  { photo: 'car-07.jpg' },
+  { photo: 'car-08.jpg' },
+  { photo: 'car-09.jpg' },
+  { photo: 'car-10.jpg' },
+  { photo: 'car-11.jpg' },
+  { photo: 'car-12.jpg' },
+  { photo: 'car-13.jpg' },
+  { photo: 'car-14.jpg' },
+  { photo: 'car-15.jpg' },
+  { photo: 'car-16.jpg' },
+  { photo: 'car-17.jpg' },
+  { photo: 'car-18.jpg' },
+  { photo: 'car-19.jpg' },
+  { photo: 'car-20.jpg' },
+  { photo: 'car-21.jpg' },
+  { photo: 'car-22.jpg' },
+  { photo: 'car-23.jpg' },
+  { photo: 'car-24.jpg' },
+  { photo: 'car-25.jpg' },
+  { photo: 'car-26.jpg' },
+  { photo: 'car-27.jpg' },
+  { photo: 'car-28.jpg' },
+  { photo: 'car-29.jpg' },
+  // 之後新增：{ photo: 'car-30.jpg' },
 ];
 
 // ==================================================================
@@ -520,10 +533,6 @@ function renderDealGallery(count = 4) {
     const photoStyle = d.photo
       ? `background-image: url('${d.photo}'); background-size: cover; background-position: center;`
       : '';
-    const tagSpans = d.tags.map((t, i) => i === 0
-      ? `<span>${escapeHtml(t)}</span>`
-      : `<span class="dot"></span><span>${escapeHtml(t)}</span>`
-    ).join('');
     return `
       <div class="deal-card">
         <div class="deal-photo ${escapeHtml(d.photoClass || '')}" style="${photoStyle}">
