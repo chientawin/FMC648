@@ -1,1018 +1,541 @@
-<!DOCTYPE html>
-<html lang="zh-TW">
+<!doctype html>
+<html lang="zh-Hant">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>您的購車顧問｜中華三菱 黃建達</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@300;400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
-  <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-    :root {
-      --primary: #0D0D0D;
-      --secondary: #1A1A1A;
-      --accent: #CC0000;
-      --accent-light: #FF1A1A;
-      --gold: #C9A84C;
-      --bg: #F5F5F5;
-      --surface: #FFFFFF;
-      --text: #111111;
-      --text-muted: #555555;
-      --border: #E0E0E0;
-      --radius: 16px;
-    }
-
-    html { scroll-behavior: smooth; }
-
-    body {
-      font-family: 'Space Grotesk', sans-serif;
-      background: var(--bg);
-      color: var(--text);
-      min-height: 100dvh;
-      overflow-x: hidden;
-    }
-
-    /* ── HERO ── */
-    .hero {
-      position: relative;
-      background: var(--primary);
-      min-height: 100dvh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      padding: 60px 24px 80px;
-      overflow: hidden;
-    }
-
-    .hero::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background:
-        radial-gradient(ellipse 80% 60% at 50% -10%, rgba(204,0,0,0.35) 0%, transparent 70%),
-        radial-gradient(ellipse 50% 40% at 80% 110%, rgba(204,0,0,0.15) 0%, transparent 60%);
-      pointer-events: none;
-    }
-
-    .hero-diamond {
-      position: absolute;
-      inset: 0;
-      pointer-events: none;
-      overflow: hidden;
-    }
-
-    .hero-diamond svg {
-      position: absolute;
-      opacity: 0.04;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      width: min(700px, 140vw);
-    }
-
-    .hero-photo {
-      width: 120px;
-      height: 120px;
-      border-radius: 50%;
-      object-fit: cover;
-      border: 3px solid rgba(204,0,0,0.6);
-      box-shadow: 0 0 0 6px rgba(204,0,0,0.12), 0 8px 32px rgba(0,0,0,0.4);
-      margin-bottom: 24px;
-      animation: fadeDown 0.6s ease both;
-    }
-
-    .badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      background: rgba(204,0,0,0.15);
-      border: 1px solid rgba(204,0,0,0.4);
-      border-radius: 999px;
-      padding: 6px 16px;
-      font-family: 'Archivo', sans-serif;
-      font-size: 12px;
-      font-weight: 500;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: #FF6666;
-      margin-bottom: 28px;
-      animation: fadeDown 0.7s ease both;
-    }
-
-    .badge-dot {
-      width: 6px;
-      height: 6px;
-      border-radius: 50%;
-      background: var(--accent);
-      animation: pulse 2s ease-in-out infinite;
-    }
-
-    .hero-name {
-      font-family: 'Archivo', sans-serif;
-      font-size: clamp(42px, 10vw, 80px);
-      font-weight: 700;
-      color: #FFFFFF;
-      letter-spacing: -0.02em;
-      line-height: 1.05;
-      animation: fadeUp 0.7s 0.1s ease both;
-    }
-
-    .hero-name span {
-      display: block;
-      font-size: clamp(16px, 4vw, 22px);
-      font-weight: 400;
-      color: rgba(255,255,255,0.45);
-      letter-spacing: 0.06em;
-      margin-bottom: 8px;
-      font-family: 'Space Grotesk', sans-serif;
-    }
-
-    .hero-title {
-      margin-top: 16px;
-      font-size: clamp(16px, 3vw, 20px);
-      font-weight: 500;
-      color: rgba(255,255,255,0.6);
-      animation: fadeUp 0.7s 0.2s ease both;
-    }
-
-    .hero-divider {
-      width: 48px;
-      height: 2px;
-      background: var(--accent);
-      margin: 28px auto;
-      animation: scaleX 0.6s 0.35s ease both;
-      transform-origin: left;
-    }
-
-    .hero-tagline {
-      font-size: clamp(15px, 3vw, 18px);
-      color: rgba(255,255,255,0.5);
-      max-width: 480px;
-      line-height: 1.7;
-      animation: fadeUp 0.7s 0.3s ease both;
-    }
-
-    .hero-stats {
-      display: flex;
-      align-items: center;
-      gap: 24px;
-      margin-top: 36px;
-      animation: fadeUp 0.7s 0.35s ease both;
-    }
-
-    .hero-stat {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 4px;
-    }
-
-    .hero-stat-num {
-      font-family: 'Archivo', sans-serif;
-      font-size: clamp(28px, 6vw, 40px);
-      font-weight: 700;
-      color: #fff;
-      line-height: 1;
-    }
-
-    .hero-stat-label {
-      font-size: 12px;
-      color: rgba(255,255,255,0.4);
-      letter-spacing: 0.08em;
-    }
-
-    .hero-stat-divider {
-      width: 1px;
-      height: 36px;
-      background: rgba(255,255,255,0.12);
-    }
-
-    .hero-cta-group {
-      display: flex;
-      gap: 12px;
-      margin-top: 40px;
-      flex-wrap: wrap;
-      justify-content: center;
-      animation: fadeUp 0.7s 0.4s ease both;
-    }
-
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      padding: 14px 28px;
-      border-radius: 999px;
-      font-family: 'Archivo', sans-serif;
-      font-size: 15px;
-      font-weight: 600;
-      text-decoration: none;
-      cursor: pointer;
-      transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
-      border: none;
-    }
-
-    .btn:hover { transform: translateY(-2px); }
-    .btn:active { transform: translateY(0); }
-
-    .btn-primary {
-      background: var(--accent);
-      color: #fff;
-      box-shadow: 0 4px 24px rgba(204,0,0,0.4);
-    }
-    .btn-primary:hover { background: var(--accent-light); box-shadow: 0 8px 32px rgba(204,0,0,0.5); }
-
-    .btn-outline {
-      background: transparent;
-      color: rgba(255,255,255,0.8);
-      border: 1.5px solid rgba(255,255,255,0.25);
-    }
-    .btn-outline:hover { background: rgba(255,255,255,0.08); border-color: rgba(255,255,255,0.5); }
-
-    .scroll-hint {
-      position: absolute;
-      bottom: 28px;
-      left: 50%;
-      transform: translateX(-50%);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 6px;
-      animation: fadeUp 1s 0.8s ease both;
-    }
-
-    .scroll-hint span {
-      font-size: 11px;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: rgba(255,255,255,0.3);
-    }
-
-    .scroll-arrow {
-      width: 20px;
-      height: 20px;
-      border-right: 2px solid rgba(255,255,255,0.2);
-      border-bottom: 2px solid rgba(255,255,255,0.2);
-      transform: rotate(45deg);
-      animation: bounce 1.5s ease-in-out infinite;
-    }
-
-    /* ── ABOUT ── */
-    .section {
-      padding: 80px 24px;
-      max-width: 900px;
-      margin: 0 auto;
-    }
-
-    .section-label {
-      font-size: 11px;
-      font-weight: 600;
-      letter-spacing: 0.16em;
-      text-transform: uppercase;
-      color: var(--accent);
-      margin-bottom: 12px;
-    }
-
-    .section-title {
-      font-family: 'Archivo', sans-serif;
-      font-size: clamp(28px, 5vw, 40px);
-      font-weight: 700;
-      letter-spacing: -0.02em;
-      line-height: 1.15;
-      color: var(--text);
-    }
-
-    .about-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 24px;
-      margin-top: 40px;
-    }
-
-    @media (max-width: 600px) {
-      .about-grid { grid-template-columns: 1fr; }
-    }
-
-    .about-card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 28px;
-      transition: transform 0.25s ease, box-shadow 0.25s ease;
-      opacity: 0;
-      transform: translateY(24px);
-    }
-
-    .about-card.visible {
-      animation: cardIn 0.5s ease forwards;
-    }
-
-    .about-card:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 16px 40px rgba(0,0,0,0.08);
-    }
-
-    .about-card-icon {
-      width: 44px;
-      height: 44px;
-      background: rgba(204,0,0,0.08);
-      border-radius: 12px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin-bottom: 16px;
-    }
-
-    .about-card-icon svg { width: 22px; height: 22px; stroke: var(--accent); fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
-
-    .about-card h3 {
-      font-family: 'Archivo', sans-serif;
-      font-size: 17px;
-      font-weight: 600;
-      margin-bottom: 8px;
-    }
-
-    .about-card p {
-      font-size: 14px;
-      line-height: 1.7;
-      color: var(--text-muted);
-    }
-
-    /* ── ABOUT INTRO ── */
-    .about-intro {
-      background: var(--primary);
-      border-radius: 24px;
-      padding: 48px 40px;
-      margin-top: 32px;
-      position: relative;
-      overflow: hidden;
-      opacity: 0;
-      transform: translateY(24px);
-    }
-
-    .about-intro.visible {
-      animation: cardIn 0.5s ease forwards;
-    }
-
-    .about-intro::before {
-      content: '"';
-      position: absolute;
-      top: -20px;
-      left: 24px;
-      font-size: 200px;
-      font-family: 'Archivo', sans-serif;
-      font-weight: 700;
-      color: rgba(204,0,0,0.12);
-      line-height: 1;
-      pointer-events: none;
-    }
-
-    .about-intro p {
-      font-size: clamp(16px, 2.5vw, 20px);
-      line-height: 1.8;
-      color: rgba(255,255,255,0.75);
-      position: relative;
-      z-index: 1;
-    }
-
-    .about-intro p strong {
-      color: #fff;
-      font-weight: 600;
-    }
-
-    @media (max-width: 600px) {
-      .about-intro { padding: 32px 24px; }
-    }
-
-    /* ── GALLERY ── */
-    .gallery-section {
-      padding: 80px 24px;
-      background: var(--bg);
-    }
-
-    .gallery-inner {
-      max-width: 900px;
-      margin: 0 auto;
-    }
-
-    .gallery-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 12px;
-      margin-top: 40px;
-    }
-
-    @media (max-width: 600px) {
-      .gallery-grid { grid-template-columns: repeat(2, 1fr); }
-    }
-
-    .gallery-item {
-      border-radius: 12px;
-      overflow: hidden;
-      background: #f0f0f0;
-      opacity: 0;
-      transform: translateY(20px);
-    }
-
-    .gallery-item.empty {
-      opacity: 1;
-      transform: none;
-      aspect-ratio: 4 / 3;
-      background: linear-gradient(135deg, #f8f8f8 0%, #efefef 100%);
-      border: 2px dashed #d0d0d0;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-    }
-
-    .gallery-item.empty svg {
-      width: 36px;
-      height: 36px;
-      stroke: #bbb;
-      fill: none;
-      stroke-width: 1.5;
-      stroke-linecap: round;
-      stroke-linejoin: round;
-    }
-
-    .gallery-item.empty span {
-      font-size: 12px;
-      color: #bbb;
-      letter-spacing: 0.08em;
-    }
-
-    .gallery-item.visible {
-      animation: cardIn 0.5s ease forwards;
-    }
-
-    .gallery-item img {
-      width: 100%;
-      height: auto;
-      display: block;
-    }
-
-
-    /* ── TESTIMONIALS ── */
-    .testimonial-section {
-      padding: 80px 24px;
-      background: var(--primary);
-    }
-
-    .testimonial-inner {
-      max-width: 900px;
-      margin: 0 auto;
-    }
-
-    .testimonial-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 16px;
-      margin-top: 40px;
-    }
-
-    @media (max-width: 768px) {
-      .testimonial-grid { grid-template-columns: 1fr; }
-    }
-
-    .testimonial-card {
-      background: rgba(255,255,255,0.05);
-      border: 1px solid rgba(255,255,255,0.08);
-      border-radius: var(--radius);
-      padding: 28px;
-      display: flex;
-      flex-direction: column;
-      gap: 16px;
-      opacity: 0;
-      transform: translateY(20px);
-      transition: border-color 0.2s ease;
-    }
-
-    .testimonial-card:hover {
-      border-color: rgba(204,0,0,0.3);
-    }
-
-    .testimonial-card.visible {
-      animation: cardIn 0.5s ease forwards;
-    }
-
-    .testimonial-stars {
-      display: flex;
-      gap: 3px;
-    }
-
-    .testimonial-stars svg {
-      width: 16px;
-      height: 16px;
-      fill: #F59E0B;
-      stroke: none;
-    }
-
-    .testimonial-text {
-      font-size: 14px;
-      line-height: 1.75;
-      color: rgba(255,255,255,0.7);
-      flex: 1;
-    }
-
-    .testimonial-text::before {
-      content: '"';
-      font-family: 'Archivo', sans-serif;
-      font-size: 40px;
-      color: var(--accent);
-      line-height: 0;
-      vertical-align: -14px;
-      margin-right: 4px;
-    }
-
-    .testimonial-author {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      padding-top: 16px;
-      border-top: 1px solid rgba(255,255,255,0.06);
-    }
-
-    .testimonial-avatar {
-      width: 40px;
-      height: 40px;
-      border-radius: 50%;
-      background: rgba(204,0,0,0.2);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-family: 'Archivo', sans-serif;
-      font-size: 15px;
-      font-weight: 700;
-      color: #FF6666;
-      flex-shrink: 0;
-    }
-
-    .testimonial-name {
-      font-family: 'Archivo', sans-serif;
-      font-size: 14px;
-      font-weight: 600;
-      color: #fff;
-    }
-
-    .testimonial-tag {
-      font-size: 12px;
-      color: rgba(255,255,255,0.35);
-      margin-top: 2px;
-    }
-
-    /* ── CONTACT ── */
-    .contact-section {
-      background: var(--primary);
-      padding: 80px 24px;
-    }
-
-    .contact-inner {
-      max-width: 900px;
-      margin: 0 auto;
-    }
-
-    .contact-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 16px;
-      margin-top: 40px;
-    }
-
-    @media (max-width: 600px) {
-      .contact-grid { grid-template-columns: 1fr; }
-    }
-
-    .contact-card {
-      display: flex;
-      align-items: center;
-      gap: 16px;
-      background: rgba(255,255,255,0.05);
-      border: 1px solid rgba(255,255,255,0.08);
-      border-radius: var(--radius);
-      padding: 24px;
-      text-decoration: none;
-      color: inherit;
-      transition: background 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
-      cursor: pointer;
-      opacity: 0;
-      transform: translateY(16px);
-    }
-
-    .contact-card.visible {
-      animation: cardIn 0.45s ease forwards;
-    }
-
-    .contact-card:hover {
-      background: rgba(255,255,255,0.09);
-      border-color: rgba(204,0,0,0.4);
-      transform: translateY(-3px);
-    }
-
-    .contact-icon {
-      width: 48px;
-      height: 48px;
-      border-radius: 12px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-shrink: 0;
-    }
-
-    .contact-icon svg { width: 24px; height: 24px; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
-
-    .contact-icon.phone { background: rgba(204,0,0,0.15); }
-    .contact-icon.phone svg { stroke: #FF6666; }
-    .contact-icon.fb { background: rgba(24,119,242,0.15); }
-    .contact-icon.fb svg { stroke: #60A5FA; }
-
-    .contact-info { flex: 1; }
-    .contact-label {
-      font-size: 11px;
-      font-weight: 600;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: rgba(255,255,255,0.35);
-      margin-bottom: 4px;
-    }
-    .contact-value {
-      font-family: 'Archivo', sans-serif;
-      font-size: 17px;
-      font-weight: 600;
-      color: #fff;
-    }
-
-    /* ── FOOTER ── */
-    .footer {
-      background: #080808;
-      text-align: center;
-      padding: 28px 24px;
-      font-size: 13px;
-      color: rgba(255,255,255,0.2);
-      letter-spacing: 0.04em;
-    }
-
-    .footer strong { color: rgba(255,255,255,0.4); }
-
-    /* ── ANIMATIONS ── */
-    @keyframes fadeDown {
-      from { opacity: 0; transform: translateY(-12px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
-
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(16px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
-
-    @keyframes scaleX {
-      from { transform: scaleX(0); }
-      to   { transform: scaleX(1); }
-    }
-
-    @keyframes bounce {
-      0%, 100% { transform: rotate(45deg) translateY(0); }
-      50%       { transform: rotate(45deg) translateY(5px); }
-    }
-
-    @keyframes pulse {
-      0%, 100% { opacity: 1; }
-      50%       { opacity: 0.3; }
-    }
-
-    @keyframes cardIn {
-      from { opacity: 0; transform: translateY(24px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-      *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
-    }
-
-    /* section label in contact */
-    .contact-section .section-label { color: #FF6666; }
-    .contact-section .section-title { color: #fff; }
-  </style>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>您的購車顧問｜中華三菱 黃建達</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;500;600;700&family=Noto+Sans+TC:wght@300;400;500;600;700&family=Inter:wght@400;500;600;700&family=Cormorant+Garamond:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; -webkit-font-smoothing: antialiased; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    font-family: 'Noto Sans TC', system-ui, sans-serif;
+    background: #d6c9a8;
+    min-height: 100vh;
+    display: flex; align-items: flex-start; justify-content: center;
+    padding: 40px 20px;
+    color: #3a2f24;
+  }
+  .frame {
+    width: 100%; max-width: 420px;
+    background: #ebe2cc;
+    border-radius: 32px;
+    overflow: hidden;
+    box-shadow: 0 20px 60px rgba(58,47,36,0.18), 0 4px 12px rgba(58,47,36,0.08);
+    position: relative;
+  }
+  .stack { padding: 24px 16px 32px; display: flex; flex-direction: column; gap: 10px; }
+  .topbar {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 4px 12px 16px;
+  }
+  .topbar .brand { font-size: 11px; color: #8a7558; letter-spacing: 0.18em; font-weight: 500; }
+  .topbar .phone {
+    font-family: 'Cormorant Garamond', serif; font-style: italic;
+    font-size: 15px; color: #a47e3a;
+  }
+
+  .card {
+    background: #fff;
+    border-radius: 24px;
+    padding: 24px;
+    position: relative;
+  }
+  .card.dark { background: #3a2f24; color: #f4ede0; }
+  .card.gold { background: linear-gradient(135deg, #b89556 0%, #a47e3a 100%); color: #fff; }
+
+  /* Hero */
+  .hero { padding: 28px 24px; overflow: hidden; }
+  .hero::before {
+    content: ''; position: absolute; top: -40px; right: -40px;
+    width: 140px; height: 140px; border-radius: 50%;
+    background: rgba(164, 126, 58, 0.08);
+  }
+  .hero-row { display: flex; gap: 16px; align-items: center; margin-bottom: 22px; position: relative; }
+  .avatar {
+    width: 72px; height: 72px; border-radius: 50%;
+    background: #d6c9b3;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Noto Serif TC', serif; font-size: 32px; font-weight: 500;
+    color: #7a6a52;
+    box-shadow: inset 0 0 0 1px rgba(0,0,0,0.06);
+    flex-shrink: 0;
+    overflow: hidden;
+  }
+  .avatar img {
+    width: 100%; height: 100%; object-fit: cover; border-radius: 50%;
+  }
+  .role { font-size: 11px; color: #8a7558; letter-spacing: 0.08em; margin-bottom: 4px; }
+  .name {
+    font-family: 'Noto Serif TC', serif; font-weight: 600;
+    font-size: 36px; line-height: 1; color: #3a2f24; letter-spacing: 0.02em;
+  }
+  .headline {
+    font-family: 'Noto Serif TC', serif; font-weight: 400;
+    font-size: 25px; line-height: 1.55; color: #3a2f24; margin: 0 0 12px;
+    position: relative;
+  }
+  .headline em { color: #a47e3a; font-weight: 500; font-style: normal; }
+  .lede { font-size: 13px; line-height: 1.85; color: #6b5d4a; margin: 0; position: relative; }
+
+  /* Stats */
+  .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; padding: 24px 12px; }
+  .stat { text-align: center; }
+  .stat + .stat { border-left: 1px solid rgba(244, 237, 224, 0.15); }
+  .stat-num {
+    font-family: 'Noto Serif TC', serif; font-weight: 500;
+    font-size: 32px; color: #e8c98a; line-height: 1;
+    display: inline-flex; align-items: baseline; gap: 1px;
+  }
+  .stat-unit { font-size: 13px; color: #e8c98a; opacity: 0.8; }
+  .stat-label {
+    font-size: 11px; color: rgba(244, 237, 224, 0.7);
+    margin-top: 6px; letter-spacing: 0.08em;
+  }
+
+  /* Section heading inside card */
+  .section-tag {
+    font-size: 11px; letter-spacing: 0.22em; color: #a47e3a;
+    margin-bottom: 12px; font-weight: 500;
+  }
+  .body-text { font-size: 13px; line-height: 1.9; color: #5a4d3a; margin: 0; }
+
+  /* Service rows */
+  .service { display: flex; gap: 14px; padding: 14px 0; }
+  .service + .service { border-top: 1px solid rgba(164, 126, 58, 0.15); }
+  .service-num {
+    font-family: 'Cormorant Garamond', serif;
+    color: #a47e3a; font-size: 18px; line-height: 1; min-width: 24px;
+    padding-top: 2px;
+  }
+  .service-body { flex: 1; }
+  .service-title {
+    font-size: 14px; font-weight: 600; color: #3a2f24; margin-bottom: 4px;
+  }
+  .service-desc {
+    font-size: 12px; line-height: 1.7; color: #6b5d4a;
+  }
+
+  /* Testimonial */
+  .quote-mark {
+    font-family: 'Cormorant Garamond', serif; font-style: italic;
+    font-size: 64px; line-height: 0.5; color: #a47e3a;
+    height: 24px; margin-bottom: 4px;
+  }
+  .quote-body {
+    font-family: 'Noto Serif TC', serif;
+    font-size: 14px; line-height: 1.85; color: #3a2f24;
+    margin: 0 0 14px;
+  }
+  .quote-author {
+    font-size: 11px; color: #8a7558; letter-spacing: 0.05em;
+  }
+
+  /* Deal gallery (成交見證) */
+  .section-head {
+    display: flex; justify-content: space-between; align-items: baseline;
+    margin-bottom: 16px;
+  }
+  .section-head .count {
+    font-family: 'Cormorant Garamond', serif; font-style: italic;
+    font-size: 13px; color: #a47e3a;
+  }
+  .deal-scroll {
+    display: flex; gap: 10px; overflow-x: auto;
+    margin: 0 -16px; padding: 4px 16px 16px;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+  .deal-scroll::-webkit-scrollbar { display: none; }
+  .deal-card {
+    flex: 0 0 220px;
+    border-radius: 20px;
+    overflow: hidden; scroll-snap-align: start;
+    position: relative;
+    box-shadow: 0 4px 16px rgba(58,47,36,0.12);
+  }
+  .deal-photo {
+    height: 320px;
+    background: linear-gradient(135deg, #d6c9b3 0%, #b89556 100%);
+    background-size: cover; background-position: center;
+    position: relative;
+    display: flex; align-items: flex-end;
+  }
+  .deal-photo.colorB { background: linear-gradient(135deg, #6b7d8a 0%, #2c3a4a 100%); }
+  .deal-photo.colorC { background: linear-gradient(135deg, #c4906b 0%, #7a4a2a 100%); }
+  .deal-photo.colorD { background: linear-gradient(135deg, #8a8e6b 0%, #4a5238 100%); }
+  .deal-overlay {
+    position: absolute; bottom: 0; left: 0; right: 0;
+    background: linear-gradient(to top, rgba(20,14,8,0.82) 0%, rgba(20,14,8,0.3) 70%, transparent 100%);
+    padding: 40px 14px 16px;
+  }
+  .deal-quote {
+    font-size: 12px; line-height: 1.7; color: rgba(255,255,255,0.9);
+    margin: 0 0 10px;
+  }
+  .deal-author {
+    display: flex; align-items: center; gap: 8px;
+  }
+  .deal-avatar {
+    width: 26px; height: 26px; border-radius: 50%;
+    background: rgba(255,255,255,0.15); color: #e8c98a;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Noto Serif TC', serif; font-size: 13px; font-weight: 500;
+    flex-shrink: 0;
+  }
+  .deal-author-name { font-size: 11px; color: #fff; font-weight: 600; }
+  .deal-author-type { font-size: 10px; color: rgba(255,255,255,0.6); }
+
+  /* 客戶見證橫向滑動 */
+  .testimonial-scroll {
+    display: flex; gap: 10px; overflow-x: auto;
+    margin: 0 -16px; padding: 4px 16px 8px;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+  .testimonial-scroll::-webkit-scrollbar { display: none; }
+  .testimonial-card {
+    flex: 0 0 240px;
+    background: #3a2f24; border-radius: 20px;
+    padding: 20px; scroll-snap-align: start;
+    display: flex; flex-direction: column; gap: 12px;
+  }
+  .testimonial-stars { color: #e8c98a; font-size: 14px; letter-spacing: 2px; }
+  .testimonial-card .quote-body { color: #f4ede0; margin: 0; }
+  .testimonial-foot {
+    display: flex; gap: 10px; align-items: center;
+    padding-top: 12px; border-top: 1px solid rgba(244,237,224,0.12);
+    margin-top: auto;
+  }
+  .testimonial-foot .deal-avatar {
+    background: rgba(244,237,224,0.12); color: #e8c98a; flex-shrink: 0;
+  }
+  .testimonial-foot .deal-author-name { color: #f4ede0; }
+  .testimonial-foot .deal-author-type { color: rgba(244,237,224,0.55); }
+
+  /* CTA grid */
+  .cta-grid { display: grid; grid-template-columns: 1.4fr 1fr; gap: 8px; }
+  .cta-btn {
+    border-radius: 20px; border: none; cursor: pointer;
+    padding: 16px; text-align: left; height: 96px;
+    display: flex; flex-direction: column; justify-content: space-between;
+    font-family: inherit; transition: transform 0.15s ease;
+  }
+  .cta-btn:active { transform: scale(0.98); }
+  .cta-call { background: #a47e3a; color: #fff; }
+  .cta-line { background: #06c755; color: #fff; }
+  .cta-label { font-size: 11px; opacity: 0.85; margin-bottom: 2px; }
+  .cta-value { font-size: 15px; font-weight: 600; }
+  .cta-call .cta-value { font-family: 'Inter', sans-serif; letter-spacing: 0.02em; }
+  .line-mark { font-size: 18px; font-weight: 800; letter-spacing: 0.02em; }
+
+  /* Sticky bottom CTA */
+  .sticky-cta {
+    position: fixed; bottom: 16px; left: 50%; transform: translateX(-50%);
+    width: calc(100% - 40px); max-width: 396px;
+    background: rgba(58, 47, 36, 0.95);
+    backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+    border-radius: 100px; padding: 8px;
+    display: flex; gap: 8px;
+    box-shadow: 0 12px 32px rgba(58, 47, 36, 0.3);
+    z-index: 100;
+  }
+  .sticky-cta button {
+    flex: 1; height: 48px; border-radius: 100px; border: none;
+    font-size: 14px; font-weight: 600; cursor: pointer;
+    display: flex; align-items: center; justify-content: center; gap: 8px;
+    font-family: inherit;
+  }
+  .sticky-call { background: #f4ede0; color: #3a2f24; }
+  .sticky-line { background: #06c755; color: #fff; }
+
+  .footer-card {
+    text-align: center; padding: 24px 20px; color: #6b5d4a;
+  }
+  .footer-card .sig {
+    font-family: 'Cormorant Garamond', serif; font-style: italic;
+    font-size: 14px; color: #a47e3a; margin-bottom: 6px;
+  }
+  .footer-card .copy { font-size: 11px; letter-spacing: 0.05em; }
+
+  /* Service card has its own header style */
+  .info-list { display: flex; flex-direction: column; gap: 0; }
+
+  /* Contact mini cards */
+  .contact-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 8px;
+  }
+  .contact-mini {
+    background: #fff; border-radius: 16px; padding: 14px 16px;
+  }
+  .contact-mini .lbl { font-size: 11px; color: #8a7558; margin-bottom: 4px; letter-spacing: 0.05em; }
+  .contact-mini .val { font-size: 13px; font-weight: 600; color: #3a2f24; }
+</style>
 </head>
 <body>
 
-  <!-- HERO -->
-  <section class="hero" aria-label="個人介紹">
-    <div class="hero-diamond" aria-hidden="true">
-      <svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
-        <polygon points="200,20 380,200 200,380 20,200" fill="white"/>
-      </svg>
+<div class="frame">
+  <div class="stack">
+
+    <!-- Topbar -->
+    <div class="topbar">
+      <div class="brand">MITSUBISHI MOTORS</div>
+      <div class="phone">0919-318-933</div>
     </div>
 
-    <img src="photo.jpg" alt="黃建達 個人照片" class="hero-photo" />
-
-    <div class="badge" aria-label="公司名稱">
-      <span class="badge-dot" aria-hidden="true"></span>
-      中華三菱 Mitsubishi
-    </div>
-
-    <h1 class="hero-name">黃建達</h1>
-
-    <p class="hero-title">中華三菱 · 銷售經理</p>
-
-    <div class="hero-divider" aria-hidden="true"></div>
-
-    <p class="hero-tagline">8 年銷售經驗，累積超過 300 台交車紀錄<br>讓你購車不慌不忙，全台皆有服務</p>
-
-    <div class="hero-stats" aria-label="銷售成績">
-      <div class="hero-stat">
-        <span class="hero-stat-num">8</span>
-        <span class="hero-stat-label">年資歷</span>
+    <!-- Hero card -->
+    <div class="card hero">
+      <div class="hero-row">
+        <div class="avatar" id="hero-avatar">
+          <img src="Personal Profile/photo.jpg" alt="黃建達">
+        </div>
+        <div>
+          <div class="role">銷售經理 ・ 中華三菱</div>
+          <div class="name">黃建達</div>
+        </div>
       </div>
-      <div class="hero-stat-divider" aria-hidden="true"></div>
-      <div class="hero-stat">
-        <span class="hero-stat-num">300<span style="font-size:0.6em">+</span></span>
-        <span class="hero-stat-label">累積交車</span>
+      <h1 class="headline"><em>讓我陪你</em>選一台<br/>適合的車。</h1>
+      <p class="lede">八年資歷、累積 300+ 台交車紀錄。<br/>從容、透明、放心。</p>
+    </div>
+
+    <!-- Stats card -->
+    <div class="card dark">
+      <div class="stats">
+        <div class="stat">
+          <span class="stat-num">8<span class="stat-unit">　年</span></span>
+          <div class="stat-label">銷售資歷</div>
+        </div>
+        <div class="stat">
+          <span class="stat-num">300<span class="stat-unit">+</span></span>
+          <div class="stat-label">交車紀錄</div>
+        </div>
+        <div class="stat">
+          <span class="stat-num">9<span class="stat-unit">　款</span></span>
+          <div class="stat-label">熟悉車型</div>
+        </div>
       </div>
-      <div class="hero-stat-divider" aria-hidden="true"></div>
-      <div class="hero-stat">
-        <span class="hero-stat-num">9</span>
-        <span class="hero-stat-label">款車型</span>
-      </div>
     </div>
 
-    <div class="hero-cta-group">
-      <a href="tel:0919318933" class="btn btn-primary" aria-label="撥打電話給黃建達">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.67 11.5 19.79 19.79 0 0 1 1.62 2.84a2 2 0 0 1 1.99-2.18h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L7.91 8.35A16 16 0 0 0 15.65 16.1l.97-.97a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-        立即聯絡
-      </a>
-      <a href="https://www.facebook.com/trucksda" target="_blank" rel="noopener noreferrer" class="btn btn-outline" aria-label="前往黃建達的 Facebook 頁面">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
-        Facebook
-      </a>
-    </div>
-
-    <div class="scroll-hint" aria-hidden="true">
-      <span>Scroll</span>
-      <div class="scroll-arrow"></div>
-    </div>
-  </section>
-
-  <!-- ABOUT -->
-  <section class="section" aria-label="服務介紹">
-    <p class="section-label">About</p>
-    <h2 class="section-title">為什麼選擇我？</h2>
-
-    <div class="about-intro js-reveal">
-      <p>
-        我選擇賣車，是因為<strong>喜歡與人接觸</strong>。每一位走進來的客戶，都有不同的故事、不同的需求，這份工作讓我每天都能認識新朋友。
-      </p>
-      <p style="margin-top: 20px;">
-        8 年下來，我學到最重要的一件事——<strong>溝通比推銷更重要</strong>。我不急著成交，而是先聽懂你真正需要什麼，再幫你找到最合適的答案。
-      </p>
-      <p style="margin-top: 20px;">
-        曾經有個客戶，因為看了我的網路分享，主動找上門，<strong>沒有多說什麼就決定簽約</strong>。那一刻我才明白，信任不是靠話術建立的，而是靠日積月累的真誠。
-      </p>
-      <p style="margin-top: 20px;">
-        跟我買車，我只有一個承諾：<strong>讓你信任我，也讓你買得安心。</strong>
+    <!-- About card -->
+    <div class="card">
+      <div class="section-tag">・ 關 於 我</div>
+      <p class="body-text">
+        喜歡聊車、也喜歡聽你的需求。<br/>
+        無論你是首購族、家庭換車、或正在比較不同品牌，
+        都歡迎打電話、加 LINE，我們慢慢聊。
       </p>
     </div>
 
-    <div class="about-grid">
-      <div class="about-card js-reveal" style="--delay: 0.05s">
-        <div class="about-card-icon" aria-hidden="true">
-          <svg viewBox="0 0 24 24"><path d="M1 3h15l-1.68 8.39a2 2 0 0 1-1.97 1.61H5.24a2 2 0 0 1-1.97-1.68L2 7H1"/><circle cx="9" cy="20" r="1"/><circle cx="20" cy="20" r="1"/><path d="M22 11V7h-5l1 5"/></svg>
+    <!-- Services card -->
+    <div class="card">
+      <div class="section-tag">・ 我能為你做的</div>
+      <div class="info-list">
+        <div class="service">
+          <div class="service-num">01</div>
+          <div class="service-body">
+            <div class="service-title">專屬試乘安排</div>
+            <div class="service-desc">配合你的時間，全車系試乘到你滿意。</div>
+          </div>
         </div>
-        <h3>商用貨車</h3>
-        <ul style="margin-top:8px; padding-left:0; list-style:none; display:flex; flex-direction:column; gap:6px;">
-          <li style="font-size:13px; color:var(--text-muted); display:flex; align-items:center; gap:8px;">
-            <span style="width:5px;height:5px;border-radius:50%;background:var(--accent);flex-shrink:0;display:inline-block;"></span>J SPACE 貨車｜廂車
-          </li>
-          <li style="font-size:13px; color:var(--text-muted); display:flex; align-items:center; gap:8px;">
-            <span style="width:5px;height:5px;border-radius:50%;background:var(--accent);flex-shrink:0;display:inline-block;"></span>DELICA 貨車｜廂車
-          </li>
-          <li style="font-size:13px; color:var(--text-muted); display:flex; align-items:center; gap:8px;">
-            <span style="width:5px;height:5px;border-radius:50%;background:var(--accent);flex-shrink:0;display:inline-block;"></span>中華堅兵 P350 三噸半 油電混合
-          </li>
-          <li style="font-size:13px; color:var(--text-muted); display:flex; align-items:center; gap:8px;">
-            <span style="width:5px;height:5px;border-radius:50%;background:var(--accent);flex-shrink:0;display:inline-block;"></span>中華菱利 E300 電動車
-          </li>
-          <li style="font-size:13px; color:var(--text-muted); display:flex; align-items:center; gap:8px;">
-            <span style="width:5px;height:5px;border-radius:50%;background:var(--accent);flex-shrink:0;display:inline-block;"></span>中華 ET35 三噸半電動貨車
-          </li>
-        </ul>
-      </div>
-
-      <div class="about-card js-reveal" style="--delay: 0.1s">
-        <div class="about-card-icon" aria-hidden="true">
-          <svg viewBox="0 0 24 24"><path d="M5 17H3a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11a2 2 0 0 1 2 2v3"/><rect x="9" y="11" width="14" height="10" rx="2"/><circle cx="12" cy="16" r="1"/></svg>
+        <div class="service">
+          <div class="service-num">02</div>
+          <div class="service-body">
+            <div class="service-title">貸款方案比較</div>
+            <div class="service-desc">不同銀行、不同利率方案完整說明。</div>
+          </div>
         </div>
-        <h3>休旅車</h3>
-        <ul style="margin-top:8px; padding-left:0; list-style:none; display:flex; flex-direction:column; gap:6px;">
-          <li style="font-size:13px; color:var(--text-muted); display:flex; align-items:center; gap:8px;">
-            <span style="width:5px;height:5px;border-radius:50%;background:var(--accent);flex-shrink:0;display:inline-block;"></span>X FORCE 跨界休旅車
-          </li>
-          <li style="font-size:13px; color:var(--text-muted); display:flex; align-items:center; gap:8px;">
-            <span style="width:5px;height:5px;border-radius:50%;background:var(--accent);flex-shrink:0;display:inline-block;"></span>ZINGER 渦輪商旅車
-          </li>
-          <li style="font-size:13px; color:var(--text-muted); display:flex; align-items:center; gap:8px;">
-            <span style="width:5px;height:5px;border-radius:50%;background:var(--accent);flex-shrink:0;display:inline-block;"></span>OUTLANDER 休旅車
-          </li>
-          <li style="font-size:13px; color:var(--text-muted); display:flex; align-items:center; gap:8px;">
-            <span style="width:5px;height:5px;border-radius:50%;background:var(--accent);flex-shrink:0;display:inline-block;"></span>COLT PLUS 輕旅車
-          </li>
-        </ul>
-      </div>
-
-      <div class="about-card js-reveal" style="--delay: 0.15s">
-        <div class="about-card-icon" aria-hidden="true">
-          <svg viewBox="0 0 24 24"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+        <div class="service">
+          <div class="service-num">03</div>
+          <div class="service-body">
+            <div class="service-title">交車後長期照顧</div>
+            <div class="service-desc">保養提醒、保固服務、二手車置換協助。</div>
+          </div>
         </div>
-        <h3>完整購車流程</h3>
-        <ol style="margin-top:10px; padding-left:0; list-style:none; display:flex; flex-direction:column; gap:8px;">
-          <li style="font-size:13px; color:var(--text-muted); display:flex; align-items:flex-start; gap:10px;">
-            <span style="min-width:20px;height:20px;border-radius:50%;background:var(--accent);color:#fff;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;">1</span>免費諮詢需求，了解你的用途與預算
-          </li>
-          <li style="font-size:13px; color:var(--text-muted); display:flex; align-items:flex-start; gap:10px;">
-            <span style="min-width:20px;height:20px;border-radius:50%;background:var(--accent);color:#fff;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;">2</span>推薦適合車款，安排試駕體驗
-          </li>
-          <li style="font-size:13px; color:var(--text-muted); display:flex; align-items:flex-start; gap:10px;">
-            <span style="min-width:20px;height:20px;border-radius:50%;background:var(--accent);color:#fff;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;">3</span>貸款試算與分期規劃，透明無隱費
-          </li>
-          <li style="font-size:13px; color:var(--text-muted); display:flex; align-items:flex-start; gap:10px;">
-            <span style="min-width:20px;height:20px;border-radius:50%;background:var(--accent);color:#fff;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;">4</span>合約簽署，確認每項細節
-          </li>
-          <li style="font-size:13px; color:var(--text-muted); display:flex; align-items:flex-start; gap:10px;">
-            <span style="min-width:20px;height:20px;border-radius:50%;background:var(--accent);color:#fff;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;">5</span>到府交車，說明操作並持續售後關心
-          </li>
-        </ol>
-      </div>
-
-      <div class="about-card js-reveal" style="--delay: 0.2s">
-        <div class="about-card-icon" aria-hidden="true">
-          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
-        </div>
-        <h3>全台服務</h3>
-        <p style="font-size:13px; color:var(--text-muted); line-height:1.7; margin-bottom:12px;">主要服務區域：</p>
-        <ul style="padding-left:0; list-style:none; display:flex; flex-direction:column; gap:6px;">
-          <li style="font-size:13px; color:var(--text-muted); display:flex; align-items:center; gap:8px;">
-            <span style="width:5px;height:5px;border-radius:50%;background:var(--accent);flex-shrink:0;display:inline-block;"></span>台中市
-          </li>
-          <li style="font-size:13px; color:var(--text-muted); display:flex; align-items:center; gap:8px;">
-            <span style="width:5px;height:5px;border-radius:50%;background:var(--accent);flex-shrink:0;display:inline-block;"></span>彰化縣
-          </li>
-          <li style="font-size:13px; color:var(--text-muted); display:flex; align-items:center; gap:8px;">
-            <span style="width:5px;height:5px;border-radius:50%;background:var(--accent);flex-shrink:0;display:inline-block;"></span>南投縣
-          </li>
-        </ul>
-        <p style="font-size:12px; color:var(--text-muted); margin-top:12px; padding-top:12px; border-top:1px solid var(--border);">其他縣市亦可服務，歡迎直接詢問。</p>
       </div>
     </div>
-  </section>
 
-  <!-- GALLERY -->
-  <section class="gallery-section" aria-label="交車照片">
-    <div class="gallery-inner">
-      <p class="section-label">Delivery</p>
-      <h2 class="section-title">交車見證</h2>
-
-      <div class="gallery-grid" id="galleryGrid"></div>
-    </div>
-  </section>
-
-  <!-- TESTIMONIALS -->
-  <section class="testimonial-section" aria-label="客戶推薦">
-    <div class="testimonial-inner">
-      <p class="section-label" style="color:#FF6666">Reviews</p>
-      <h2 class="section-title" style="color:#fff">客戶這樣說</h2>
-
-      <div class="testimonial-grid" id="testimonialGrid"></div>
-    </div>
-  </section>
-
-  <!-- CONTACT -->
-  <section class="contact-section" aria-label="聯絡方式">
-    <div class="contact-inner">
-      <p class="section-label">Contact</p>
-      <h2 class="section-title">立即與我聯繫</h2>
-
-      <div class="contact-grid">
-        <a href="tel:0919318933" class="contact-card js-reveal" aria-label="撥打電話 0919-318-933">
-          <div class="contact-icon phone" aria-hidden="true">
-            <svg viewBox="0 0 24 24" stroke="#FF6666"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.67 11.5 19.79 19.79 0 0 1 1.62 2.84a2 2 0 0 1 1.99-2.18h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L7.91 8.35A16 16 0 0 0 15.65 16.1l.97-.97a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-          </div>
-          <div class="contact-info">
-            <p class="contact-label">Phone</p>
-            <p class="contact-value">0919-318-933</p>
-          </div>
-        </a>
-
-        <a href="https://www.facebook.com/trucksda" target="_blank" rel="noopener noreferrer" class="contact-card js-reveal" style="--delay: 0.08s" aria-label="前往 Facebook 頁面">
-          <div class="contact-icon fb" aria-hidden="true">
-            <svg viewBox="0 0 24 24" stroke="#60A5FA"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
-          </div>
-          <div class="contact-info">
-            <p class="contact-label">Facebook</p>
-            <p class="contact-value">中華三菱 黃建達</p>
-          </div>
-        </a>
+    <!-- 客戶見證 — 橫向滑動 -->
+    <div class="card">
+      <div class="section-tag">・ 客 戶 推 薦</div>
+      <div class="testimonial-scroll" id="testimonial-scroll">
+        <!-- 由 JS 注入 -->
       </div>
     </div>
-  </section>
 
-  <!-- FOOTER -->
-  <footer class="footer">
-    <p>© 2026 <strong>中華三菱 黃建達</strong></p>
-  </footer>
+    <!-- 成交見證 — gallery (隨機從 deals 池挑 4 則) -->
+    <div class="card">
+      <div class="section-head">
+        <div class="section-tag" style="margin-bottom:0;">・ 成 交 見 證</div>
+        <div class="count">300+ deals</div>
+      </div>
+      <p class="body-text" style="margin-bottom: 14px;">
+        八年來陪每一位車主走過從詢問到交車的過程。<br/>
+        以下是其中幾位的分享。
+      </p>
+      <div class="deal-scroll" id="deal-scroll">
+        <!-- 由 JS 注入 -->
+      </div>
+    </div>
 
-  <script>
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry, i) => {
-        if (entry.isIntersecting) {
-          const delay = entry.target.style.getPropertyValue('--delay') || '0s';
-          entry.target.style.animationDelay = delay;
-          entry.target.classList.add('visible');
-          observer.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.15 });
+    <!-- Contact mini grid -->
+    <div class="contact-grid">
+      <div class="contact-mini">
+        <div class="lbl">服務時間</div>
+        <div class="val">週一至週日 9:00–21:00</div>
+      </div>
+      <div class="contact-mini">
+        <div class="lbl">服務範圍</div>
+        <div class="val">全台皆可</div>
+      </div>
+    </div>
 
-    const photos = [
-      'car-01.jpg', 'car-02.jpg', 'car-03.jpg',
-      'car-04.jpg', 'car-05.jpg', 'car-06.jpg', 'car-07.jpg',
-      'car-08.jpg', 'car-09.jpg', 'car-10.jpg', 'car-11.jpg',
-      'car-12.jpg', 'car-13.jpg', 'car-14.jpg', 'car-15.jpg',
-      'car-16.jpg', 'car-17.jpg', 'car-18.jpg', 'car-19.jpg',
-      'car-20.jpg', 'car-21.jpg', 'car-22.jpg', 'car-23.jpg',
-      'car-24.jpg', 'car-25.jpg', 'car-26.jpg', 'car-27.jpg',
-      'car-28.jpg', 'car-29.jpg', 
-    ];
-    const TOTAL_SLOTS = 9;
-    const grid = document.getElementById('galleryGrid');
-
-    for (let i = photos.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [photos[i], photos[j]] = [photos[j], photos[i]];
-    }
-
-    for (let i = 0; i < TOTAL_SLOTS; i++) {
-      const div = document.createElement('div');
-      if (photos[i]) {
-        div.className = 'gallery-item js-reveal';
-        div.style.setProperty('--delay', (i * 0.04) + 's');
-        const img = document.createElement('img');
-        img.src = photos[i];
-        img.alt = '交車照片';
-        img.loading = 'lazy';
-        div.appendChild(img);
-      } else {
-        div.className = 'gallery-item empty';
-        div.innerHTML = `
-          <svg viewBox="0 0 24 24"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
-          <span>即將新增</span>
-        `;
-      }
-      grid.appendChild(div);
-    }
-
-    const testimonials = [
-      { name: '林先生',  tag: '購入 J SPACE 廂車 · 台中',       text: '第一次買貨車完全不懂，建達哥很有耐心幫我說明每款差異，也幫我試算貸款方案，最後選到最適合我的車，交車當天還特別到場說明操作，非常感謝！' },
-      { name: '陳老闆',  tag: '購入 J SPACE 貨車 · 高雄',      text: '跨縣市買車本來很擔心售後問題，但建達告訴我全台都有服務據點，讓我放心許多。整個流程很順暢，從下訂到交車不到兩週，效率很高！' },
-      { name: '王小姐',  tag: '購入 OUTLANDER · 台北',          text: '家裡需要一台兼顧載貨和家用的車，建達推薦 OUTLANDER，空間大又省油。他很了解我的需求，沒有強迫推銷，聊完就決定了，下次換車還是找他！' },
-      { name: '張老闆',  tag: '購入 P350 油電混合 · 桃園',      text: '做工程的需要耐用又省油的車，建達幫我分析油電混合的長期油耗優勢，說服我嘗試新車款。開了半年超滿意，省下不少油錢，朋友都來問我在哪買的。' },
-      { name: '李先生',  tag: '購入 DELICA 廂車 · 台南',        text: '買了第三台車都是找建達，他記得我每次的需求，這次直接幫我縮小選項，省了很多時間。服務態度始終如一，是我最信任的業務。' },
-      { name: '黃小姐',  tag: '購入 X FORCE · 新竹',            text: '一個人去看車很怕被亂推銷，但建達完全沒有這種感覺，很客觀地介紹每款優缺點。最後選了 X FORCE，外型和配備都很滿意，非常推薦！' },
-      { name: '吳先生',  tag: '購入 ZINGER 商旅車 · 彰化',      text: '公司需要接送員工的商旅車，建達幫我評估座位數和使用需求，推薦 ZINGER 渦輪版。動力充足，員工都說坐起來很舒適，老闆也說買對了！' },
-      { name: '劉老闆',  tag: '購入 E300 電動車 · 台中',        text: '本身自己開Tesla，很清楚電車的優勢，找建達省了我很多麻煩。他懂的東西比我想像的還多，交車後還有追蹤關心，服務很到位。' },
-      { name: '許先生',  tag: '購入 COLT PLUS · 嘉義',          text: '第一次買新車，預算有限，建達幫我規劃最適合的分期方案，讓我不用一次拿出太多錢。整個過程都很透明，沒有隱藏費用，買得很安心。' },
-      { name: '蔡老闆',  tag: '購入 J SPACE 貨車 · 屏東',       text: '在屏東買車，原本擔心跨區服務麻煩，沒想到建達安排得非常周全，親自到府交車。專業又負責，下次還要再介紹朋友來找他！' },
-    ];
-
-    const starSVG = `<svg viewBox="0 0 24 24" style="width:16px;height:16px;fill:#F59E0B;stroke:none"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>`;
-
-    const shuffled = [...testimonials].sort(() => Math.random() - 0.5);
-    const picked = shuffled.slice(0, 3);
-    const tGrid = document.getElementById('testimonialGrid');
-
-    picked.forEach((t, i) => {
-      const card = document.createElement('div');
-      card.className = 'testimonial-card js-reveal';
-      card.style.setProperty('--delay', (i * 0.08) + 's');
-      card.innerHTML = `
-        <div class="testimonial-stars" aria-label="五顆星">${starSVG.repeat(5)}</div>
-        <p class="testimonial-text">${t.text}</p>
-        <div class="testimonial-author">
-          <div class="testimonial-avatar" aria-hidden="true">${t.name[0]}</div>
-          <div>
-            <p class="testimonial-name">${t.name}</p>
-            <p class="testimonial-tag">${t.tag}</p>
-          </div>
+    <!-- CTA -->
+    <div class="cta-grid">
+      <button class="cta-btn cta-call" onclick="window.location.href='tel:0919318933'">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+          <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <div>
+          <div class="cta-label">來電諮詢</div>
+          <div class="cta-value">0919 318 933</div>
         </div>
-      `;
-      tGrid.appendChild(card);
-    });
+      </button>
+      <button class="cta-btn cta-line" onclick="window.open('https://line.me/ti/p/0T8V8whrk6','_blank')">
+        <span class="line-mark">LINE</span>
+        <div>
+          <div class="cta-label">聊聊</div>
+          <div class="cta-value">加入諮詢</div>
+        </div>
+      </button>
+    </div>
 
-    document.querySelectorAll('.js-reveal').forEach(el => observer.observe(el));
+    <!-- Footer -->
+    <div class="footer-card">
+      <div class="sig">Thanks for stopping by.</div>
+      <div class="copy">© 黃建達 ・ 中華三菱銷售經理</div>
+    </div>
 
-  </script>
+  </div>
+</div>
+
+<!-- Sticky bottom -->
+<div class="sticky-cta">
+  <button class="sticky-call" onclick="window.location.href='tel:0919318933'">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+      <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z" stroke="#3a2f24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+    立即來電
+  </button>
+  <button class="sticky-line" onclick="window.open('https://line.me/ti/p/0T8V8whrk6','_blank')">
+    <span style="width:18px;height:18px;border-radius:4px;background:#fff;color:#06c755;display:inline-flex;align-items:center;justify-content:center;font-size:10px;font-weight:800;">L</span>
+    LINE
+  </button>
+</div>
+
+<script>
+// ==================================================================
+// 客戶見證資料庫 — 隨意增減項目，每次重新整理會隨機挑一則顯示
+// ==================================================================
+const TESTIMONIALS = [
+  { name: '林先生', tag: '購入 J SPACE 廂車 · 台中',      text: '第一次買貨車完全不懂，建達哥很有耐心幫我說明每款差異，也幫我試算貸款方案，最後選到最適合我的車，交車當天還特別到場說明操作，非常感謝！', initial: '林' },
+  { name: '陳老闆', tag: '購入 J SPACE 貨車 · 高雄',      text: '跨縣市買車本來很擔心售後問題，但建達告訴我全台都有服務據點，讓我放心許多。整個流程很順暢，從下訂到交車不到兩週，效率很高！', initial: '陳' },
+  { name: '王小姐', tag: '購入 OUTLANDER · 台北',          text: '家裡需要一台兼顧載貨和家用的車，建達推薦 OUTLANDER，空間大又省油。他很了解我的需求，沒有強迫推銷，聊完就決定了，下次換車還是找他！', initial: '王' },
+  { name: '張老闆', tag: '購入 P350 油電混合 · 桃園',      text: '做工程的需要耐用又省油的車，建達幫我分析油電混合的長期油耗優勢，說服我嘗試新車款。開了半年超滿意，省下不少油錢，朋友都來問我在哪買的。', initial: '張' },
+  { name: '李先生', tag: '購入 DELICA 廂車 · 台南',        text: '買了第三台車都是找建達，他記得我每次的需求，這次直接幫我縮小選項，省了很多時間。服務態度始終如一，是我最信任的業務。', initial: '李' },
+  { name: '黃小姐', tag: '購入 X FORCE · 新竹',            text: '一個人去看車很怕被亂推銷，但建達完全沒有這種感覺，很客觀地介紹每款優缺點。最後選了 X FORCE，外型和配備都很滿意，非常推薦！', initial: '黃' },
+  { name: '吳先生', tag: '購入 ZINGER 商旅車 · 彰化',      text: '公司需要接送員工的商旅車，建達幫我評估座位數和使用需求，推薦 ZINGER 渦輪版。動力充足，員工都說坐起來很舒適，老闆也說買對了！', initial: '吳' },
+  { name: '劉老闆', tag: '購入 E300 電動車 · 台中',        text: '本身自己開Tesla，很清楚電車的優勢，找建達省了我很多麻煩。他懂的東西比我想像的還多，交車後還有追蹤關心，服務很到位。', initial: '劉' },
+  { name: '許先生', tag: '購入 COLT PLUS · 嘉義',          text: '第一次買新車，預算有限，建達幫我規劃最適合的分期方案，讓我不用一次拿出太多錢。整個過程都很透明，沒有隱藏費用，買得很安心。', initial: '許' },
+  { name: '蔡老闆', tag: '購入 J SPACE 貨車 · 屏東',       text: '在屏東買車，原本擔心跨區服務麻煩，沒想到建達安排得非常周全，親自到府交車。專業又負責，下次還要再介紹朋友來找他！', initial: '蔡' },
+];
+
+// ==================================================================
+// 成交見證照片庫
+// 新增照片：複製一筆 { photo: '你的路徑/檔名.jpg' } 貼到下方即可
+// ==================================================================
+const DEALS = [
+  { photo: 'car-01.jpg' },
+  { photo: 'car-02.jpg' },
+  { photo: 'car-03.jpg' },
+  { photo: 'car-04.jpg' },
+  { photo: 'car-05.jpg' },
+  { photo: 'car-06.jpg' },
+  { photo: 'car-07.jpg' },
+  { photo: 'car-08.jpg' },
+  // { photo: 'Personal Profile/car-09.jpg' },   ← 之後新增照片從這裡加
+  // { photo: 'Personal Profile/car-10.jpg' },
+  // { photo: 'Personal Profile/car-11.jpg' },
+  /*
+    ★ 新增方式：
+       1. 把照片放進 Personal Profile 資料夾
+       2. 複製上面任一行，把路徑改成新檔名
+       3. 移除該行前面的 // 注解符號
+  */
+];
+
+// ==================================================================
+// 隨機抽取工具 + 渲染
+// ==================================================================
+function pickOne(arr) {
+  return arr[Math.floor(Math.random() * arr.length)];
+}
+function pickN(arr, n) {
+  const copy = [...arr];
+  const result = [];
+  while (result.length < n && copy.length) {
+    const i = Math.floor(Math.random() * copy.length);
+    result.push(copy.splice(i, 1)[0]);
+  }
+  return result;
+}
+function escapeHtml(s) {
+  return String(s).replace(/[&<>"']/g, m => (
+    { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[m]
+  ));
+}
+
+function renderTestimonials() {
+  document.getElementById('testimonial-scroll').innerHTML = pickN(TESTIMONIALS, 3).map(t => `
+    <div class="testimonial-card">
+      <div class="testimonial-stars">★★★★★</div>
+      <p class="quote-body">${escapeHtml(t.text)}</p>
+      <div class="testimonial-foot">
+        <div class="deal-avatar">${escapeHtml(t.initial)}</div>
+        <div>
+          <div class="deal-author-name">${escapeHtml(t.name)}</div>
+          <div class="deal-author-type">${escapeHtml(t.tag)}</div>
+        </div>
+      </div>
+    </div>
+  `).join('');
+}
+
+function renderDealGallery(count = 4) {
+  const picks = pickN(DEALS, Math.min(count, DEALS.length));
+  document.getElementById('deal-scroll').innerHTML = picks.map(d => {
+    const photoStyle = d.photo
+      ? `background-image: url('${d.photo}'); background-size: cover; background-position: center;`
+      : '';
+    const tagSpans = d.tags.map((t, i) => i === 0
+      ? `<span>${escapeHtml(t)}</span>`
+      : `<span class="dot"></span><span>${escapeHtml(t)}</span>`
+    ).join('');
+    return `
+      <div class="deal-card">
+        <div class="deal-photo ${escapeHtml(d.photoClass || '')}" style="${photoStyle}">
+        </div>
+      </div>
+    `;
+  }).join('');
+}
+
+renderTestimonials();
+renderDealGallery(4);
+</script>
+
 </body>
 </html>
