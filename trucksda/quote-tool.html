@@ -1,0 +1,1511 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>匯豐汽車｜報價系統</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    /* ── Warm Beige Palette ── */
+    --cream-50:  #fdfaf4;
+    --cream-100: #f8f2e4;
+    --cream-200: #f0e6d0;
+    --cream-300: #e4d3b4;
+    --cream-400: #d4bc96;
+    --cream-500: #c2a278;
+    --cream-600: #a88458;
+    --cream-700: #8a6840;
+    --cream-800: #6a4e2c;
+    --cream-900: #3d2c18;
+    /* ── Warm Brown Accent ── */
+    --brown-900: #2c1a08;
+    --brown-800: #3d2710;
+    --brown-700: #5c3d1e;
+    --brown-600: #7c5230;
+    --brown-500: #9a6b42;
+    --brown-400: #b88a60;
+    --brown-300: #d4ac84;
+    --brown-200: #e8cdb0;
+    --brown-100: #f5e8d8;
+    --brown-50:  #fdf5ee;
+    /* ── Warm Sand Border/BG ── */
+    --sand-dark:  #c8b090;
+    --sand-mid:   #ddd0b8;
+    --sand-light: #ede5d4;
+    --sand-pale:  #f5efe4;
+    /* ── Shadows (warm tinted) ── */
+    --shadow-sm: 0 1px 4px rgba(80,50,20,0.1);
+    --shadow-md: 0 4px 12px rgba(80,50,20,0.12);
+    --shadow-lg: 0 10px 32px rgba(80,50,20,0.16), 0 4px 12px rgba(80,50,20,0.1);
+    --shadow-xl: 0 20px 60px rgba(80,50,20,0.18), 0 8px 20px rgba(80,50,20,0.1);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  input, textarea, select, button { font-family: 'Noto Sans TC', 'Microsoft JhengHei', sans-serif; }
+
+  body {
+    font-family: 'Noto Sans TC', 'Microsoft JhengHei', sans-serif;
+    background: var(--sand-light);
+    color: var(--brown-800);
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+  /* ══════════════════════════════
+     TOP BAR
+  ══════════════════════════════ */
+  .topbar {
+    background: var(--cream-50);
+    border-bottom: 2px solid var(--sand-dark);
+    padding: 0 20px;
+    height: 54px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-shrink: 0;
+    box-shadow: 0 2px 10px rgba(80,50,20,0.1);
+  }
+  .topbar-logo {
+    color: var(--brown-900);
+    font-size: 16px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    margin-right: 6px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .topbar-logo::before {
+    content: '';
+    display: block;
+    width: 4px;
+    height: 20px;
+    background: linear-gradient(180deg, var(--cream-500), var(--cream-700));
+    border-radius: 2px;
+  }
+  .topbar-logo span { color: var(--brown-600); }
+  .topbar-divider { width: 1px; height: 26px; background: var(--sand-mid); margin: 0 2px; }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 6px 13px;
+    border-radius: 6px;
+    border: none;
+    font-size: 12.5px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    white-space: nowrap;
+    font-family: inherit;
+    letter-spacing: 0.2px;
+  }
+  .btn-ghost {
+    background: var(--cream-200);
+    color: var(--brown-700);
+    border: 1px solid var(--sand-mid);
+  }
+  .btn-ghost:hover {
+    background: var(--cream-300);
+    border-color: var(--sand-dark);
+    color: var(--brown-900);
+  }
+  .btn-primary {
+    background: linear-gradient(135deg, var(--brown-600), var(--brown-800));
+    color: var(--cream-50);
+    box-shadow: 0 2px 6px rgba(80,50,20,0.28);
+  }
+  .btn-primary:hover {
+    background: linear-gradient(135deg, var(--brown-500), var(--brown-700));
+    box-shadow: 0 3px 10px rgba(80,50,20,0.38);
+  }
+  .btn-gold {
+    background: linear-gradient(135deg, var(--cream-600), var(--cream-800));
+    color: var(--cream-50);
+    font-weight: 700;
+    box-shadow: 0 2px 8px rgba(100,60,20,0.3);
+  }
+  .btn-gold:hover {
+    background: linear-gradient(135deg, var(--cream-500), var(--cream-700));
+    box-shadow: 0 3px 12px rgba(100,60,20,0.4);
+  }
+  .btn-danger {
+    background: #fff5f5;
+    color: #c0392b;
+    border: 1px solid #f5c6c6;
+  }
+  .btn-danger:hover { background: #fee2e2; }
+
+  .topbar-spacer { flex: 1; }
+
+  /* ══════════════════════════════
+     MAIN LAYOUT
+  ══════════════════════════════ */
+  .main {
+    display: flex;
+    flex: 1;
+    overflow: hidden;
+  }
+
+  /* ══════════════════════════════
+     LEFT PANEL
+  ══════════════════════════════ */
+  .left-panel {
+    width: 400px;
+    min-width: 360px;
+    background: var(--sand-light);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    border-right: 1px solid var(--sand-mid);
+  }
+
+  .panel-header {
+    padding: 12px 18px 10px;
+    border-bottom: 1px solid var(--sand-mid);
+    flex-shrink: 0;
+    background: var(--cream-100);
+  }
+  .panel-title {
+    color: var(--cream-500);
+    font-size: 10.5px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+
+  .left-scroll {
+    flex: 1;
+    overflow-y: auto;
+    padding: 12px 14px 20px;
+    scrollbar-width: thin;
+    scrollbar-color: var(--sand-dark) transparent;
+  }
+  .left-scroll::-webkit-scrollbar { width: 4px; }
+  .left-scroll::-webkit-scrollbar-track { background: transparent; }
+  .left-scroll::-webkit-scrollbar-thumb { background: var(--sand-dark); border-radius: 2px; }
+
+  /* ── Form Sections ── */
+  .form-section {
+    background: var(--cream-50);
+    border: 1px solid var(--sand-mid);
+    border-radius: 10px;
+    margin-bottom: 10px;
+    overflow: hidden;
+    box-shadow: 0 1px 4px rgba(80,50,20,0.08);
+  }
+  .section-header {
+    background: var(--cream-200);
+    border-bottom: 1px solid var(--sand-mid);
+    padding: 8px 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    position: relative;
+  }
+  .section-header::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 3px;
+    background: linear-gradient(180deg, var(--cream-600), var(--cream-800));
+    border-radius: 0 2px 2px 0;
+  }
+  .section-icon { font-size: 13px; }
+  .section-title {
+    color: var(--brown-700);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+  }
+  .section-body { padding: 11px 13px; }
+
+  .form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    margin-bottom: 8px;
+  }
+  .form-row.full { grid-template-columns: 1fr; }
+  .form-row.three { grid-template-columns: 1fr 1fr 1fr; }
+
+  .form-group { display: flex; flex-direction: column; gap: 3px; }
+  .form-label {
+    color: var(--brown-500);
+    font-size: 10.5px;
+    font-weight: 700;
+    letter-spacing: 0.3px;
+  }
+  .form-input {
+    background: var(--cream-100);
+    border: 1px solid var(--sand-mid);
+    border-radius: 6px;
+    color: var(--brown-900);
+    padding: 6px 10px;
+    font-size: 12.5px;
+    transition: border-color 0.18s, box-shadow 0.18s, background 0.18s;
+    width: 100%;
+    font-family: inherit;
+  }
+  .form-input::placeholder { color: var(--cream-400); }
+  .form-input:focus {
+    outline: none;
+    border-color: var(--cream-700);
+    box-shadow: 0 0 0 3px rgba(138,104,64,0.15);
+    background: var(--cream-50);
+  }
+  .form-input.amount { text-align: right; font-variant-numeric: tabular-nums; }
+
+  .checkbox-group {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    flex-wrap: wrap;
+    margin-top: 4px;
+  }
+  .checkbox-label {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    color: var(--brown-600);
+    font-size: 12px;
+    cursor: pointer;
+  }
+  .checkbox-label input[type=checkbox] { accent-color: var(--brown-600); width: 13px; height: 13px; }
+  .checkbox-label input[type=radio]    { accent-color: var(--brown-600); width: 13px; height: 13px; }
+  .form-input:disabled { opacity: 0.45; cursor: not-allowed; background: var(--cream-200); }
+
+  .total-display {
+    background: linear-gradient(135deg, var(--cream-200), var(--cream-100));
+    border: 1px solid var(--sand-dark);
+    border-radius: 8px;
+    padding: 9px 13px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 4px;
+  }
+  .total-label { color: var(--brown-700); font-size: 11px; font-weight: 700; letter-spacing: 0.5px; }
+  .total-value { color: var(--brown-800); font-size: 17px; font-weight: 700; font-variant-numeric: tabular-nums; }
+
+  /* Equipment grid */
+  .equip-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5px;
+  }
+  .equip-item {
+    display: flex;
+    gap: 4px;
+    align-items: center;
+  }
+  .equip-num {
+    color: var(--cream-400);
+    font-size: 10px;
+    min-width: 16px;
+  }
+  .equip-name { flex: 1; min-width: 0; }
+  .equip-price { width: 70px; }
+
+  /* ══════════════════════════════
+     RIGHT PANEL
+  ══════════════════════════════ */
+  .right-panel {
+    flex: 1;
+    background: var(--cream-300);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+  .preview-toolbar {
+    background: var(--cream-100);
+    border-bottom: 1px solid var(--sand-mid);
+    padding: 7px 16px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-shrink: 0;
+  }
+  .preview-label {
+    color: var(--cream-500);
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+  }
+  .preview-spacer { flex: 1; }
+
+  .preview-scroll {
+    flex: 1;
+    overflow-y: auto;
+    padding: 24px 20px;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    scrollbar-width: thin;
+    scrollbar-color: var(--sand-dark) transparent;
+  }
+
+  /* ══════════════════════════════
+     FORM PREVIEW (A4 document)
+  ══════════════════════════════ */
+  .form-preview {
+    background: var(--cream-50);
+    width: 700px;
+    min-width: 700px;
+    min-height: 990px; /* 700 × (297/210) = A4 ratio */
+    box-shadow: var(--shadow-xl), 0 0 0 1px rgba(80,50,20,0.08);
+    border-radius: 4px;
+    font-family: 'Noto Sans TC', 'Microsoft JhengHei', sans-serif;
+    color: var(--brown-900);
+    position: relative;
+    overflow: hidden;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* ── Header ── */
+  .fp-header {
+    background: var(--cream-50);
+    border-bottom: 2px solid var(--brown-900);
+    padding: 20px 36px 16px;
+    position: relative;
+    flex-shrink: 0;
+  }
+  .fp-header-accent {
+    width: 44px; height: 3px;
+    background: var(--cream-700);
+    border-radius: 2px;
+    margin-bottom: 10px;
+  }
+  .fp-title {
+    font-size: 26px;
+    font-weight: 700;
+    letter-spacing: 6px;
+    color: var(--brown-900);
+    margin-bottom: 4px;
+  }
+  .fp-subtitle {
+    font-size: 9px;
+    letter-spacing: 4px;
+    color: var(--cream-600);
+    text-transform: uppercase;
+    font-weight: 400;
+  }
+  .fp-title-row { display: none; }
+
+  /* ── Client Info Bar ── */
+  .fp-info-bar {
+    background: var(--cream-100);
+    border-bottom: 1.5px solid var(--sand-dark);
+    padding: 10px 36px;
+    flex-shrink: 0;
+  }
+  .fp-basic {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4px 36px;
+    margin-bottom: 4px;
+  }
+  .fp-basic-three {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4px 36px;
+    margin-bottom: 0;
+  }
+  .fp-field-row {
+    display: flex;
+    align-items: center;
+    font-size: 12px;
+    border-bottom: 1px dashed var(--sand-dark);
+    padding-bottom: 3px;
+    min-height: 22px;
+  }
+  .fp-field-label {
+    white-space: nowrap;
+    font-weight: 700;
+    color: var(--brown-800);
+    font-size: 10.5px;
+    min-width: 68px;
+    padding-right: 6px;
+  }
+  .fp-field-val {
+    flex: 1;
+    color: var(--brown-900);
+    font-size: 12px;
+    font-weight: 500;
+  }
+  .fp-addr-row {
+    display: flex;
+    align-items: center;
+    font-size: 12px;
+    border-bottom: 1px dashed var(--sand-dark);
+    padding-bottom: 3px;
+    min-height: 22px;
+    margin-top: 4px;
+  }
+
+  /* ── 2×2 Grid ── */
+  .fp-grid {
+    flex: 1;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    gap: 10px;
+    padding: 12px 36px 12px;
+    min-height: 0;
+  }
+
+  /* ── Shared card shell ── */
+  .fp-cost-card,
+  .fp-ins-card,
+  .fp-bottom-left,
+  .fp-bottom-right {
+    border: 1px solid var(--sand-dark);
+    border-radius: 4px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* ── Card headers ── */
+  .fp-cost-card-header,
+  .fp-ins-card-header,
+  .fp-section-title {
+    background: var(--cream-300);
+    color: var(--brown-900);
+    font-size: 10.5px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    padding: 6px 12px;
+    text-align: center;
+    border-bottom: 1px solid var(--sand-dark);
+    flex-shrink: 0;
+  }
+
+  /* ── Cost rows ── */
+  .fp-cost-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 5.5px 12px;
+    font-size: 11.5px;
+    border-bottom: 1px solid var(--cream-200);
+    flex: 1;
+  }
+  .fp-cost-row:nth-child(even) { background: var(--cream-100); }
+  .fp-cost-name {
+    font-weight: 600;
+    color: var(--brown-800);
+    display: flex;
+    align-items: center;
+    gap: 7px;
+  }
+  .fp-cost-name::before {
+    content: '';
+    display: inline-block;
+    width: 3px; height: 11px;
+    background: var(--cream-600);
+    border-radius: 2px;
+  }
+  .fp-cost-amt { font-weight: 700; color: var(--brown-900); font-variant-numeric: tabular-nums; }
+  .fp-cost-total-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 12px;
+    background: var(--cream-400);
+    border-top: 1px solid var(--sand-dark);
+    flex-shrink: 0;
+  }
+  .fp-cost-total-label { color: var(--brown-900); font-weight: 700; letter-spacing: 1.5px; font-size: 11px; }
+  .fp-cost-total-amt { color: var(--brown-900); font-weight: 700; font-variant-numeric: tabular-nums; font-size: 14px; }
+
+  /* ── Insurance rows ── */
+  .fp-ins-row {
+    display: flex;
+    align-items: center;
+    padding: 4.5px 10px;
+    border-bottom: 1px solid var(--cream-200);
+    font-size: 11px;
+    gap: 7px;
+    flex: 1;
+  }
+  .fp-ins-row:nth-child(even) { background: var(--cream-100); }
+  .fp-ins-row:last-child { border-bottom: none; }
+  .fp-ins-badge {
+    background: var(--cream-300);
+    border: 1px solid var(--sand-dark);
+    color: var(--brown-800);
+    font-size: 8.5px;
+    font-weight: 700;
+    width: 16px; height: 16px;
+    border-radius: 3px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .fp-ins-name { flex: 1; font-weight: 600; color: var(--brown-800); }
+  .fp-ins-amount { font-weight: 700; color: var(--brown-900); font-variant-numeric: tabular-nums; min-width: 52px; text-align: right; }
+  .fp-ins-note {
+    font-size: 9.5px;
+    background: var(--cream-200);
+    color: var(--brown-700);
+    padding: 1px 5px;
+    border-radius: 3px;
+    white-space: nowrap;
+    font-weight: 600;
+    border: 1px solid var(--sand-dark);
+  }
+
+  /* ── Loan rows ── */
+  .fp-loan-row {
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid var(--cream-200);
+    padding: 5px 10px;
+    font-size: 11px;
+    gap: 6px;
+    flex: 1;
+  }
+  .fp-loan-row:nth-child(even) { background: var(--cream-100); }
+  .fp-loan-label { font-weight: 700; min-width: 58px; color: var(--brown-800); font-size: 10.5px; }
+  .fp-loan-val { flex: 1; text-align: right; font-variant-numeric: tabular-nums; font-weight: 700; color: var(--brown-900); }
+  .fp-loan-spacer { flex: 1; }
+  .fp-loan-step { border-top: 1px dashed var(--sand-dark); }
+  .fp-loan-step-title {
+    font-size: 9.5px; font-weight: 700; letter-spacing: 2px;
+    color: var(--cream-600); padding: 4px 10px;
+    background: var(--cream-100);
+  }
+
+  /* ── Options grid ── */
+  .fp-opt-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: repeat(6, 1fr);
+    flex: 1;
+  }
+  .fp-opt-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 3.5px 8px;
+    border-bottom: 1px solid var(--cream-200);
+    font-size: 10.5px;
+    gap: 4px;
+  }
+  .fp-opt-row:nth-child(4n+1),
+  .fp-opt-row:nth-child(4n+2) { background: var(--cream-100); }
+  .fp-opt-row:nth-child(odd) { border-right: 1px solid var(--cream-200); }
+  .fp-opt-name { flex: 1; color: var(--brown-600); }
+  .fp-opt-val { min-width: 50px; text-align: right; font-variant-numeric: tabular-nums; font-weight: 700; color: var(--brown-900); }
+
+  .fp-remark-row {
+    padding: 6px 10px;
+    font-size: 10.5px;
+    border-top: 1px solid var(--sand-dark);
+    color: var(--brown-600);
+    background: var(--cream-100);
+    flex-shrink: 0;
+  }
+
+  /* ── Date Footer ── */
+  .fp-date-row {
+    text-align: center;
+    font-size: 11.5px;
+    letter-spacing: 2.5px;
+    padding: 10px 36px 14px;
+    color: var(--cream-700);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    flex-shrink: 0;
+  }
+  .fp-date-row #pv_year { display:inline-block; min-width:2.5em; text-align:center; }
+  .fp-date-row #pv_month,
+  .fp-date-row #pv_day  { display:inline-block; min-width:1.6em; text-align:center; }
+  .fp-date-row::before,
+  .fp-date-row::after {
+    content: '';
+    flex: 1;
+    max-width: 70px;
+    height: 1px;
+    background: var(--sand-dark);
+  }
+
+  /* Legacy */
+  .fp-title-row { display: none; }
+  .fp-chip-header, .fp-chip, .fp-chip-line, .fp-mid, .fp-bottom, .fp-cond { display: none; }
+
+  /* ══════════════════════════════
+     MODAL
+  ══════════════════════════════ */
+  .modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(60,35,10,0.5);
+    backdrop-filter: blur(3px);
+    z-index: 100;
+    align-items: center;
+    justify-content: center;
+  }
+  .modal-overlay.open { display: flex; }
+  .modal {
+    background: var(--cream-50);
+    border: 1px solid var(--sand-mid);
+    border-radius: 14px;
+    width: 520px;
+    max-height: 80vh;
+    display: flex;
+    flex-direction: column;
+    box-shadow: var(--shadow-xl);
+  }
+  .modal-header {
+    padding: 18px 20px 14px;
+    border-bottom: 1px solid var(--sand-mid);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .modal-title { color: var(--brown-900); font-size: 14px; font-weight: 700; }
+  .modal-close {
+    background: var(--cream-200);
+    border: 1px solid var(--sand-mid);
+    color: var(--brown-500);
+    font-size: 16px;
+    cursor: pointer;
+    line-height: 1;
+    padding: 4px 8px;
+    border-radius: 6px;
+    transition: all 0.15s;
+  }
+  .modal-close:hover { background: var(--cream-300); color: var(--brown-800); }
+  .modal-search {
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--sand-mid);
+  }
+  .modal-search input {
+    width: 100%;
+    background: var(--cream-100);
+    border: 1px solid var(--sand-mid);
+    border-radius: 7px;
+    color: var(--brown-900);
+    padding: 8px 12px;
+    font-size: 13px;
+    font-family: inherit;
+  }
+  .modal-search input:focus { outline: none; border-color: var(--cream-700); box-shadow: 0 0 0 3px rgba(138,104,64,0.15); }
+  .modal-list { flex: 1; overflow-y: auto; padding: 8px; }
+  .modal-item {
+    display: flex;
+    align-items: center;
+    padding: 10px 12px;
+    border-radius: 8px;
+    cursor: pointer;
+    gap: 12px;
+    transition: background 0.12s;
+    margin-bottom: 2px;
+  }
+  .modal-item:hover { background: var(--cream-200); }
+  .modal-item-avatar {
+    width: 36px; height: 36px;
+    background: linear-gradient(135deg, var(--cream-300), var(--cream-200));
+    border: 1px solid var(--sand-dark);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--brown-700);
+    font-size: 14px;
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+  .modal-item-info { flex: 1; }
+  .modal-item-name { color: var(--brown-900); font-size: 13px; font-weight: 600; }
+  .modal-item-sub { color: var(--cream-600); font-size: 11px; margin-top: 2px; }
+  .modal-item-del {
+    background: none;
+    border: none;
+    color: #e0a0a0;
+    cursor: pointer;
+    font-size: 15px;
+    padding: 5px 7px;
+    border-radius: 5px;
+    transition: all 0.12s;
+  }
+  .modal-item-del:hover { background: #fde8e8; color: #c0392b; }
+  .modal-empty {
+    text-align: center;
+    color: var(--cream-400);
+    font-size: 13px;
+    padding: 40px 20px;
+  }
+
+  /* ══════════════════════════════
+     TOAST
+  ══════════════════════════════ */
+  .toast {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    background: var(--cream-50);
+    border: 1px solid var(--sand-mid);
+    color: var(--brown-800);
+    padding: 11px 18px;
+    border-radius: 10px;
+    font-size: 12.5px;
+    font-weight: 600;
+    box-shadow: var(--shadow-lg);
+    transform: translateY(80px);
+    opacity: 0;
+    transition: all 0.28s cubic-bezier(0.34,1.56,0.64,1);
+    z-index: 200;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .toast.show { transform: translateY(0); opacity: 1; }
+  .toast.success { border-color: #a8d5b0; background: #f4fbf5; color: #2d6a3f; }
+  .toast.error   { border-color: #e8a8a8; background: #fdf4f4; color: #8b2020; }
+
+  /* ══════════════════════════════
+     PRINT
+  ══════════════════════════════ */
+  @page { size: A4 portrait; margin: 0; }
+  @media print {
+    html, body {
+      width: 210mm; height: 297mm; overflow: hidden; background: white;
+      -webkit-print-color-adjust: exact !important;
+      print-color-adjust: exact !important;
+    }
+    .topbar, .left-panel, .preview-toolbar { display: none !important; }
+    .main  { display: block; width: 210mm; height: 297mm; overflow: hidden; }
+    .right-panel { background: white; width: 210mm; height: 297mm; overflow: hidden; }
+
+    .preview-scroll {
+      padding: 0;
+      width: 210mm;
+      height: 297mm;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      overflow: hidden;
+    }
+
+    .form-preview {
+      box-shadow: none;
+      border-radius: 0;
+      min-height: unset;
+      width: 700px;
+      height: 297mm;
+      overflow: hidden;
+    }
+
+    .toast { display: none !important; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Top Bar -->
+<div class="topbar">
+  <div class="topbar-logo">匯豐汽車&thinsp;<span>報價系統</span></div>
+  <div class="topbar-divider"></div>
+  <button class="btn btn-ghost" onclick="newQuote()">＋ 新增報價</button>
+  <button class="btn btn-primary" onclick="saveCustomer()">💾 儲存客戶</button>
+  <button class="btn btn-ghost" onclick="openSearch()">🔍 查詢客戶</button>
+  <div class="topbar-divider"></div>
+  <button class="btn btn-gold" onclick="printOrPDF()">🖨️ 列印 / 匯出 PDF</button>
+  <div class="topbar-spacer"></div>
+</div>
+
+<!-- Main -->
+<div class="main">
+
+  <!-- Left Panel -->
+  <div class="left-panel">
+    <div class="panel-header">
+      <div class="panel-title">輸入資料</div>
+    </div>
+    <div class="left-scroll">
+
+      <!-- 基本資料 -->
+      <div class="form-section">
+        <div class="section-header">
+          <span class="section-icon">👤</span>
+          <span class="section-title">客戶基本資料</span>
+        </div>
+        <div class="section-body">
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">客戶姓名</label>
+              <input class="form-input" id="f_name" placeholder="請輸入姓名" oninput="update()">
+            </div>
+            <div class="form-group">
+              <label class="form-label">業務代表</label>
+              <input class="form-input" id="f_agent" placeholder="業務姓名" oninput="update()">
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">行動電話</label>
+              <input class="form-input" id="f_mobile" placeholder="09xx-xxxxxx" oninput="update()">
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">車型</label>
+              <input class="form-input" id="f_model" placeholder="車型" oninput="update()">
+            </div>
+            <div class="form-group">
+              <label class="form-label">顏色</label>
+              <input class="form-input" id="f_color" placeholder="顏色" oninput="update()">
+            </div>
+          </div>
+          <div class="form-row full">
+            <div class="form-group">
+              <label class="form-label">住址</label>
+              <input class="form-input" id="f_addr" placeholder="完整住址" oninput="update()">
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 費用分類 -->
+      <div class="form-section">
+        <div class="section-header">
+          <span class="section-icon">💰</span>
+          <span class="section-title">費用分類</span>
+        </div>
+        <div class="section-body">
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">車價</label>
+              <input class="form-input amount" id="f_car_price" placeholder="0" type="number" oninput="update()">
+            </div>
+            <div class="form-group">
+              <label class="form-label" style="display:flex;justify-content:space-between;align-items:center">
+                <span>領牌費</span>
+                <label class="checkbox-label" style="font-size:10.5px;gap:3px;font-weight:400">
+                  <input type="checkbox" id="f_reg_actual" onchange="update()"> 實支實付
+                </label>
+              </label>
+              <input class="form-input amount" id="f_reg_fee" placeholder="0" type="number" oninput="update()">
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label" style="display:flex;justify-content:space-between;align-items:center">
+                <span>保險費</span>
+                <label class="checkbox-label" style="font-size:10.5px;gap:3px;font-weight:400">
+                  <input type="checkbox" id="f_ins_actual" onchange="update()"> 實支實付
+                </label>
+              </label>
+              <input class="form-input amount" id="f_ins_fee" placeholder="0" type="number" oninput="update()">
+            </div>
+            <div class="form-group">
+              <label class="form-label">選配費用</label>
+              <input class="form-input amount" id="f_opt_fee" placeholder="0" type="number" oninput="update()">
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">其他</label>
+              <input class="form-input amount" id="f_other_fee" placeholder="0" type="number" oninput="update()">
+            </div>
+            <div></div>
+          </div>
+          <div class="total-display">
+            <span class="total-label">總計</span>
+            <span class="total-value" id="totalDisplay">$ 0</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 保險明細 -->
+      <div class="form-section">
+        <div class="section-header">
+          <span class="section-icon">🛡️</span>
+          <span class="section-title">保險明細</span>
+        </div>
+        <div class="section-body">
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">1. 強制險</label>
+              <input class="form-input amount" id="i1_amt" placeholder="0" type="number" oninput="update()">
+            </div>
+            <div></div>
+          </div>
+          <div class="form-row full">
+            <div class="form-group">
+              <label class="form-label" style="display:flex;justify-content:space-between;align-items:center">
+                <span>2. 車體險</span>
+                <span style="display:flex;gap:10px">
+                  <label class="checkbox-label" style="font-size:10.5px;gap:3px;font-weight:400">
+                    <input type="radio" name="i2_type" id="i2_type_b" value="乙式" onchange="update()"> 乙式
+                  </label>
+                  <label class="checkbox-label" style="font-size:10.5px;gap:3px;font-weight:400">
+                    <input type="radio" name="i2_type" id="i2_type_c" value="丙式" onchange="update()"> 丙式
+                  </label>
+                </span>
+              </label>
+              <input class="form-input amount" id="i2_amt" placeholder="0" type="number" oninput="update()">
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">3. 竊盜險</label>
+              <input class="form-input amount" id="i3_amt" placeholder="0" type="number" oninput="update()">
+            </div>
+            <div></div>
+          </div>
+          <div class="form-row full">
+            <div class="form-group">
+              <label class="form-label">4. 意外險（每人）</label>
+              <div class="form-row three">
+                <input class="form-input amount" id="i4_amt" placeholder="金額" type="number" oninput="update()">
+                <input class="form-input" id="i4_accident" placeholder="事故" oninput="update()">
+                <input class="form-input" id="i4_property" placeholder="財損" oninput="update()">
+              </div>
+            </div>
+          </div>
+          <div class="form-row full">
+            <div class="form-group">
+              <label class="form-label">5. 乘客險（每人）</label>
+              <div class="form-row">
+                <input class="form-input amount" id="i5_amt" placeholder="金額" type="number" oninput="update()">
+                <div class="checkbox-group">
+                  <label class="checkbox-label"><input type="checkbox" id="i5_driver" onchange="update()"> 含駕駛</label>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="form-row full">
+            <div class="form-group">
+              <label class="form-label">6. 慰問金（每人）</label>
+              <div class="form-row">
+                <input class="form-input amount" id="i6_amt" placeholder="金額" type="number" oninput="update()">
+                <input class="form-input" id="i6_note" placeholder="住院醫療" oninput="update()">
+              </div>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">7. 高枕無憂</label>
+              <input class="form-input amount" id="i7_amt" placeholder="0" type="number" oninput="update()">
+            </div>
+            <div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 貸款分期 -->
+      <div class="form-section">
+        <div class="section-header">
+          <span class="section-icon">🏦</span>
+          <span class="section-title">車價貸款分期明細</span>
+        </div>
+        <div class="section-body">
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">頭款</label>
+              <input class="form-input amount" id="l_down" placeholder="0" type="number" oninput="update()">
+            </div>
+            <div class="form-group">
+              <label class="form-label">貸款金額</label>
+              <input class="form-input amount" id="l_loan" placeholder="0" type="number" oninput="update()">
+            </div>
+          </div>
+          <div class="form-row three">
+            <div class="form-group">
+              <label class="form-label">期數</label>
+              <input class="form-input amount" id="l_periods" placeholder="0" type="number" oninput="update()">
+            </div>
+            <div class="form-group">
+              <label class="form-label">每期金額</label>
+              <input class="form-input amount" id="l_monthly" placeholder="0" type="number" oninput="update()">
+            </div>
+            <div class="form-group">
+              <label class="form-label">動保規費</label>
+              <input class="form-input amount" id="l_reg" placeholder="0" type="number" oninput="update()">
+            </div>
+          </div>
+          <!-- 變階式繳款 -->
+          <div style="margin-top:6px;padding-top:8px;border-top:1px solid #d4c4a8">
+            <div class="form-label" style="margin-bottom:6px;color:#8a6840">變階式繳款（選填）</div>
+            <div class="form-row three" style="margin-bottom:4px">
+              <div class="form-group"><label class="form-label">第一階 期數</label><input class="form-input amount" id="l_step1_p" placeholder="0" type="number" oninput="update()"></div>
+              <div class="form-group"><label class="form-label">每期金額</label><input class="form-input amount" id="l_step1_m" placeholder="0" type="number" oninput="update()"></div>
+              <div></div>
+            </div>
+            <div class="form-row three" style="margin-bottom:4px">
+              <div class="form-group"><label class="form-label">第二階 期數</label><input class="form-input amount" id="l_step2_p" placeholder="0" type="number" oninput="update()"></div>
+              <div class="form-group"><label class="form-label">每期金額</label><input class="form-input amount" id="l_step2_m" placeholder="0" type="number" oninput="update()"></div>
+              <div></div>
+            </div>
+            <div class="form-row three">
+              <div class="form-group"><label class="form-label">第三階 期數</label><input class="form-input amount" id="l_step3_p" placeholder="0" type="number" oninput="update()"></div>
+              <div class="form-group"><label class="form-label">每期金額</label><input class="form-input amount" id="l_step3_m" placeholder="0" type="number" oninput="update()"></div>
+              <div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 選用配備 -->
+      <div class="form-section">
+        <div class="section-header">
+          <span class="section-icon">⚙️</span>
+          <span class="section-title">選用配備費用（12項）</span>
+          <span id="equip_total_badge" style="display:none;margin-left:auto;font-size:11.5px;font-weight:700;color:var(--brown-700);background:var(--cream-200);border:1px solid var(--cream-300);border-radius:20px;padding:2px 10px;white-space:nowrap">小計 $ <span id="equip_total_val">0</span></span>
+        </div>
+        <div class="section-body">
+          <div class="equip-grid" id="equipGrid"></div>
+          <div class="form-row full" style="margin-top:10px">
+            <div class="form-group">
+              <label class="form-label">備註</label>
+              <textarea class="form-input" id="f_remark" rows="3" placeholder="備註說明" oninput="update()" style="resize:vertical"></textarea>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Right Panel -->
+  <div class="right-panel">
+    <div class="preview-toolbar">
+      <span class="preview-label">預覽</span>
+      <span style="color:rgba(255,255,255,0.28);font-size:11px;letter-spacing:0.5px">即時同步更新</span>
+      <div class="preview-spacer"></div>
+    </div>
+    <div class="preview-scroll">
+      <div class="form-preview" id="formPreview">
+
+        <!-- Header -->
+        <div class="fp-header">
+          <div style="display:flex;align-items:center;gap:20px">
+            <!-- Mitsubishi Motors logo -->
+            <img src="Mitsubishi_Motors.png" alt="Mitsubishi Motors" style="height:54px;width:auto;flex-shrink:0;display:block">
+            <div>
+              <div class="fp-header-accent"></div>
+              <div class="fp-title">匯豐汽車　購車費用明細</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Client Info Bar -->
+        <div class="fp-info-bar">
+          <div class="fp-basic">
+            <div class="fp-field-row"><span class="fp-field-label">客戶姓名</span><span class="fp-field-val" id="pv_name"></span></div>
+            <div class="fp-field-row"><span class="fp-field-label">業務代表</span><span class="fp-field-val" id="pv_agent"></span></div>
+            <div class="fp-field-row"><span class="fp-field-label">行動電話</span><span class="fp-field-val" id="pv_mobile"></span></div>
+            <div class="fp-field-row"><span class="fp-field-label">車型 / 顏色</span><span class="fp-field-val"><span id="pv_model"></span><span id="pv_color" style="margin-left:8px;color:#64748b"></span></span></div>
+          </div>
+          <div class="fp-addr-row"><span class="fp-field-label">住址</span><span class="fp-field-val" id="pv_addr"></span></div>
+        </div>
+
+        <!-- 2×2 Grid: all 4 cards -->
+        <div class="fp-grid">
+
+          <!-- Cost Card -->
+          <div class="fp-cost-card">
+            <div class="fp-cost-card-header">費　用　分　類</div>
+            <div class="fp-cost-row"><span class="fp-cost-name">車價</span><span class="fp-cost-amt" id="pv_car_price"></span></div>
+            <div class="fp-cost-row"><span class="fp-cost-name">領牌費</span><span class="fp-cost-amt" id="pv_reg_fee"></span></div>
+            <div class="fp-cost-row"><span class="fp-cost-name">保險費</span><span class="fp-cost-amt" id="pv_ins_fee"></span></div>
+            <div class="fp-cost-row"><span class="fp-cost-name">選配費用</span><span class="fp-cost-amt" id="pv_opt_fee"></span></div>
+            <div class="fp-cost-row"><span class="fp-cost-name">其他</span><span class="fp-cost-amt" id="pv_other_fee"></span></div>
+            <div class="fp-cost-total-row">
+              <span class="fp-cost-total-label">總　計</span>
+              <span class="fp-cost-total-amt" id="pv_total"></span>
+            </div>
+          </div>
+
+          <!-- Insurance Card -->
+          <div class="fp-ins-card">
+            <div class="fp-ins-card-header">保　險　明　細</div>
+            <div class="fp-ins-row"><span class="fp-ins-badge">1</span><span class="fp-ins-name">強制險</span><span class="fp-ins-amount" id="pv_i1"></span></div>
+            <div class="fp-ins-row"><span class="fp-ins-badge">2</span><span class="fp-ins-name">車體險</span><span class="fp-ins-amount" id="pv_i2"></span><span class="fp-ins-note" id="pv_i2_note"></span></div>
+            <div class="fp-ins-row"><span class="fp-ins-badge">3</span><span class="fp-ins-name">竊盜險</span><span class="fp-ins-amount" id="pv_i3"></span><span class="fp-ins-note">自負額10%</span></div>
+            <div class="fp-ins-row"><span class="fp-ins-badge">4</span><span class="fp-ins-name">意外險</span><span class="fp-ins-amount" id="pv_i4"></span><span class="fp-ins-note" id="pv_i4_note"></span></div>
+            <div class="fp-ins-row"><span class="fp-ins-badge">5</span><span class="fp-ins-name">乘客險</span><span class="fp-ins-amount" id="pv_i5"></span><span class="fp-ins-note" id="pv_i5_note"></span></div>
+            <div class="fp-ins-row"><span class="fp-ins-badge">6</span><span class="fp-ins-name">慰問金</span><span class="fp-ins-amount" id="pv_i6"></span><span class="fp-ins-note" id="pv_i6_note"></span></div>
+            <div class="fp-ins-row"><span class="fp-ins-badge">7</span><span class="fp-ins-name">高枕無憂</span><span class="fp-ins-amount" id="pv_i7"></span></div>
+          </div>
+
+          <!-- Loan Card -->
+          <div class="fp-bottom-left">
+            <div class="fp-section-title">車　價　貸　款　分　期　明　細</div>
+            <div class="fp-loan-row"><span class="fp-loan-label">頭款</span><span class="fp-loan-val" id="pv_down"></span></div>
+            <div class="fp-loan-row"><span class="fp-loan-label">貸款金額</span><span class="fp-loan-val" id="pv_loan"></span></div>
+            <div class="fp-loan-row">
+              <span class="fp-loan-label">期數 / 期付</span>
+              <span style="font-variant-numeric:tabular-nums;font-weight:700;color:#1e40af">
+                <span id="pv_periods"></span> 期 &nbsp;／&nbsp; <span id="pv_monthly"></span> 元
+              </span>
+            </div>
+            <div class="fp-loan-row"><span class="fp-loan-label">動保規費</span><span class="fp-loan-val" id="pv_reg"></span></div>
+            <div class="fp-loan-step" id="pv_step_block" style="display:none">
+              <div class="fp-loan-step-title">變　階　式　繳　款</div>
+              <div class="fp-loan-row" id="pv_step1_row" style="display:none"><span class="fp-loan-label">第一階</span><span class="fp-loan-val"><span id="pv_step1_p"></span> 期 ／ <span id="pv_step1_m"></span> 元</span></div>
+              <div class="fp-loan-row" id="pv_step2_row" style="display:none"><span class="fp-loan-label">第二階</span><span class="fp-loan-val"><span id="pv_step2_p"></span> 期 ／ <span id="pv_step2_m"></span> 元</span></div>
+              <div class="fp-loan-row" id="pv_step3_row" style="display:none"><span class="fp-loan-label">第三階</span><span class="fp-loan-val"><span id="pv_step3_p"></span> 期 ／ <span id="pv_step3_m"></span> 元</span></div>
+            </div>
+          </div>
+
+          <!-- Options Card -->
+          <div class="fp-bottom-right">
+            <div class="fp-section-title">選　用　配　備　費　用</div>
+            <div class="fp-opt-grid" id="pv_opt_grid"></div>
+            <div class="fp-remark-row"><strong>備註：</strong><span id="pv_remark"></span></div>
+          </div>
+
+        </div><!-- /fp-grid -->
+
+        <!-- Date -->
+        <div class="fp-date-row">
+          中　華　民　國　<span id="pv_year"></span>　年　<span id="pv_month"></span>　月　<span id="pv_day"></span>　日
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Search Modal -->
+<div class="modal-overlay" id="searchModal">
+  <div class="modal">
+    <div class="modal-header">
+      <span class="modal-title">🔍 查詢客戶紀錄</span>
+      <button class="modal-close" onclick="closeSearch()">✕</button>
+    </div>
+    <div class="modal-search">
+      <input type="text" id="searchInput" placeholder="搜尋客戶姓名或車型..." oninput="renderList()">
+    </div>
+    <div class="modal-list" id="modalList"></div>
+  </div>
+</div>
+
+<!-- Toast -->
+<div class="toast" id="toast"></div>
+
+<script>
+// ── Equipment grid init ──
+const EQUIP_COUNT = 12;
+const equipGrid = document.getElementById('equipGrid');
+for (let i = 1; i <= EQUIP_COUNT; i++) {
+  equipGrid.innerHTML += `
+    <div class="equip-item">
+      <span class="equip-num">${i}.</span>
+      <input class="form-input equip-name" id="eq_name_${i}" placeholder="項目" oninput="update()">
+      <input class="form-input amount equip-price" id="eq_price_${i}" placeholder="0" type="number" oninput="update()">
+    </div>`;
+}
+
+// Opt grid in preview
+const pvOptGrid = document.getElementById('pv_opt_grid');
+for (let i = 1; i <= EQUIP_COUNT; i++) {
+  pvOptGrid.innerHTML += `
+    <div class="fp-opt-row">
+      <span class="fp-opt-name"><span id="pv_eq_name_${i}">${i}.</span></span>
+      <span class="fp-opt-val" id="pv_eq_price_${i}"></span>
+    </div>`;
+}
+
+
+// ── Helpers ──
+function fmt(v) {
+  const n = parseFloat(v);
+  if (!v && v !== 0) return '';
+  if (isNaN(n)) return '';
+  return n.toLocaleString('zh-TW');
+}
+function v(id) { return document.getElementById(id)?.value || ''; }
+function set(id, val) { const el = document.getElementById(id); if(el) el.textContent = val; }
+
+// ── Update preview ──
+function update() {
+  // Basic
+  set('pv_name', v('f_name'));
+  set('pv_agent', v('f_agent'));
+  set('pv_mobile', v('f_mobile'));
+  set('pv_model', v('f_model'));
+  set('pv_color', v('f_color'));
+  set('pv_addr', v('f_addr'));
+
+  // Costs
+  const regActual = document.getElementById('f_reg_actual').checked;
+  const insActual = document.getElementById('f_ins_actual').checked;
+  document.getElementById('f_reg_fee').disabled = regActual;
+  document.getElementById('f_ins_fee').disabled = insActual;
+
+  const car = parseFloat(v('f_car_price')) || 0;
+  const reg = regActual ? 0 : (parseFloat(v('f_reg_fee')) || 0);
+  const ins = insActual ? 0 : (parseFloat(v('f_ins_fee')) || 0);
+  const opt = parseFloat(v('f_opt_fee')) || 0;
+  const oth = parseFloat(v('f_other_fee')) || 0;
+  const total = car + reg + ins + opt + oth;
+
+  set('pv_car_price', car ? fmt(car) : '');
+  set('pv_reg_fee', regActual ? '實支實付' : (reg ? fmt(reg) : ''));
+  set('pv_ins_fee', insActual ? '實支實付' : (ins ? fmt(ins) : ''));
+  set('pv_opt_fee', opt ? fmt(opt) : '');
+  set('pv_other_fee', oth ? fmt(oth) : '');
+  set('pv_total', total ? fmt(total) : '');
+  document.getElementById('totalDisplay').textContent = '$ ' + total.toLocaleString('zh-TW');
+
+  // Insurance
+  set('pv_i1', fmt(v('i1_amt')));
+  set('pv_i2', fmt(v('i2_amt')));
+  const i2type = document.querySelector('input[name="i2_type"]:checked');
+  set('pv_i2_note', i2type ? i2type.value : '');
+  set('pv_i3', fmt(v('i3_amt')));
+  set('pv_i4', fmt(v('i4_amt')));
+  const i4n = [v('i4_accident') ? '事故'+v('i4_accident') : '', v('i4_property') ? '財損'+v('i4_property') : ''].filter(Boolean).join('　');
+  set('pv_i4_note', i4n ? '每人'+i4n : '每人');
+  set('pv_i5', fmt(v('i5_amt')));
+  set('pv_i5_note', document.getElementById('i5_driver').checked ? '含駕駛' : '');
+  set('pv_i6', fmt(v('i6_amt')));
+  set('pv_i6_note', v('i6_note') ? '每人　'+v('i6_note') : '每人');
+  set('pv_i7', fmt(v('i7_amt')));
+
+  // Loan
+  set('pv_down', fmt(v('l_down')));
+  set('pv_loan', fmt(v('l_loan')));
+  set('pv_periods', v('l_periods'));
+  set('pv_monthly', fmt(v('l_monthly')));
+  set('pv_reg', fmt(v('l_reg')));
+
+  // 變階式繳款
+  const steps = [
+    { p: v('l_step1_p'), m: v('l_step1_m'), rowId: 'pv_step1_row', pId: 'pv_step1_p', mId: 'pv_step1_m' },
+    { p: v('l_step2_p'), m: v('l_step2_m'), rowId: 'pv_step2_row', pId: 'pv_step2_p', mId: 'pv_step2_m' },
+    { p: v('l_step3_p'), m: v('l_step3_m'), rowId: 'pv_step3_row', pId: 'pv_step3_p', mId: 'pv_step3_m' },
+  ];
+  const hasAnyStep = steps.some(s => s.p || s.m);
+  document.getElementById('pv_step_block').style.display = hasAnyStep ? '' : 'none';
+  steps.forEach(s => {
+    const row = document.getElementById(s.rowId);
+    const show = s.p || s.m;
+    row.style.display = show ? '' : 'none';
+    set(s.pId, s.p || '—');
+    set(s.mId, fmt(s.m) || '—');
+  });
+
+  // Equipment
+  let equipTotal = 0;
+  for (let i = 1; i <= EQUIP_COUNT; i++) {
+    const name = v(`eq_name_${i}`);
+    const price = v(`eq_price_${i}`);
+    set(`pv_eq_name_${i}`, name ? `${i}. ${name}` : `${i}.`);
+    set(`pv_eq_price_${i}`, fmt(price));
+    equipTotal += parseFloat(price) || 0;
+  }
+  const badge = document.getElementById('equip_total_badge');
+  if (equipTotal > 0) {
+    document.getElementById('equip_total_val').textContent = equipTotal.toLocaleString('zh-TW');
+    badge.style.display = '';
+  } else {
+    badge.style.display = 'none';
+  }
+
+  // Remark
+  set('pv_remark', v('f_remark'));
+
+  // Date
+  const now = new Date();
+  const roc = now.getFullYear() - 1911;
+  set('pv_year', roc);
+  set('pv_month', now.getMonth() + 1);
+  set('pv_day', now.getDate());
+}
+
+// ── Gather / Restore data ──
+function gatherData() {
+  const d = {};
+  const ids = ['f_name','f_agent','f_mobile','f_model','f_color','f_addr',
+    'f_car_price','f_reg_fee','f_ins_fee','f_opt_fee','f_other_fee',
+    'i1_amt','i2_amt','i3_amt','i4_amt','i4_accident','i4_property',
+    'i5_amt','i6_amt','i6_note','i7_amt',
+    'l_down','l_loan','l_periods','l_monthly','l_reg',
+    'l_step1_p','l_step1_m','l_step2_p','l_step2_m','l_step3_p','l_step3_m','f_remark'];
+  ids.forEach(id => d[id] = v(id));
+  d.i5_driver = document.getElementById('i5_driver').checked;
+  d.f_reg_actual = document.getElementById('f_reg_actual').checked;
+  d.f_ins_actual = document.getElementById('f_ins_actual').checked;
+  const i2checked = document.querySelector('input[name="i2_type"]:checked');
+  d.i2_type = i2checked ? i2checked.value : '';
+  for (let i = 1; i <= EQUIP_COUNT; i++) {
+    d[`eq_name_${i}`] = v(`eq_name_${i}`);
+    d[`eq_price_${i}`] = v(`eq_price_${i}`);
+  }
+  d.savedAt = new Date().toISOString();
+  return d;
+}
+
+function restoreData(d) {
+  const ids = ['f_name','f_agent','f_mobile','f_model','f_color','f_addr',
+    'f_car_price','f_reg_fee','f_ins_fee','f_opt_fee','f_other_fee',
+    'i1_amt','i2_amt','i3_amt','i4_amt','i4_accident','i4_property',
+    'i5_amt','i6_amt','i6_note','i7_amt',
+    'l_down','l_loan','l_periods','l_monthly','l_reg',
+    'l_step1_p','l_step1_m','l_step2_p','l_step2_m','l_step3_p','l_step3_m','f_remark'];
+  ids.forEach(id => { const el = document.getElementById(id); if(el) el.value = d[id] || ''; });
+  document.getElementById('i5_driver').checked = !!d.i5_driver;
+  document.getElementById('f_reg_actual').checked = !!d.f_reg_actual;
+  document.getElementById('f_ins_actual').checked = !!d.f_ins_actual;
+  document.querySelectorAll('input[name="i2_type"]').forEach(r => { r.checked = (r.value === d.i2_type); });
+  for (let i = 1; i <= EQUIP_COUNT; i++) {
+    const n = document.getElementById(`eq_name_${i}`); if(n) n.value = d[`eq_name_${i}`] || '';
+    const p = document.getElementById(`eq_price_${i}`); if(p) p.value = d[`eq_price_${i}`] || '';
+  }
+  update();
+}
+
+// ── New Quote ──
+function newQuote() {
+  if (!confirm('清空目前所有資料，建立新報價單？')) return;
+  const ids = ['f_name','f_agent','f_mobile','f_model','f_color','f_addr',
+    'f_car_price','f_reg_fee','f_ins_fee','f_opt_fee','f_other_fee',
+    'i1_amt','i2_amt','i3_amt','i4_amt','i4_accident','i4_property',
+    'i5_amt','i6_amt','i6_note','i7_amt',
+    'l_down','l_loan','l_periods','l_monthly','l_reg',
+    'l_step1_p','l_step1_m','l_step2_p','l_step2_m','l_step3_p','l_step3_m','f_remark'];
+  ids.forEach(id => { const el = document.getElementById(id); if(el) el.value = ''; });
+  document.getElementById('i5_driver').checked = false;
+  document.getElementById('f_reg_actual').checked = false;
+  document.getElementById('f_ins_actual').checked = false;
+  document.querySelectorAll('input[name="i2_type"]').forEach(r => { r.checked = false; });
+  for (let i = 1; i <= EQUIP_COUNT; i++) {
+    const n = document.getElementById(`eq_name_${i}`); if(n) n.value = '';
+    const p = document.getElementById(`eq_price_${i}`); if(p) p.value = '';
+  }
+  update();
+  showToast('✅ 已建立新報價單', 'success');
+}
+
+// ── Save ──
+function saveCustomer() {
+  const name = v('f_name');
+  if (!name) { showToast('⚠️ 請先填寫客戶姓名', 'error'); return; }
+  const data = gatherData();
+  const key = `hf_${Date.now()}`;
+  localStorage.setItem(key, JSON.stringify(data));
+  showToast(`💾 已儲存：${name}`, 'success');
+}
+
+// ── Load all records ──
+function getRecords() {
+  const records = [];
+  for (let i = 0; i < localStorage.length; i++) {
+    const key = localStorage.key(i);
+    if (!key.startsWith('hf_') || key === 'hf_serial') continue;
+    try {
+      const d = JSON.parse(localStorage.getItem(key));
+      records.push({ key, data: d });
+    } catch(e) {}
+  }
+  return records.sort((a, b) => b.key.localeCompare(a.key));
+}
+
+// ── Search Modal ──
+function openSearch() {
+  document.getElementById('searchModal').classList.add('open');
+  document.getElementById('searchInput').value = '';
+  renderList();
+}
+function closeSearch() {
+  document.getElementById('searchModal').classList.remove('open');
+}
+
+function renderList() {
+  const q = document.getElementById('searchInput').value.trim().toLowerCase();
+  const records = getRecords().filter(r => {
+    if (!q) return true;
+    return (r.data.f_name||'').toLowerCase().includes(q) ||
+           (r.data.f_model||'').toLowerCase().includes(q);
+  });
+  const list = document.getElementById('modalList');
+  if (!records.length) {
+    list.innerHTML = '<div class="modal-empty">📂 尚無符合紀錄</div>';
+    return;
+  }
+  list.innerHTML = records.map(r => {
+    const d = r.data;
+    const name = d.f_name || '（未命名）';
+    const model = d.f_model || '—';
+    const date = d.savedAt ? new Date(d.savedAt).toLocaleDateString('zh-TW') : '—';
+    const init = name.charAt(0);
+    return `<div class="modal-item" onclick="loadRecord('${r.key}')">
+      <div class="modal-item-avatar">${init}</div>
+      <div class="modal-item-info">
+        <div class="modal-item-name">${name}</div>
+        <div class="modal-item-sub">${model}　｜　${date}　｜　NO. ${d.serial||'—'}</div>
+      </div>
+      <button class="modal-item-del" onclick="deleteRecord(event,'${r.key}')">🗑</button>
+    </div>`;
+  }).join('');
+}
+
+function loadRecord(key) {
+  const raw = localStorage.getItem(key);
+  if (!raw) return;
+  const d = JSON.parse(raw);
+  restoreData(d);
+  closeSearch();
+  showToast(`📂 已載入：${d.f_name || '紀錄'}`, 'success');
+}
+
+function deleteRecord(e, key) {
+  e.stopPropagation();
+  if (!confirm('確定刪除這筆紀錄？')) return;
+  localStorage.removeItem(key);
+  renderList();
+  showToast('🗑️ 已刪除', 'success');
+}
+
+// ── PDF Export ──
+function printOrPDF() {
+  showToast('🖨️ 列印請直接列印；匯出 PDF 請在對話框選「儲存為 PDF」', 'success');
+  const name = v('f_name');
+  const orig = document.title;
+  document.title = name ? '匯豐汽車-' + name : '匯豐汽車';
+  setTimeout(() => {
+    window.print();
+    document.title = orig;
+  }, 700);
+}
+
+// ── Toast ──
+let toastTimer;
+function showToast(msg, type='') {
+  const el = document.getElementById('toast');
+  el.textContent = msg;
+  el.className = 'toast show ' + type;
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => el.classList.remove('show'), 2800);
+}
+
+// Close modal on overlay click
+document.getElementById('searchModal').addEventListener('click', e => {
+  if (e.target === e.currentTarget) closeSearch();
+});
+
+// Init
+update();
+</script>
+</body>
+</html>
