@@ -274,6 +274,59 @@
   }
   .contact-mini .lbl { font-size: 11px; color: #8a7558; margin-bottom: 4px; letter-spacing: 0.05em; }
   .contact-mini .val { font-size: 13px; font-weight: 600; color: #3a2f24; }
+
+  /* 報價工具入口 */
+  .tool-entry-btn {
+    background: none; border: none; cursor: pointer;
+    font-family: inherit; font-size: 11px; color: #b0a08a;
+    letter-spacing: 0.08em; padding: 4px 8px; border-radius: 8px;
+    transition: color 0.2s, background 0.2s;
+  }
+  .tool-entry-btn:hover { color: #7a6a52; background: rgba(0,0,0,0.04); }
+
+  /* 密碼 Modal */
+  .pw-overlay {
+    display: none; position: fixed; inset: 0;
+    background: rgba(40,30,20,0.55);
+    backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
+    z-index: 200; align-items: center; justify-content: center;
+  }
+  .pw-overlay.open { display: flex; }
+  .pw-box {
+    background: #ebe2cc; border-radius: 24px; padding: 32px 28px;
+    width: 300px; box-shadow: 0 24px 64px rgba(58,47,36,0.28);
+    display: flex; flex-direction: column; gap: 16px;
+    border: 1px solid rgba(164,126,58,0.2);
+  }
+  .pw-title {
+    font-family: 'Noto Serif TC', serif; font-size: 16px;
+    color: #3a2f24; font-weight: 600; text-align: center;
+  }
+  .pw-sub { font-size: 12px; color: #8a7558; text-align: center; margin-top: -8px; }
+  .pw-input {
+    background: #fff; border: 1px solid rgba(164,126,58,0.3);
+    border-radius: 12px; padding: 12px 16px;
+    font-size: 15px; font-family: inherit; color: #3a2f24;
+    width: 100%; outline: none; text-align: center; letter-spacing: 0.15em;
+    transition: border-color 0.18s, box-shadow 0.18s;
+  }
+  .pw-input:focus { border-color: #a47e3a; box-shadow: 0 0 0 3px rgba(164,126,58,0.15); }
+  .pw-input.error { border-color: #c0392b; box-shadow: 0 0 0 3px rgba(192,57,43,0.12); animation: shake 0.35s; }
+  @keyframes shake {
+    0%,100%{transform:translateX(0)} 25%{transform:translateX(-6px)} 75%{transform:translateX(6px)}
+  }
+  .pw-btn {
+    background: #a47e3a; color: #fff; border: none; border-radius: 12px;
+    padding: 13px; font-size: 14px; font-weight: 600; font-family: inherit;
+    cursor: pointer; transition: background 0.18s;
+  }
+  .pw-btn:hover { background: #8a6830; }
+  .pw-cancel {
+    background: none; border: none; color: #8a7558; font-size: 12px;
+    font-family: inherit; cursor: pointer; text-align: center; padding: 4px;
+  }
+  .pw-cancel:hover { color: #3a2f24; }
+  .pw-err-msg { font-size: 12px; color: #c0392b; text-align: center; min-height: 16px; }
 </style>
 </head>
 <body>
@@ -417,8 +470,25 @@
     <div class="footer-card">
       <div class="sig">Thanks for stopping by.</div>
       <div class="copy">© 黃建達 ・ 中華三菱銷售經理</div>
+      <div style="margin-top: 12px;">
+        <button class="tool-entry-btn" onclick="openPwModal()">🔒 內部工具</button>
+      </div>
     </div>
 
+  </div>
+</div>
+
+<!-- 密碼 Modal -->
+<div class="pw-overlay" id="pwOverlay">
+  <div class="pw-box">
+    <div class="pw-title">内部工具</div>
+    <div class="pw-sub">請輸入密碼</div>
+    <input class="pw-input" id="pwInput" type="password" placeholder="••••••"
+      onkeydown="if(event.key==='Enter')checkPw()"
+      oninput="document.getElementById('pwInput').classList.remove('error');document.getElementById('pwErrMsg').textContent=''">
+    <div class="pw-err-msg" id="pwErrMsg"></div>
+    <button class="pw-btn" onclick="checkPw()">進入報價系統</button>
+    <button class="pw-cancel" onclick="closePwModal()">取消</button>
   </div>
 </div>
 
@@ -544,6 +614,39 @@ function renderDealGallery(count = 4) {
 
 renderTestimonials();
 renderDealGallery(4);
+
+// ── 報價工具入口密碼 ──────────────────────────────
+// 若要更改密碼，修改下方 TOOL_PASSWORD 的值即可
+const TOOL_PASSWORD = '22898';
+
+function openPwModal() {
+  document.getElementById('pwInput').value = '';
+  document.getElementById('pwInput').classList.remove('error');
+  document.getElementById('pwErrMsg').textContent = '';
+  document.getElementById('pwOverlay').classList.add('open');
+  setTimeout(() => document.getElementById('pwInput').focus(), 80);
+}
+
+function closePwModal() {
+  document.getElementById('pwOverlay').classList.remove('open');
+}
+
+function checkPw() {
+  const input = document.getElementById('pwInput');
+  if (input.value === TOOL_PASSWORD) {
+    closePwModal();
+    window.open('quote-tool.html', '_blank');
+  } else {
+    input.classList.add('error');
+    document.getElementById('pwErrMsg').textContent = '密碼錯誤，請再試一次';
+    input.value = '';
+    setTimeout(() => input.focus(), 50);
+  }
+}
+
+document.getElementById('pwOverlay').addEventListener('click', function(e) {
+  if (e.target === this) closePwModal();
+});
 </script>
 
 </body>
