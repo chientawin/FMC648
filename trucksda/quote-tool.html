@@ -466,6 +466,18 @@
     letter-spacing: 0.5px;
   }
   .hero-meta strong { font-weight: 600; color: var(--ink-900); font-variant-numeric: tabular-nums; }
+  .hero-steps { display: flex; flex-direction: column; gap: 5px; }
+  .hero-step-row { display: flex; align-items: baseline; gap: 4px; }
+  .hero-step-tag {
+    font-size: 9px; letter-spacing: 1.5px; color: var(--ink-500);
+    text-transform: uppercase; font-weight: 600; min-width: 50px; flex-shrink: 0;
+  }
+  .hero-step-num {
+    font-family: var(--hero-num); font-size: 26px; font-weight: 600;
+    color: var(--ink-900); letter-spacing: -0.8px;
+    font-variant-numeric: tabular-nums; line-height: 1;
+  }
+  .hero-step-unit { font-size: 10px; color: var(--ink-500); margin-left: 2px; }
 
   /* SECTIONS — vertical flow */
   .doc-section {
@@ -935,8 +947,8 @@
           <div>
             <label class="checkbox-label" style="font-size:12.5px"><input type="checkbox" id="ins_liability" onchange="update()"> 2. 任意險</label>
             <div style="margin-left:22px;display:flex;gap:14px;margin-top:3px">
-              <label class="checkbox-label" style="font-size:11px"><input type="checkbox" id="ins_liability_property" onchange="update()"> 財損</label>
-              <label class="checkbox-label" style="font-size:11px"><input type="checkbox" id="ins_liability_injury" onchange="update()"> 體傷</label>
+              <label class="checkbox-label" style="font-size:11px"><input type="checkbox" id="ins_liability_property" onchange="update()"> 財損<span style="color:var(--ink-400);font-size:10px;margin-left:3px">50萬</span></label>
+              <label class="checkbox-label" style="font-size:11px"><input type="checkbox" id="ins_liability_injury" onchange="update()"> 體傷<span style="color:var(--ink-400);font-size:10px;margin-left:3px">200萬</span></label>
             </div>
           </div>
 
@@ -948,7 +960,7 @@
             </div>
           </div>
 
-          <label class="checkbox-label" style="font-size:12.5px"><input type="checkbox" id="ins_excess" onchange="update()"> 4. 超額責任險</label>
+          <label class="checkbox-label" style="font-size:12.5px"><input type="checkbox" id="ins_excess" onchange="update()"> 4. 超額責任險<span style="color:var(--ink-400);font-size:10px;margin-left:3px">1,000萬</span></label>
           <label class="checkbox-label" style="font-size:12.5px"><input type="checkbox" id="ins_road" onchange="update()"> 5. 道路救援</label>
           <label class="checkbox-label" style="font-size:12.5px"><input type="checkbox" id="ins_theft" onchange="update()"> 6. 竊盜險</label>
         </div>
@@ -960,8 +972,8 @@
           <div class="section-sub">Loan</div>
         </div>
         <div class="form-row">
-          <div class="form-group"><label class="form-label">頭款</label><input class="form-input amount" id="l_down" placeholder="0" type="number" oninput="update()"></div>
-          <div class="form-group"><label class="form-label">貸款金額</label><input class="form-input amount" id="l_loan" placeholder="0" type="number" oninput="update()"></div>
+          <div class="form-group"><label class="form-label">頭款</label><input class="form-input amount" id="l_down" placeholder="0" type="number" oninput="autoFillLoan('down')"></div>
+          <div class="form-group"><label class="form-label">貸款金額</label><input class="form-input amount" id="l_loan" placeholder="0" type="number" oninput="autoFillLoan('loan')"></div>
         </div>
         <div class="form-row three">
           <div class="form-group"><label class="form-label">期數</label><input class="form-input amount" id="l_periods" placeholder="0" type="number" oninput="update()"></div>
@@ -1078,10 +1090,11 @@
           </div>
           <div class="hero-cell secondary">
             <div class="hero-label">每月　Monthly</div>
-            <div class="hero-num-wrap">
+            <div class="hero-num-wrap" id="pv_monthly_wrap">
               <span class="hero-currency">NT$</span>
               <span class="hero-num" id="pv_monthly_hero"></span>
             </div>
+            <div class="hero-steps" id="pv_steps_hero" style="display:none"></div>
             <div class="hero-meta">分期 <strong id="pv_periods_hero">—</strong> 期 ／ 頭款 NT$ <strong id="pv_down_hero">—</strong></div>
           </div>
         </section>
@@ -1118,7 +1131,7 @@
             <div class="row ins-row" id="pv_ins_compulsory_row"><span class="num-idx">01</span><span class="lbl">強制險</span><span class="note"></span><span class="amt" id="pv_ins_compulsory_mark">✓</span></div>
             <div class="row ins-row" id="pv_ins_liability_row"><span class="num-idx">02</span><span class="lbl">任意險</span><span class="note" id="pv_ins_liability_note"></span><span class="amt">✓</span></div>
             <div class="row ins-row" id="pv_ins_body_row"><span class="num-idx">03</span><span class="lbl">車體險</span><span class="note" id="pv_ins_body_note"></span><span class="amt">✓</span></div>
-            <div class="row ins-row" id="pv_ins_excess_row"><span class="num-idx">04</span><span class="lbl">超額責任險</span><span class="note"></span><span class="amt">✓</span></div>
+            <div class="row ins-row" id="pv_ins_excess_row"><span class="num-idx">04</span><span class="lbl">超額責任險</span><span class="note">1,000萬</span><span class="amt">✓</span></div>
             <div class="row ins-row" id="pv_ins_road_row"><span class="num-idx">05</span><span class="lbl">道路救援</span><span class="note"></span><span class="amt">✓</span></div>
             <div class="row ins-row" id="pv_ins_theft_row"><span class="num-idx">06</span><span class="lbl">竊盜險</span><span class="note">自負額10%</span><span class="amt">✓</span></div>
           </div>
@@ -1273,7 +1286,7 @@ function update() {
   const bodyTypeEl   = document.querySelector('input[name="ins_body_type"]:checked');
   const bodyType     = bodyTypeEl ? bodyTypeEl.value : '';
 
-  const liabSubs = [liabProperty ? '財損' : '', liabInjury ? '體傷' : ''].filter(Boolean).join(' / ');
+  const liabSubs = [liabProperty ? '財損 50萬' : '', liabInjury ? '體傷 200萬' : ''].filter(Boolean).join('　/　');
   set('pv_ins_liability_note', liabSubs);
   set('pv_ins_body_note', bodyType);
 
@@ -1319,6 +1332,11 @@ function update() {
     set(s.pId, s.p || '—');
     set(s.mId, fmt(s.m) || '—');
   });
+
+  // Hero stepped display — only step 1 shown as the giant number
+  document.getElementById('pv_steps_hero').style.display = 'none';
+  document.getElementById('pv_monthly_wrap').style.display = '';
+  if (steps[0].m) set('pv_monthly_hero', fmt(steps[0].m));
 
   let equipTotal = 0;
   for (let i = 1; i <= EQUIP_COUNT; i++) {
@@ -1476,6 +1494,38 @@ function printOrPDF() {
   setTimeout(() => { window.print(); document.title = orig; }, 400);
 }
 
+
+function autoFillLoan(changed) {
+  const regActual = document.getElementById('f_reg_actual').checked;
+  const insActual = document.getElementById('f_ins_actual').checked;
+  const car = parseFloat(v('f_car_price')) || 0;
+  const reg = regActual ? 0 : (parseFloat(v('f_reg_fee')) || 0);
+  const ins = insActual ? 0 : (parseFloat(v('f_ins_fee')) || 0);
+  const opt = parseFloat(v('f_opt_fee')) || 0;
+  const oth = parseFloat(v('f_other_fee')) || 0;
+  const total = car + reg + ins + opt - oth;
+
+  if (total > 0) {
+    if (changed === 'loan') {
+      const loan = parseFloat(v('l_loan'));
+      const el = document.getElementById('l_down');
+      if (!isNaN(loan) && v('l_loan') !== '') {
+        el.value = Math.max(0, total - loan) || 0;
+      } else {
+        el.value = '';
+      }
+    } else {
+      const down = parseFloat(v('l_down'));
+      const el = document.getElementById('l_loan');
+      if (!isNaN(down) && v('l_down') !== '') {
+        el.value = Math.max(0, total - down) || 0;
+      } else {
+        el.value = '';
+      }
+    }
+  }
+  update();
+}
 
 function calcRegFeeHint() {
   const today = new Date();
