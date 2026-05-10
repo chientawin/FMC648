@@ -3,817 +3,843 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" type="image/x-icon" href="data:image/x-icon;base64,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av8HBwj/BwcH/wYHB/8GBgb/BQUG/4mJiv/o6On/5+fn/19fX/8FBQb/BQUG/wUFBf8PDw8yFRUVPgoJCv8KCgr/CgoK/woKCv8KCgr/CgoK/wkJCv8KCgr/CgoK/wkJCv8NDQ3/8O/w//f39//k4+T/BwcH/yQkJP8jIyP/IyMk/yMjJP8jIyP/IyMj/ycnKP9oaWn/6ejp/+zs7f/BwcL/Gxsc/wYGBv8FBgb/BQUF/w8PDzIVFRU+CgoK/woKCv8KCgv/CgoK/woLC/8KCgr/CgoL/woKC/8KCgr/CgoK/wkJCf/Dw8P/+fn6//n5+f8jIyT/6unq//f39//29vb/9vb2//X19f/09PT/8/Pz//Ly8v/x8fH/t7e4/xQUFP8GBgb/BQYG/wUFBf8FBQX/Dw8PMhUVFT4LCgv/CgoL/woKCv8KCgv/CwsL/woKCv8KCwv/CwsL/woKCv8KCgr/CgoK/4qKiv/u7u7/7e3u/1BQUf+ysrP/7Ozs/+vr7P/r6+v/6urq/+np6v/o6On/6Ojo/6Wlpf8ODg7/BgYH/wYGB/8GBgb/BQUG/wUFBv8PDw8yFRUVPgsLC/8LCwv/CwsL/wsLC/8LCwv/CwsL/woLC/8LCwv/CwsL/woKCv8KCgr/CgoK/woKCv8JCgr/CQkK/wgJCf8JCQn/CQkJ/wkJCf8ICAj/BwcI/wgICP8HBwf/BwcH/wcHB/8GBgf/BgYH/wYGBv8GBgb/BQYG/w8PDzIVFRU+CwsL/wsLC/8LCwv/CwsM/wsLC/8LCwv/CwsL/wsLC/8LCwv/CgoK/woKC/8KCgr/CgoK/wkKCv8KCgr/CQkK/wkJCf8JCQn/CQkJ/wgICP8ICAj/CAgI/wcHCP8HBwf/BwcH/wcHB/8GBgf/BgYG/wYGBv8GBgb/Dw8PMhUVFT4LCwv/CwsL/wsLC/8LCwv/CwsL/wsLC/8LCwv/CwsL/wsLC/8LCwv/CgsL/woKCv8KCgr/CgoK/woKCv8KCgr/CQkJ/wkJCf8JCQn/CAkJ/wgICP8ICAj/BwgI/wgICP8HBwj/BwcH/wcHB/8GBgf/BgYG/wYFBv8PDw8yFRUVPgsLC/8LCwv/CwsM/wwMDP8MDAz/DAsM/wsLC/8LCwv/CwsL/wsLC/8LCwv/CwsL/woKCv8KCgr/CgoK/woKCv8KCgr/CQkK/wkJ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BP8EBAT/AwME/wMDBP8EBAT/AwMD/wQDBP8DAwP/AwME/wMDBP8DAwT/AwQE/wMDBP8DAwT/AwMD/wMDA/8ICAjXDg4OOAAAAAAAAAAAAAAAGwAAABsAAAAAExMTNgkJCd0EBAX/BAQF/wQFBf8EBQX/BQUF/wQFBf8EBAX/BAQF/wQEBf8EBAX/BAQF/wQEBf8EBAX/BAUF/wQFBf8EBAX/BAQE/wQEBf8EBAX/BAQE/wQEBP8EBAT/BAQE/wQEBP8EBAT/BAQE/wMDBP8DBAT/AwME/wMDBP8DAwP/AwME/wMDBP8DAwT/AwME/wMDBP8DAwT/AwME/wMDA/8DAwP/CAgI1hISEisAAAAAAAAAGwAAABsVFRUMDAwMwgUFBf8FBQX/BQUF/wUFBf8FBQX/BQUF/wUFBf8FBQX/BQUF/wUFBf8FBQX/BQUF/wUFBf8FBQX/BAUF/wUFBf8FBQX/BQUF/wQFBf8EBAX/BAUF/wQFBf8EBAX/BAQF/wQEBP8EBAT/BAQE/wMEBP8DBAT/BAQE/wQEBP8EBAT/AwME/wMDBP8DAwT/BAQE/wQEBP8DAwT/AwME/wMDBP8DAwT/AwME/woLC7UAAAAHAAAAGwAAABsQEBBQBgYG7wUFBf8FBQb/BQUF/wUFBf8FBQX/BQUG/wYGBv8FBgb/BQYG/wYGBv8FBQb/BQUG/wUFBf8FBQX/BQUF/wUFBf8EBAX/BAQF/wUFBf8EBQX/BQUF/wQFBf8EBAX/BAQF/wQEBf8EBAX/BAQF/wQEBP8EBAT/BAQE/wQEBP8EBAT/BAQE/wQEBP8EBAT/BAQE/wMEBP8DAwT/AwME/wQEBP8DAwT/AwME/wQEBesPExNDAAAAGwAAAB4MDAyFBgYG/QUFBv8FBQb/BQUG/wUFBv8FBQb/BQUG/wUFBv8FBgb/BQYG/wUFBv8FBQb/BQUG/wUFBf8FBQX/BQUF/wUFBf8EBQX/BAQF/wQEBf8EBQX/BAUF/wUFBf8EBQX/BAUF/wQFBf8EBAX/BAUF/wQEBP8EBAT/BAQE/wQEBP8EBAT/BAQE/wQEBP8EBAT/BAQE/wMEBP8DAwT/AwME/wMDBP8DAwT/AwME/wQEBfsLCwt5AAAAHAYGBigLCwumBQUG/wYFBv8FBQb/BgYG/wYGBv8FBgb/BgYG/wUGBv8GBgb/BgYG/wUGBv8FBQb/BQUF/wUFBv8FBQX/BQUF/wUFBv8FBQX/BQUF/wUFBf8FBQX/BQUF/wUFBf8FBQX/BAUF/wUFBf8FBQX/BAUF/wQEBf8EBAX/BAQE/wQEBf8EBAX/BAQF/wQEBP8EBAT/BAQE/wQEBP8DAwT/BAQE/wMDBP8DBAT/AwME/wQEBP8ICAiZBwcHIwYGBioKCgquBgUG/wYGBv8GBgb/BgYG/wYGBv8GBgb/BgYG/wYGBv8GBgb/BgYG/wUFBv8GBgb/BgYG/wYGBv8FBgb/BQYG/wUFBv8FBQX/BQUF/wUFBf8FBQX/BQUF/wUFBf8FBAX/BQUF/wQEBP8FBQX/BQUF/wQEBf8EBQX/BAUF/wQEBf8EBAX/BAQF/wQEBP8EBAT/BAQE/wQEBP8EBAT/BAQE/wMDBP8EAwT/AwME/wMDBP8ICAihBwcHJgYGBioKCgquBgYG/wYGBv8GBgb/BgYG/wYGBv8GBgb/BgYG/wYGBv8GBgb/BgYG/wUFBv8FBQb/BgYG/wYGBv8FBQb/BQUG/wUGBv8FBgb/BQUF/wUFBv8FBQX/BQUF/wUFBf8FBQX/BQUF/wUFBf8FBQX/BAUF/wUFBf8EBQX/BAUF/wQEBf8EBAX/BAQF/wQEBf8EBAT/BAQE/wQEBP8EBAT/BAQE/wQEBP8EBAT/AwME/wMDA/8GBgahBwcHJgYGBioKCgquBgYG/wYGB/8GBgb/BgYG/wYGBv8GBgb/BgYG/wYGBv8GBgb/BgYG/wYGBv8FBQb/BgYG/wYGBv8GBgb/BgYG/wUFBv8GBgb/BQUG/wUFBv8FBQb/BQYG/wUFBf8FBQX/BQUF/wUFBf8FBQX/BQUF/wUFBf8FBQX/BQUF/wQEBf8EBAX/BAQE/wQFBf8EBQX/BAUF/wQEBf8EBAT/BAQE/wQEBP8EBAT/AwMD/wMDA/8ICAihBwcHJgYGBioKCgquBgYH/wYGB/8GBgf/BgYG/wYGBv8GBgb/BgYH/wYHB/8GBgb/BgYH/wYGBv8GBgb/BgYG/wYGBv8GBgb/BgcH/wUFBv8GBgb/BQUF/wUFBv8GBgb/BQYG/wUGBv8FBQb/BQUF/wUFBv8FBQX/BQUF/wUFBf8FBQX/BQQF/wUFBf8FBQX/BAUF/wQFBf8EBQX/BQUF/wQFBf8EBAT/BAQE/wQEBP8EBAT/BAME/wMD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9P/z8/T/8/Lz//Dv8P+wsLD/LCws/wYGB/8GBgf/BgYG/wYGBv8FBQb/BQUF/wUFBf8KCgqhBwcHJgwMDCoPDw+uCwsL/woLC/8KCwv/CgoK/woKC/8LCwv/CwsL/woLC/8LCwv/CgoL/wsLC/8KCwv/CgoK/woKCv8KCgr/CgoK/zo6O//k5OX/5ubm/+Xl5f/ExMT/IiIi/3x8fP/k5OT/4+Pk/+Pi4//k4+T/4+Pj/+Li4//i4uL/4eHh/+Dh4f/g4OH/4eHh/6urq/8iIiP/CAgI/wcGB/8GBgf/BgYH/wYGBv8GBgb/BQYG/wUFBv8KCgqhBwcHJgwMDCoPDw+uCwoL/woLC/8LCwv/CgsL/wsLC/8LCwv/CwsL/wsLC/8LCwv/CwsL/wsLC/8KCwv/CwsL/woLC/8KCgr/CQoK/wkJCf8KCgr/CgoK/woKCv8JCQr/CQkJ/wgJCf8JCQn/CQkJ/wkJCf8JCQn/CQkJ/wgICP8ICAj/BwcI/wcHCP8ICAj/BwcH/wcHB/8HBwf/BwcH/wcHB/8GBgf/BgcH/wYGB/8GBgb/BgYG/wUFBf8KCgqhBwcHJgwMDCoPDw+uCwsL/wsLC/8LCwv/CwsL/wsLC/8LCwv/CwsL/wsLC/8LCwv/CgsL/wsLC/8LCwv/CwsL/woKCv8KCgr/CgoK/woKCv8KCgr/CgoK/wkKCv8JCgr/CgoK/wkJCf8JCQn/CQkJ/wkJCf8JCQn/CQkJ/wgICP8ICAj/CAgI/wgICP8ICAj/BwcI/wcHB/8HBwf/BwcH/wcHB/8GBgf/BgYH/wYGBv8GBgb/BgYG/wYGBv8KCgqhBwcHJgwMDCoPDw+uCwsL/wsLC/8KCwv/CwsL/wsLDP8LCwv/CwsL/wsLC/8LCwv/CwsL/wsLDP8LCwv/CwsL/woLC/8KCgr/CgoL/woKC/8KCgr/CgoK/woJCv8KCgr/CgoK/woKCv8JCQn/CQkJ/wkJCf8JCQn/CQkJ/wgICf8ICAj/CAgI/wgICP8ICAj/BwcI/wcHCP8HBwj/BwcH/wcHB/8HBwf/BgYH/wYGBv8GBgb/BgYG/wYGBv8KCgqhBwcHJgwMDCoPDw+uCwsL/woKCv8LCwv/CwsL/wsLC/8LCwv/CwsL/wsLC/8LCwv/CwsL/wsLC/8KCwv/CwsL/wsLC/8KCwv/CgsL/woKCv8KCgr/CgoK/woKCv8KCgr/CgoK/woKCv8JCgr/CQkJ/wkJCf8JCQn/CQkJ/wkJCf8ICAn/CAgI/wgICP8ICAj/BwgI/wgICP8HBwj/BwcI/wcHB/8HBwf/BgYH/wYGBv8GBgf/BQUF/wYFBv8KCgqhBwcHJgwMDCoPDw+uCwsL/wsLC/8LCwv/CwsL/wwLDP8MCwz/CwsM/wsLDP8LCwz/CwsL/wsLC/8LCgv/CwsL/wsLC/8LCwv/CwsL/wsLC/8KCgr/CgoK/woKCv8KCgr/CgoK/woKCv8KCgr/CQoK/wkJCf8JCQn/CQkJ/wgJCf8ICQn/CAgI/wgICP8ICAj/CAgI/wgICP8ICAj/BwcI/wcHB/8HBwf/BwcH/wYGB/8GBwf/BgYG/wYGBv8KCgqhBwcHJgwMDCoPDw+uCwsL/wsLC/8LCwv/CwsM/wwMDP8MDAz/DAwM/wwMDP8LCwv/CwsM/wsLC/8LCwv/CwsL/wsLC/8LCwv/CwsL/wsLC/8KCgr/CgoK/woKC/8KCgr/CgoK/woKCv8KCgr/CgoK/wkKCv8JCQn/CQkJ/wkICf8ICQn/CQkJ/wgICf8ICAj/CAgI/wgICP8ICAj/CAgI/wcHCP8HBwf/BgYG/wYHB/8HBwf/BgYH/wYGBv8LCguhBwcHJg0NDScRERGlCwsL/wsLC/8MDAz/DAwM/wwMDP8MDAz/DAwM/wwMDP8LCwz/CwsL/wsLC/8LCwv/CwsL/wsLC/8KCwv/CwsL/wsLC/8LCwv/CgoL/wsLC/8KCgr/CgoK/woKCv8KCgr/CQkK/wkJCv8JCQr/CAkJ/wgJCf8ICQn/CQkJ/wgICf8ICAj/CAgI/wgICP8ICAj/CAgI/wgICP8ICAj/BwcH/wcHB/8HBwf/BwcH/wcHB/8MDQ2ZBwcHIwAAAB8TEROHDAwM/QwMDP8MDAz/DAwM/wwMDP8MDAz/DAwM/wwMDP8MDAz/DAwM/wsLDP8LDAz/CwwM/wsLC/8LCwv/CwsL/wsLC/8LCwv/CwsL/woLC/8KCgv/CgoL/woKCv8KCgr/CgoK/woKCv8KCgr/CQoK/wkJCf8JCQn/CAkJ/wkJCf8ICAn/CAgJ/wgICf8ICAj/CAgI/wgICP8ICAj/BwgI/wcHCP8HBwf/BwcH/wgICPsPDw95AAAAHAAAABsWGRlRDQ0N7wwM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">
 <title>匯豐汽車｜報價系統</title>
-<link rel="icon" href="favicon.ico" type="image/x-icon">
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;600;700&family=Noto+Serif+TC:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root {
-    /* ── Warm Beige Palette ── */
-    --cream-50:  #fdfaf4;
-    --cream-100: #f8f2e4;
-    --cream-200: #f0e6d0;
-    --cream-300: #e4d3b4;
-    --cream-400: #d4bc96;
-    --cream-500: #c2a278;
-    --cream-600: #a88458;
-    --cream-700: #8a6840;
-    --cream-800: #6a4e2c;
-    --cream-900: #3d2c18;
-    /* ── Warm Brown Accent ── */
-    --brown-900: #2c1a08;
-    --brown-800: #3d2710;
-    --brown-700: #5c3d1e;
-    --brown-600: #7c5230;
-    --brown-500: #9a6b42;
-    --brown-400: #b88a60;
-    --brown-300: #d4ac84;
-    --brown-200: #e8cdb0;
-    --brown-100: #f5e8d8;
-    --brown-50:  #fdf5ee;
-    /* ── Warm Sand Border/BG ── */
-    --sand-dark:  #c8b090;
-    --sand-mid:   #ddd0b8;
-    --sand-light: #ede5d4;
-    --sand-pale:  #f5efe4;
-    /* ── Shadows (warm tinted) ── */
-    --shadow-sm: 0 1px 4px rgba(80,50,20,0.1);
-    --shadow-md: 0 4px 12px rgba(80,50,20,0.12);
-    --shadow-lg: 0 10px 32px rgba(80,50,20,0.16), 0 4px 12px rgba(80,50,20,0.1);
-    --shadow-xl: 0 20px 60px rgba(80,50,20,0.18), 0 8px 20px rgba(80,50,20,0.1);
+    --ink-900: #0a0a0a;
+    --ink-800: #1a1a1a;
+    --ink-700: #2c2c2c;
+    --ink-600: #4a4a4a;
+    --ink-500: #6e6e6e;
+    --ink-400: #969696;
+    --ink-300: #c4c4c4;
+    --ink-200: #e4e4e4;
+    --ink-150: #ededed;
+    --ink-100: #f4f4f4;
+    --ink-50:  #fafafa;
+    --paper:   #ffffff;
+    --rule:    #1a1a1a;
+    --rule-soft: #d8d8d8;
+    --hero-num: 'Inter', 'Noto Sans TC', sans-serif;
+    --display: 'Noto Serif TC', serif;
+    --body: 'Inter', 'Noto Sans TC', 'Microsoft JhengHei', sans-serif;
   }
 
   * { box-sizing: border-box; margin: 0; padding: 0; }
-  input, textarea, select, button { font-family: 'Noto Sans TC', 'Microsoft JhengHei', sans-serif; }
+  input, textarea, select, button { font-family: var(--body); }
 
   body {
-    font-family: 'Noto Sans TC', 'Microsoft JhengHei', sans-serif;
-    background: var(--sand-light);
-    color: var(--brown-800);
+    font-family: var(--body);
+    background: var(--ink-100);
+    color: var(--ink-800);
     height: 100vh;
     display: flex;
     flex-direction: column;
     overflow: hidden;
+    -webkit-font-smoothing: antialiased;
   }
 
-  /* ══════════════════════════════
-     TOP BAR
-  ══════════════════════════════ */
+  /* ── TOP BAR ── */
   .topbar {
-    background: var(--cream-50);
-    border-bottom: 2px solid var(--sand-dark);
-    padding: 0 20px;
-    height: 54px;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    flex-shrink: 0;
-    box-shadow: 0 2px 10px rgba(80,50,20,0.1);
-  }
-  .topbar-logo {
-    color: var(--brown-900);
-    font-size: 16px;
-    font-weight: 700;
-    letter-spacing: 2px;
-    margin-right: 6px;
+    background: var(--paper);
+    border-bottom: 1px solid var(--ink-200);
+    padding: 0 22px;
+    height: 52px;
     display: flex;
     align-items: center;
     gap: 8px;
+    flex-shrink: 0;
+  }
+  .topbar-logo {
+    color: var(--ink-900);
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    margin-right: 6px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
   }
   .topbar-logo::before {
     content: '';
     display: block;
-    width: 4px;
-    height: 20px;
-    background: linear-gradient(180deg, var(--cream-500), var(--cream-700));
+    width: 18px; height: 18px;
+    background: var(--ink-900);
     border-radius: 2px;
   }
-  .topbar-logo span { color: var(--brown-600); }
-  .topbar-divider { width: 1px; height: 26px; background: var(--sand-mid); margin: 0 2px; }
+  .topbar-logo span { color: var(--ink-500); font-weight: 400; letter-spacing: 2px; font-size: 12px; }
+  .topbar-divider { width: 1px; height: 22px; background: var(--ink-200); margin: 0 4px; }
 
   .btn {
     display: inline-flex;
     align-items: center;
-    gap: 5px;
-    padding: 6px 13px;
+    gap: 6px;
+    padding: 7px 14px;
     border-radius: 6px;
-    border: none;
+    border: 1px solid var(--ink-200);
+    background: var(--paper);
+    color: var(--ink-700);
     font-size: 12.5px;
-    font-weight: 600;
+    font-weight: 500;
     cursor: pointer;
-    transition: all 0.15s ease;
+    transition: all 0.15s;
     white-space: nowrap;
-    font-family: inherit;
-    letter-spacing: 0.2px;
+    letter-spacing: 0.3px;
   }
-  .btn-ghost {
-    background: var(--cream-200);
-    color: var(--brown-700);
-    border: 1px solid var(--sand-mid);
-  }
-  .btn-ghost:hover {
-    background: var(--cream-300);
-    border-color: var(--sand-dark);
-    color: var(--brown-900);
-  }
+  .btn:hover { border-color: var(--ink-400); color: var(--ink-900); }
   .btn-primary {
-    background: linear-gradient(135deg, var(--brown-600), var(--brown-800));
-    color: var(--cream-50);
-    box-shadow: 0 2px 6px rgba(80,50,20,0.28);
+    background: var(--ink-900);
+    color: var(--paper);
+    border-color: var(--ink-900);
   }
-  .btn-primary:hover {
-    background: linear-gradient(135deg, var(--brown-500), var(--brown-700));
-    box-shadow: 0 3px 10px rgba(80,50,20,0.38);
-  }
-  .btn-gold {
-    background: linear-gradient(135deg, var(--cream-600), var(--cream-800));
-    color: var(--cream-50);
-    font-weight: 700;
-    box-shadow: 0 2px 8px rgba(100,60,20,0.3);
-  }
-  .btn-gold:hover {
-    background: linear-gradient(135deg, var(--cream-500), var(--cream-700));
-    box-shadow: 0 3px 12px rgba(100,60,20,0.4);
-  }
-  .btn-danger {
-    background: #fff5f5;
-    color: #c0392b;
-    border: 1px solid #f5c6c6;
-  }
-  .btn-danger:hover { background: #fee2e2; }
-
+  .btn-primary:hover { background: var(--ink-700); border-color: var(--ink-700); color: var(--paper); }
   .topbar-spacer { flex: 1; }
 
-  /* ══════════════════════════════
-     MAIN LAYOUT
-  ══════════════════════════════ */
-  .main {
-    display: flex;
-    flex: 1;
-    overflow: hidden;
-  }
+  /* ── MAIN ── */
+  .main { display: flex; flex: 1; overflow: hidden; }
 
-  /* ══════════════════════════════
-     LEFT PANEL
-  ══════════════════════════════ */
+  /* ── LEFT PANEL ── */
   .left-panel {
-    width: 400px;
+    width: 380px;
     min-width: 360px;
-    background: var(--sand-light);
+    background: var(--paper);
     display: flex;
     flex-direction: column;
     overflow: hidden;
-    border-right: 1px solid var(--sand-mid);
+    border-right: 1px solid var(--ink-200);
   }
-
   .panel-header {
-    padding: 12px 18px 10px;
-    border-bottom: 1px solid var(--sand-mid);
+    padding: 14px 22px 12px;
+    border-bottom: 1px solid var(--ink-200);
     flex-shrink: 0;
-    background: var(--cream-100);
   }
   .panel-title {
-    color: var(--cream-500);
-    font-size: 10.5px;
-    font-weight: 700;
-    letter-spacing: 2px;
+    color: var(--ink-400);
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 3px;
     text-transform: uppercase;
   }
-
   .left-scroll {
     flex: 1;
     overflow-y: auto;
-    padding: 12px 14px 20px;
+    padding: 8px 0 24px;
     scrollbar-width: thin;
-    scrollbar-color: var(--sand-dark) transparent;
+    scrollbar-color: var(--ink-300) transparent;
   }
   .left-scroll::-webkit-scrollbar { width: 4px; }
-  .left-scroll::-webkit-scrollbar-track { background: transparent; }
-  .left-scroll::-webkit-scrollbar-thumb { background: var(--sand-dark); border-radius: 2px; }
+  .left-scroll::-webkit-scrollbar-thumb { background: var(--ink-300); border-radius: 2px; }
 
-  /* ── Form Sections ── */
+  /* Sections */
   .form-section {
-    background: var(--cream-50);
-    border: 1px solid var(--sand-mid);
-    border-radius: 10px;
-    margin-bottom: 10px;
-    overflow: hidden;
-    box-shadow: 0 1px 4px rgba(80,50,20,0.08);
+    border-bottom: 1px solid var(--ink-150);
+    padding: 14px 22px 16px;
   }
-  .section-header {
-    background: var(--cream-200);
-    border-bottom: 1px solid var(--sand-mid);
-    padding: 8px 14px;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    position: relative;
+  .form-section:first-child {
+    border-top: 1px solid var(--ink-200);
   }
-  .section-header::before {
-    content: '';
-    position: absolute;
-    left: 0; top: 0; bottom: 0;
-    width: 3px;
-    background: linear-gradient(180deg, var(--cream-600), var(--cream-800));
-    border-radius: 0 2px 2px 0;
-  }
-  .section-icon { font-size: 13px; }
+  .section-header { margin-bottom: 12px; }
   .section-title {
-    color: var(--brown-700);
-    font-size: 11px;
+    color: var(--ink-900);
+    font-size: 12px;
     font-weight: 700;
-    letter-spacing: 0.8px;
+    letter-spacing: 1px;
+  }
+  .section-sub {
+    color: var(--ink-400);
+    font-size: 9.5px;
+    font-weight: 500;
+    letter-spacing: 1.5px;
     text-transform: uppercase;
+    margin-top: 2px;
   }
-  .section-body { padding: 11px 13px; }
 
-  .form-row {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 8px;
-    margin-bottom: 8px;
-  }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 8px; }
   .form-row.full { grid-template-columns: 1fr; }
   .form-row.three { grid-template-columns: 1fr 1fr 1fr; }
-
-  .form-group { display: flex; flex-direction: column; gap: 3px; }
+  .form-group { display: flex; flex-direction: column; gap: 4px; }
   .form-label {
-    color: var(--brown-500);
+    color: var(--ink-500);
     font-size: 10.5px;
-    font-weight: 700;
-    letter-spacing: 0.3px;
+    font-weight: 500;
+    letter-spacing: 0.5px;
   }
   .form-input {
-    background: var(--cream-100);
-    border: 1px solid var(--sand-mid);
-    border-radius: 6px;
-    color: var(--brown-900);
-    padding: 6px 10px;
-    font-size: 12.5px;
-    transition: border-color 0.18s, box-shadow 0.18s, background 0.18s;
+    background: var(--paper);
+    border: none;
+    border-bottom: 1px solid var(--ink-200);
+    color: var(--ink-900);
+    padding: 6px 2px;
+    font-size: 13px;
+    transition: border-color 0.18s;
     width: 100%;
     font-family: inherit;
+    border-radius: 0;
   }
-  .form-input::placeholder { color: var(--cream-400); }
+  .form-input::placeholder { color: var(--ink-300); }
   .form-input:focus {
     outline: none;
-    border-color: var(--cream-700);
-    box-shadow: 0 0 0 3px rgba(138,104,64,0.15);
-    background: var(--cream-50);
+    border-color: var(--ink-900);
   }
   .form-input.amount { text-align: right; font-variant-numeric: tabular-nums; }
-
-  .checkbox-group {
-    display: flex;
-    gap: 10px;
-    align-items: center;
-    flex-wrap: wrap;
-    margin-top: 4px;
-  }
+  .checkbox-group { display: flex; gap: 14px; align-items: center; flex-wrap: wrap; margin-top: 4px; }
   .checkbox-label {
-    display: flex;
-    align-items: center;
-    gap: 5px;
-    color: var(--brown-600);
-    font-size: 12px;
+    display: flex; align-items: center; gap: 5px;
+    color: var(--ink-700);
+    font-size: 11.5px;
     cursor: pointer;
+    letter-spacing: 0.3px;
   }
-  .checkbox-label input[type=checkbox] { accent-color: var(--brown-600); width: 13px; height: 13px; }
-  .checkbox-label input[type=radio]    { accent-color: var(--brown-600); width: 13px; height: 13px; }
-  .form-input:disabled { opacity: 0.45; cursor: not-allowed; background: var(--cream-200); }
+  .checkbox-label input { accent-color: var(--ink-900); width: 13px; height: 13px; }
+  .form-input:disabled { opacity: 0.4; background: var(--ink-50); }
 
   .total-display {
-    background: linear-gradient(135deg, var(--cream-200), var(--cream-100));
-    border: 1px solid var(--sand-dark);
-    border-radius: 8px;
-    padding: 9px 13px;
+    border-top: 1px solid var(--ink-900);
+    padding: 10px 0 0;
     display: flex;
     justify-content: space-between;
-    align-items: center;
-    margin-top: 4px;
+    align-items: baseline;
+    margin-top: 8px;
   }
-  .total-label { color: var(--brown-700); font-size: 11px; font-weight: 700; letter-spacing: 0.5px; }
-  .total-value { color: var(--brown-800); font-size: 17px; font-weight: 700; font-variant-numeric: tabular-nums; }
+  .total-label { color: var(--ink-700); font-size: 11px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; }
+  .total-value { color: var(--ink-900); font-size: 22px; font-weight: 700; font-variant-numeric: tabular-nums; letter-spacing: -0.5px; }
 
-  /* Equipment grid */
-  .equip-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 5px;
-  }
-  .equip-item {
-    display: flex;
-    gap: 4px;
-    align-items: center;
-  }
-  .equip-num {
-    color: var(--cream-400);
-    font-size: 10px;
-    min-width: 16px;
-  }
+  .equip-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4px 10px; }
+  .equip-item { display: flex; gap: 4px; align-items: baseline; }
+  .equip-num { color: var(--ink-400); font-size: 10px; min-width: 16px; font-variant-numeric: tabular-nums; }
   .equip-name { flex: 1; min-width: 0; }
-  .equip-price { width: 70px; }
+  .equip-price { width: 80px; }
 
-  /* ══════════════════════════════
-     RIGHT PANEL
-  ══════════════════════════════ */
+  /* ── RIGHT PANEL ── */
   .right-panel {
     flex: 1;
-    background: var(--cream-300);
+    background: var(--ink-100);
     display: flex;
     flex-direction: column;
     overflow: hidden;
   }
-
   .preview-toolbar {
-    background: var(--cream-100);
-    border-bottom: 1px solid var(--sand-mid);
-    padding: 7px 16px;
+    background: var(--paper);
+    border-bottom: 1px solid var(--ink-200);
+    padding: 10px 22px;
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 12px;
     flex-shrink: 0;
   }
   .preview-label {
-    color: var(--cream-500);
-    font-size: 11px;
-    font-weight: 700;
+    color: var(--ink-400);
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 3px;
     text-transform: uppercase;
-    letter-spacing: 1.5px;
   }
-  .preview-spacer { flex: 1; }
+  .preview-sub { color: var(--ink-400); font-size: 11px; }
 
   .preview-scroll {
     flex: 1;
-    overflow-y: auto;
-    padding: 24px 20px;
+    overflow: auto;
+    padding: 32px 24px;
     display: flex;
     justify-content: center;
     align-items: flex-start;
-    scrollbar-width: thin;
-    scrollbar-color: var(--sand-dark) transparent;
   }
 
-  /* ══════════════════════════════
-     FORM PREVIEW (A4 document)
-  ══════════════════════════════ */
+  /* ══════════════════════════════════════════════
+     FORM PREVIEW — A4 portrait, minimalist mono
+  ══════════════════════════════════════════════ */
   .form-preview {
-    background: var(--cream-50);
-    width: 700px;
-    min-width: 700px;
-    min-height: 990px; /* 700 × (297/210) = A4 ratio */
-    box-shadow: var(--shadow-xl), 0 0 0 1px rgba(80,50,20,0.08);
-    border-radius: 4px;
-    font-family: 'Noto Sans TC', 'Microsoft JhengHei', sans-serif;
-    color: var(--brown-900);
+    background: var(--paper);
+    width: 794px;       /* 210mm @ 96dpi */
+    min-width: 794px;
+    min-height: 1123px; /* 297mm — 可抽長為多頁 */
+    box-shadow: 0 1px 2px rgba(0,0,0,0.04), 0 12px 40px rgba(0,0,0,0.08);
+    color: var(--ink-900);
     position: relative;
-    overflow: hidden;
-    padding: 0;
+    overflow: visible;
     display: flex;
     flex-direction: column;
+    padding: 56px 64px 48px;
+    font-family: var(--body);
+    /* visual page guide for screen preview */
+    background-image: linear-gradient(transparent 1122px, rgba(0,0,0,0.06) 1122px, rgba(0,0,0,0.06) 1123px, transparent 1123px);
+    background-size: 100% 1123px;
+    background-repeat: repeat-y;
   }
+  /* Each block stays on a single page */
+  .doc-header, .doc-customer, .doc-hero, .doc-section, .doc-remark, .doc-footer, .sig-row, .doc-date, .cost-subtotal {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+  .doc-section-head { break-after: avoid; page-break-after: avoid; }
+  .row { break-inside: avoid; page-break-inside: avoid; }
 
-  /* ── Header ── */
-  .fp-header {
-    background: var(--cream-50);
-    border-bottom: 2px solid var(--brown-900);
-    padding: 20px 36px 16px;
-    position: relative;
+  /* Print-only running header — repeats on every page */
+  .print-running-head { display: none; }
+  .doc-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--ink-900);
     flex-shrink: 0;
   }
-  .fp-header-accent {
-    width: 44px; height: 3px;
-    background: var(--cream-700);
-    border-radius: 2px;
-    margin-bottom: 10px;
+  .doc-brand {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
   }
-  .fp-title {
-    font-size: 26px;
+  .doc-brand-mark {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .doc-brand-name {
+    font-size: 13px;
     font-weight: 700;
-    letter-spacing: 6px;
-    color: var(--brown-900);
-    margin-bottom: 4px;
+    letter-spacing: 4px;
+    color: var(--ink-900);
   }
-  .fp-subtitle {
+  .doc-brand-sub {
+    font-size: 9px;
+    letter-spacing: 3.5px;
+    color: var(--ink-500);
+    text-transform: uppercase;
+    font-weight: 500;
+    margin-top: 1px;
+  }
+  .doc-title {
+    font-family: var(--display);
+    font-size: 28px;
+    font-weight: 600;
+    letter-spacing: 6px;
+    color: var(--ink-900);
+    line-height: 1;
+    margin-top: 8px;
+  }
+  .doc-meta {
+    text-align: right;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .doc-meta-eyebrow {
     font-size: 9px;
     letter-spacing: 4px;
-    color: var(--cream-600);
+    color: var(--ink-500);
     text-transform: uppercase;
+    font-weight: 600;
+  }
+  .doc-meta-no {
+    font-family: var(--hero-num);
+    font-size: 18px;
+    font-weight: 500;
+    color: var(--ink-900);
+    letter-spacing: 1px;
+    font-variant-numeric: tabular-nums;
+  }
+  .doc-meta-date {
+    font-size: 11px;
+    color: var(--ink-600);
+    letter-spacing: 1.5px;
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* CUSTOMER */
+  .doc-customer {
+    padding: 26px 0 26px;
+    border-bottom: 1px solid var(--ink-200);
+    flex-shrink: 0;
+  }
+  .cust-name-row {
+    display: flex;
+    align-items: baseline;
+    gap: 14px;
+    margin-bottom: 18px;
+  }
+  .cust-eyebrow {
+    font-size: 9.5px;
+    letter-spacing: 3px;
+    color: var(--ink-400);
+    text-transform: uppercase;
+    font-weight: 600;
+    flex-shrink: 0;
+  }
+  .cust-name {
+    font-family: var(--display);
+    font-size: 28px;
+    font-weight: 500;
+    color: var(--ink-900);
+    letter-spacing: 4px;
+    line-height: 1;
+  }
+  .cust-name:empty::before {
+    content: '—';
+    color: var(--ink-300);
+  }
+  .cust-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 4px 28px;
+  }
+  .cust-grid.row2 {
+    grid-template-columns: 2fr 1fr;
+    margin-top: 8px;
+  }
+  .cust-field { display: flex; flex-direction: column; gap: 3px; }
+  .cust-field-label {
+    font-size: 9.5px;
+    letter-spacing: 2.5px;
+    color: var(--ink-400);
+    text-transform: uppercase;
+    font-weight: 600;
+  }
+  .cust-field-val {
+    font-size: 13px;
+    color: var(--ink-900);
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    min-height: 17px;
+  }
+  .cust-field-val:empty::before {
+    content: '—';
+    color: var(--ink-300);
     font-weight: 400;
   }
-  .fp-title-row { display: none; }
 
-  /* ── Client Info Bar ── */
-  .fp-info-bar {
-    background: var(--cream-100);
-    border-bottom: 1.5px solid var(--sand-dark);
-    padding: 10px 36px;
+  /* HERO NUMBERS */
+  .doc-hero {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr;
+    gap: 0;
+    padding: 26px 0 26px;
+    border-bottom: 1px solid var(--ink-200);
     flex-shrink: 0;
   }
-  .fp-basic {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 4px 36px;
-    margin-bottom: 4px;
-  }
-  .fp-basic-three {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 4px 36px;
-    margin-bottom: 0;
-  }
-  .fp-field-row {
-    display: flex;
-    align-items: center;
-    font-size: 12px;
-    border-bottom: 1px dashed var(--sand-dark);
-    padding-bottom: 3px;
-    min-height: 22px;
-  }
-  .fp-field-label {
-    white-space: nowrap;
-    font-weight: 700;
-    color: var(--brown-800);
-    font-size: 10.5px;
-    min-width: 68px;
-    padding-right: 6px;
-  }
-  .fp-field-val {
-    flex: 1;
-    color: var(--brown-900);
-    font-size: 12px;
-    font-weight: 500;
-  }
-  .fp-addr-row {
-    display: flex;
-    align-items: center;
-    font-size: 12px;
-    border-bottom: 1px dashed var(--sand-dark);
-    padding-bottom: 3px;
-    min-height: 22px;
-    margin-top: 4px;
-  }
-
-  /* ── 2×2 Grid ── */
-  .fp-grid {
-    flex: 1;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: 1fr 1fr;
-    gap: 10px;
-    padding: 12px 36px 12px;
-    min-height: 0;
-  }
-
-  /* ── Shared card shell ── */
-  .fp-cost-card,
-  .fp-ins-card,
-  .fp-bottom-left,
-  .fp-bottom-right {
-    border: 1px solid var(--sand-dark);
-    border-radius: 4px;
-    overflow: hidden;
+  .hero-cell {
     display: flex;
     flex-direction: column;
+    gap: 8px;
+    padding-right: 20px;
   }
+  .hero-cell + .hero-cell {
+    border-left: 1px solid var(--ink-200);
+    padding-left: 26px;
+    padding-right: 0;
+  }
+  .hero-label {
+    font-size: 10px;
+    letter-spacing: 3px;
+    color: var(--ink-500);
+    text-transform: uppercase;
+    font-weight: 600;
+  }
+  .hero-num-wrap {
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+  }
+  .hero-currency {
+    font-family: var(--hero-num);
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--ink-500);
+    letter-spacing: 0.5px;
+  }
+  .hero-num {
+    font-family: var(--hero-num);
+    font-size: 44px;
+    font-weight: 600;
+    color: var(--ink-900);
+    letter-spacing: -1.5px;
+    line-height: 1;
+    font-variant-numeric: tabular-nums;
+  }
+  .hero-num:empty::before { content: '0'; color: var(--ink-300); }
+  .hero-cell.secondary .hero-num { font-size: 32px; letter-spacing: -1px; }
+  .hero-meta {
+    font-size: 11px;
+    color: var(--ink-600);
+    font-weight: 400;
+    letter-spacing: 0.5px;
+  }
+  .hero-meta strong { font-weight: 600; color: var(--ink-900); font-variant-numeric: tabular-nums; }
 
-  /* ── Card headers ── */
-  .fp-cost-card-header,
-  .fp-ins-card-header,
-  .fp-section-title {
-    background: var(--cream-300);
-    color: var(--brown-900);
-    font-size: 10.5px;
+  /* SECTIONS — vertical flow */
+  .doc-section {
+    padding: 20px 0 18px;
+    border-bottom: 1px solid var(--ink-200);
+    flex-shrink: 0;
+  }
+  .doc-section:last-of-type { border-bottom: none; }
+  .doc-section-head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    margin-bottom: 8px;
+  }
+  .doc-section-title {
+    font-size: 11px;
     font-weight: 700;
     letter-spacing: 3px;
-    padding: 6px 12px;
-    text-align: center;
-    border-bottom: 1px solid var(--sand-dark);
-    flex-shrink: 0;
+    color: var(--ink-900);
+    text-transform: uppercase;
+  }
+  .doc-section-title-zh {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--ink-900);
+    letter-spacing: 4px;
+    margin-right: 8px;
+  }
+  .doc-section-en {
+    font-size: 9px;
+    letter-spacing: 2.5px;
+    color: var(--ink-400);
+    font-weight: 500;
+    text-transform: uppercase;
   }
 
-  /* ── Cost rows ── */
-  .fp-cost-row {
-    display: flex;
-    justify-content: space-between;
+  /* Generic table-style rows */
+  .row {
+    display: grid;
     align-items: center;
-    padding: 5.5px 12px;
+    padding: 8px 0;
+    font-size: 12px;
+    border-bottom: 1px dotted var(--ink-200);
+  }
+  .row:last-child { border-bottom: none; }
+  .row .lbl {
     font-size: 11.5px;
-    border-bottom: 1px solid var(--cream-200);
-    flex: 1;
+    color: var(--ink-700);
+    font-weight: 500;
+    letter-spacing: 1px;
   }
-  .fp-cost-row:nth-child(even) { background: var(--cream-100); }
-  .fp-cost-name {
-    font-weight: 600;
-    color: var(--brown-800);
-    display: flex;
-    align-items: center;
-    gap: 7px;
+  .row .num-idx {
+    font-family: var(--hero-num);
+    font-size: 10px;
+    color: var(--ink-400);
+    font-variant-numeric: tabular-nums;
+    font-weight: 500;
+    width: 18px;
   }
-  .fp-cost-name::before {
-    content: '';
-    display: inline-block;
-    width: 3px; height: 11px;
-    background: var(--cream-600);
-    border-radius: 2px;
+  .row .note {
+    font-size: 10px;
+    color: var(--ink-500);
+    letter-spacing: 0.3px;
   }
-  .fp-cost-amt { font-weight: 700; color: var(--brown-900); font-variant-numeric: tabular-nums; }
-  .fp-cost-total-row {
+  .row .amt {
+    text-align: right;
+    font-family: var(--hero-num);
+    font-variant-numeric: tabular-nums;
+    font-weight: 500;
+    font-size: 13px;
+    color: var(--ink-900);
+    letter-spacing: 0.2px;
+  }
+  .row .amt:empty::before {
+    content: '—';
+    color: var(--ink-300);
+    font-weight: 400;
+  }
+
+  /* Cost section: lbl | spacer | amt */
+  .cost-row { grid-template-columns: 140px 1fr 120px; gap: 14px; }
+  .cost-row.discount .amt { color: var(--ink-700); }
+
+  .cost-subtotal {
     display: flex;
     justify-content: space-between;
-    align-items: center;
-    padding: 8px 12px;
-    background: var(--cream-400);
-    border-top: 1px solid var(--sand-dark);
-    flex-shrink: 0;
+    align-items: baseline;
+    padding: 10px 0 12px;
+    margin-top: 6px;
+    border-top: 2px solid var(--ink-900);
   }
-  .fp-cost-total-label { color: var(--brown-900); font-weight: 700; letter-spacing: 1.5px; font-size: 11px; }
-  .fp-cost-total-amt { color: var(--brown-900); font-weight: 700; font-variant-numeric: tabular-nums; font-size: 14px; }
-
-  /* ── Insurance rows ── */
-  .fp-ins-row {
-    display: flex;
-    align-items: center;
-    padding: 4.5px 10px;
-    border-bottom: 1px solid var(--cream-200);
-    font-size: 11px;
-    gap: 7px;
-    flex: 1;
-  }
-  .fp-ins-row:nth-child(even) { background: var(--cream-100); }
-  .fp-ins-row:last-child { border-bottom: none; }
-  .fp-ins-badge {
-    background: var(--cream-300);
-    border: 1px solid var(--sand-dark);
-    color: var(--brown-800);
-    font-size: 8.5px;
-    font-weight: 700;
-    width: 16px; height: 16px;
-    border-radius: 3px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
-  }
-  .fp-ins-name { flex: 1; font-weight: 600; color: var(--brown-800); }
-  .fp-ins-amount { font-weight: 700; color: var(--brown-900); font-variant-numeric: tabular-nums; min-width: 52px; text-align: right; }
-  .fp-ins-note {
-    font-size: 9.5px;
-    background: var(--cream-200);
-    color: var(--brown-700);
-    padding: 1px 5px;
-    border-radius: 3px;
-    white-space: nowrap;
+  .cost-subtotal-label {
+    font-size: 10.5px;
+    color: var(--ink-700);
     font-weight: 600;
-    border: 1px solid var(--sand-dark);
+    letter-spacing: 3px;
+    text-transform: uppercase;
+  }
+  .cost-subtotal-amt {
+    font-family: var(--hero-num);
+    font-size: 22px;
+    font-weight: 600;
+    color: var(--ink-900);
+    font-variant-numeric: tabular-nums;
+    letter-spacing: -0.5px;
   }
 
-  /* ── Loan rows ── */
-  .fp-loan-row {
-    display: flex;
-    align-items: center;
-    border-bottom: 1px solid var(--cream-200);
-    padding: 5px 10px;
-    font-size: 11px;
-    gap: 6px;
-    flex: 1;
-  }
-  .fp-loan-row:nth-child(even) { background: var(--cream-100); }
-  .fp-loan-label { font-weight: 700; min-width: 58px; color: var(--brown-800); font-size: 10.5px; }
-  .fp-loan-val { flex: 1; text-align: right; font-variant-numeric: tabular-nums; font-weight: 700; color: var(--brown-900); }
-  .fp-loan-spacer { flex: 1; }
-  .fp-loan-step { border-top: 1px dashed var(--sand-dark); }
-  .fp-loan-step-title {
-    font-size: 9.5px; font-weight: 700; letter-spacing: 2px;
-    color: var(--cream-600); padding: 4px 10px;
-    background: var(--cream-100);
-  }
-
-  /* ── Options grid ── */
-  .fp-opt-grid {
+  /* Insurance: 2-col grid for compact */
+  .ins-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    grid-template-rows: repeat(6, 1fr);
-    flex: 1;
+    column-gap: 36px;
+    row-gap: 0;
   }
-  .fp-opt-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 3.5px 8px;
-    border-bottom: 1px solid var(--cream-200);
-    font-size: 10.5px;
-    gap: 4px;
-  }
-  .fp-opt-row:nth-child(4n+1),
-  .fp-opt-row:nth-child(4n+2) { background: var(--cream-100); }
-  .fp-opt-row:nth-child(odd) { border-right: 1px solid var(--cream-200); }
-  .fp-opt-name { flex: 1; color: var(--brown-600); }
-  .fp-opt-val { min-width: 50px; text-align: right; font-variant-numeric: tabular-nums; font-weight: 700; color: var(--brown-900); }
+  .ins-row { grid-template-columns: 18px 1fr auto 90px; gap: 8px; }
 
-  .fp-remark-row {
-    padding: 6px 10px;
-    font-size: 10.5px;
-    border-top: 1px solid var(--sand-dark);
-    color: var(--brown-600);
-    background: var(--cream-100);
+  /* Loan: 2-col grid */
+  .loan-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 36px;
+  }
+  .loan-row { grid-template-columns: 100px 1fr; gap: 12px; }
+  .loan-row .amt-line {
+    text-align: right;
+    font-family: var(--hero-num);
+    font-variant-numeric: tabular-nums;
+    font-weight: 500;
+    font-size: 14px;
+    color: var(--ink-900);
+  }
+  .loan-row .amt-line .unit {
+    font-size: 10px;
+    color: var(--ink-500);
+    margin-left: 3px;
+    font-weight: 400;
+  }
+  .loan-step {
+    grid-column: 1 / -1;
+    margin-top: 6px;
+    padding-top: 6px;
+    border-top: 1px dashed var(--ink-300);
+  }
+  .loan-step-title {
+    font-size: 9.5px;
+    letter-spacing: 2.5px;
+    color: var(--ink-500);
+    text-transform: uppercase;
+    font-weight: 600;
+    margin-bottom: 4px;
+  }
+  .loan-step-rows {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 0 24px;
+  }
+
+  /* Equipment: 2-col compact */
+  .opt-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 32px;
+  }
+  .opt-row { grid-template-columns: 18px 1fr 70px; gap: 6px; padding: 6px 0; font-size: 11px; }
+  .opt-row .lbl { font-size: 11px; color: var(--ink-700); letter-spacing: 0.3px; }
+  .opt-row .amt { font-size: 11.5px; }
+
+  /* Remark */
+  .doc-remark {
+    padding: 18px 0 14px;
+    border-bottom: 1px solid var(--ink-200);
     flex-shrink: 0;
   }
+  .remark-label {
+    font-size: 9.5px;
+    letter-spacing: 3px;
+    color: var(--ink-500);
+    text-transform: uppercase;
+    font-weight: 600;
+    margin-bottom: 4px;
+  }
+  .remark-body {
+    font-size: 11px;
+    color: var(--ink-700);
+    line-height: 1.65;
+    letter-spacing: 0.3px;
+    min-height: 14px;
+  }
+  .remark-body:empty::before {
+    content: '—';
+    color: var(--ink-300);
+  }
 
-  /* ── Date Footer ── */
-  .fp-date-row {
+  /* Footer: signatures + date */
+  .doc-footer {
+    display: flex;
+    flex-direction: column;
+    padding-top: 32px;
+    margin-top: auto;
+  }
+  @media print {
+    .doc-footer { margin-top: 28px; }
+  }
+  .sig-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 32px;
+    margin-bottom: 0;
+  }
+  .sig-cell { display: flex; flex-direction: column; }
+  .sig-line {
+    height: 30px;
+    border-bottom: 1px solid var(--ink-900);
+  }
+  .sig-label {
+    font-size: 9.5px;
+    letter-spacing: 3px;
+    color: var(--ink-500);
+    text-transform: uppercase;
+    font-weight: 600;
+    margin-top: 6px;
+  }
+  .doc-date {
     text-align: center;
     font-size: 11.5px;
-    letter-spacing: 2.5px;
-    padding: 10px 36px 14px;
-    color: var(--cream-700);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    flex-shrink: 0;
+    color: var(--ink-700);
+    letter-spacing: 4px;
+    font-weight: 500;
   }
-  .fp-date-row #pv_year { display:inline-block; min-width:2.5em; text-align:center; }
-  .fp-date-row #pv_month,
-  .fp-date-row #pv_day  { display:inline-block; min-width:1.6em; text-align:center; }
-  .fp-date-row::before,
-  .fp-date-row::after {
-    content: '';
-    flex: 1;
-    max-width: 70px;
-    height: 1px;
-    background: var(--sand-dark);
+  .doc-date span {
+    display: inline-block;
+    min-width: 1.8em;
+    color: var(--ink-900);
+    font-weight: 700;
+    border-bottom: 1px solid var(--ink-900);
+    padding: 0 4px;
+    margin: 0 2px;
   }
 
-  /* Legacy */
-  .fp-title-row { display: none; }
-  .fp-chip-header, .fp-chip, .fp-chip-line, .fp-mid, .fp-bottom, .fp-cond { display: none; }
-
-  /* ══════════════════════════════
-     MODAL
-  ══════════════════════════════ */
+  /* ── MODAL ── */
   .modal-overlay {
     display: none;
     position: fixed;
     inset: 0;
-    background: rgba(60,35,10,0.5);
-    backdrop-filter: blur(3px);
+    background: rgba(0,0,0,0.4);
+    backdrop-filter: blur(2px);
     z-index: 100;
     align-items: center;
     justify-content: center;
   }
   .modal-overlay.open { display: flex; }
   .modal {
-    background: var(--cream-50);
-    border: 1px solid var(--sand-mid);
-    border-radius: 14px;
-    width: 520px;
-    max-height: 80vh;
+    background: var(--paper);
+    border: 1px solid var(--ink-200);
+    border-radius: 8px;
+    width: 480px;
+    max-height: 76vh;
     display: flex;
     flex-direction: column;
-    box-shadow: var(--shadow-xl);
+    box-shadow: 0 20px 60px rgba(0,0,0,0.2);
   }
   .modal-header {
-    padding: 18px 20px 14px;
-    border-bottom: 1px solid var(--sand-mid);
+    padding: 18px 22px 14px;
+    border-bottom: 1px solid var(--ink-150);
     display: flex;
     align-items: center;
     justify-content: space-between;
   }
-  .modal-title { color: var(--brown-900); font-size: 14px; font-weight: 700; }
+  .modal-title { color: var(--ink-900); font-size: 13px; font-weight: 700; letter-spacing: 1px; }
   .modal-close {
-    background: var(--cream-200);
-    border: 1px solid var(--sand-mid);
-    color: var(--brown-500);
-    font-size: 16px;
-    cursor: pointer;
-    line-height: 1;
-    padding: 4px 8px;
-    border-radius: 6px;
-    transition: all 0.15s;
+    background: none; border: 1px solid var(--ink-200);
+    color: var(--ink-500); font-size: 14px;
+    cursor: pointer; line-height: 1;
+    padding: 4px 8px; border-radius: 5px;
   }
-  .modal-close:hover { background: var(--cream-300); color: var(--brown-800); }
+  .modal-close:hover { background: var(--ink-50); color: var(--ink-900); }
   .modal-search {
-    padding: 12px 16px;
-    border-bottom: 1px solid var(--sand-mid);
+    padding: 12px 22px;
+    border-bottom: 1px solid var(--ink-150);
   }
   .modal-search input {
     width: 100%;
-    background: var(--cream-100);
-    border: 1px solid var(--sand-mid);
-    border-radius: 7px;
-    color: var(--brown-900);
-    padding: 8px 12px;
+    background: var(--paper);
+    border: none;
+    border-bottom: 1px solid var(--ink-300);
+    padding: 6px 0;
     font-size: 13px;
-    font-family: inherit;
   }
-  .modal-search input:focus { outline: none; border-color: var(--cream-700); box-shadow: 0 0 0 3px rgba(138,104,64,0.15); }
-  .modal-list { flex: 1; overflow-y: auto; padding: 8px; }
+  .modal-search input:focus { outline: none; border-color: var(--ink-900); }
+  .modal-list { flex: 1; overflow-y: auto; padding: 8px 12px; }
   .modal-item {
-    display: flex;
-    align-items: center;
+    display: flex; align-items: center;
     padding: 10px 12px;
-    border-radius: 8px;
+    border-radius: 6px;
     cursor: pointer;
     gap: 12px;
-    transition: background 0.12s;
     margin-bottom: 2px;
   }
-  .modal-item:hover { background: var(--cream-200); }
+  .modal-item:hover { background: var(--ink-50); }
   .modal-item-avatar {
-    width: 36px; height: 36px;
-    background: linear-gradient(135deg, var(--cream-300), var(--cream-200));
-    border: 1px solid var(--sand-dark);
+    width: 32px; height: 32px;
+    background: var(--ink-900);
+    color: var(--paper);
     border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: var(--brown-700);
-    font-size: 14px;
-    font-weight: 700;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 13px; font-weight: 600;
     flex-shrink: 0;
   }
-  .modal-item-info { flex: 1; }
-  .modal-item-name { color: var(--brown-900); font-size: 13px; font-weight: 600; }
-  .modal-item-sub { color: var(--cream-600); font-size: 11px; margin-top: 2px; }
+  .modal-item-info { flex: 1; min-width: 0; }
+  .modal-item-name { color: var(--ink-900); font-size: 13px; font-weight: 600; }
+  .modal-item-sub { color: var(--ink-500); font-size: 11px; margin-top: 2px; }
   .modal-item-del {
-    background: none;
-    border: none;
-    color: #e0a0a0;
-    cursor: pointer;
-    font-size: 15px;
-    padding: 5px 7px;
-    border-radius: 5px;
-    transition: all 0.12s;
+    background: none; border: none;
+    color: var(--ink-400);
+    cursor: pointer; font-size: 13px;
+    padding: 5px 7px; border-radius: 4px;
   }
-  .modal-item-del:hover { background: #fde8e8; color: #c0392b; }
+  .modal-item-del:hover { background: var(--ink-100); color: var(--ink-900); }
   .modal-empty {
     text-align: center;
-    color: var(--cream-400);
+    color: var(--ink-400);
     font-size: 13px;
-    padding: 40px 20px;
+    padding: 50px 20px;
   }
 
-  /* ══════════════════════════════
-     TOAST
-  ══════════════════════════════ */
+  /* TOAST */
   .toast {
     position: fixed;
-    bottom: 24px;
-    right: 24px;
-    background: var(--cream-50);
-    border: 1px solid var(--sand-mid);
-    color: var(--brown-800);
-    padding: 11px 18px;
-    border-radius: 10px;
+    bottom: 24px; right: 24px;
+    background: var(--ink-900);
+    color: var(--paper);
+    padding: 10px 18px;
+    border-radius: 6px;
     font-size: 12.5px;
-    font-weight: 600;
-    box-shadow: var(--shadow-lg);
+    font-weight: 500;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
     transform: translateY(80px);
     opacity: 0;
     transition: all 0.28s cubic-bezier(0.34,1.56,0.64,1);
     z-index: 200;
-    display: flex;
-    align-items: center;
-    gap: 8px;
   }
   .toast.show { transform: translateY(0); opacity: 1; }
-  .toast.success { border-color: #a8d5b0; background: #f4fbf5; color: #2d6a3f; }
-  .toast.error   { border-color: #e8a8a8; background: #fdf4f4; color: #8b2020; }
 
   /* ══════════════════════════════
-     PRINT
+     PRINT — true A4
   ══════════════════════════════ */
   @page { size: A4 portrait; margin: 0; }
   @media print {
     html, body {
-      width: 210mm; height: 297mm; overflow: hidden; background: white;
+      width: 210mm; height: auto; min-height: 297mm; overflow: visible; background: white;
       -webkit-print-color-adjust: exact !important;
       print-color-adjust: exact !important;
     }
-    .topbar, .left-panel, .preview-toolbar { display: none !important; }
-    .main  { display: block; width: 210mm; height: 297mm; overflow: hidden; }
-    .right-panel { background: white; width: 210mm; height: 297mm; overflow: hidden; }
-
+    .topbar, .left-panel, .preview-toolbar, .toast { display: none !important; }
+    .main { display: block; width: 210mm; height: auto; min-height: 297mm; overflow: visible; }
+    .right-panel { background: white; width: 210mm; height: auto; min-height: 297mm; overflow: visible; }
     .preview-scroll {
       padding: 0;
-      width: 210mm;
-      height: 297mm;
-      display: flex;
-      justify-content: center;
-      align-items: flex-start;
-      overflow: hidden;
+      width: 210mm; height: auto; min-height: 297mm;
+      display: block;
+      overflow: visible;
     }
-
     .form-preview {
       box-shadow: none;
       border-radius: 0;
-      min-height: unset;
-      width: 700px;
-      height: 297mm;
-      overflow: hidden;
+      width: 210mm;
+      min-height: 297mm;
+      height: auto;
+      padding: 16mm 18mm 14mm;
+      overflow: visible;
+      background-image: none;
     }
-
-    .toast { display: none !important; }
+    .preview-scroll { height: auto; min-height: 297mm; overflow: visible; }
+    .main, .right-panel { height: auto; min-height: 297mm; overflow: visible; }
   }
 </style>
 </head>
@@ -821,365 +847,338 @@
 
 <!-- Top Bar -->
 <div class="topbar">
-  <div class="topbar-logo">匯豐汽車&thinsp;<span>報價系統</span></div>
+  <div class="topbar-logo">匯豐汽車<span>MITSUBISHI</span></div>
   <div class="topbar-divider"></div>
-  <button class="btn btn-ghost" onclick="newQuote()">＋ 新增報價</button>
-  <button class="btn btn-primary" onclick="saveCustomer()">💾 儲存客戶</button>
-  <button class="btn btn-ghost" onclick="openSearch()">🔍 查詢客戶</button>
+  <button class="btn" onclick="newQuote()">新增報價</button>
+  <button class="btn" onclick="saveCustomer()">儲存客戶</button>
+  <button class="btn" onclick="openSearch()">查詢客戶</button>
   <div class="topbar-divider"></div>
-  <button class="btn btn-gold" onclick="printOrPDF()">🖨️ 列印 / 匯出 PDF</button>
+  <button class="btn btn-primary" onclick="printOrPDF()">列印 / 匯出 PDF</button>
   <div class="topbar-spacer"></div>
 </div>
 
-<!-- Main -->
 <div class="main">
-
-  <!-- Left Panel -->
+  <!-- LEFT PANEL -->
   <div class="left-panel">
     <div class="panel-header">
-      <div class="panel-title">輸入資料</div>
+      <div class="panel-title">Input</div>
     </div>
     <div class="left-scroll">
 
-      <!-- 基本資料 -->
       <div class="form-section">
         <div class="section-header">
-          <span class="section-icon">👤</span>
-          <span class="section-title">客戶基本資料</span>
+          <div class="section-title">客戶基本資料</div>
+          <div class="section-sub">Customer</div>
         </div>
-        <div class="section-body">
-          <div class="form-row">
-            <div class="form-group">
-              <label class="form-label">客戶姓名</label>
-              <input class="form-input" id="f_name" placeholder="請輸入姓名" oninput="update()">
-            </div>
-            <div class="form-group">
-              <label class="form-label">業務代表</label>
-              <input class="form-input" id="f_agent" placeholder="業務姓名" oninput="update()">
-            </div>
-          </div>
-          <div class="form-row">
-            <div class="form-group">
-              <label class="form-label">行動電話</label>
-              <input class="form-input" id="f_mobile" placeholder="09xx-xxxxxx" oninput="update()">
-            </div>
-          </div>
-          <div class="form-row">
-            <div class="form-group">
-              <label class="form-label">車型</label>
-              <input class="form-input" id="f_model" placeholder="車型" oninput="update()">
-            </div>
-            <div class="form-group">
-              <label class="form-label">顏色</label>
-              <input class="form-input" id="f_color" placeholder="顏色" oninput="update()">
-            </div>
-          </div>
-          <div class="form-row full">
-            <div class="form-group">
-              <label class="form-label">住址</label>
-              <input class="form-input" id="f_addr" placeholder="完整住址" oninput="update()">
-            </div>
-          </div>
+        <div class="form-row">
+          <div class="form-group"><label class="form-label">客戶姓名</label><input class="form-input" id="f_name" placeholder="—" oninput="update()"></div>
+          <div class="form-group"><label class="form-label">業務代表</label><input class="form-input" id="f_agent" placeholder="—" oninput="update()"></div>
+        </div>
+        <div class="form-row">
+          <div class="form-group"><label class="form-label">行動電話</label><input class="form-input" id="f_mobile" placeholder="—" oninput="update()"></div>
+        </div>
+        <div class="form-row">
+          <div class="form-group"><label class="form-label">車型</label><input class="form-input" id="f_model" placeholder="—" oninput="update()"></div>
+          <div class="form-group"><label class="form-label">顏色</label><input class="form-input" id="f_color" placeholder="—" oninput="update()"></div>
+        </div>
+        <div class="form-row full">
+          <div class="form-group"><label class="form-label">住址</label><input class="form-input" id="f_addr" placeholder="—" oninput="update()"></div>
         </div>
       </div>
 
-      <!-- 費用分類 -->
       <div class="form-section">
         <div class="section-header">
-          <span class="section-icon">💰</span>
-          <span class="section-title">費用分類</span>
+          <div class="section-title">費用分類</div>
+          <div class="section-sub">Pricing</div>
         </div>
-        <div class="section-body">
-          <div class="form-row">
-            <div class="form-group">
-              <label class="form-label">車價</label>
-              <input class="form-input amount" id="f_car_price" placeholder="0" type="number" oninput="update()">
-            </div>
-            <div class="form-group">
-              <label class="form-label" style="display:flex;justify-content:space-between;align-items:center">
-                <span>領牌費</span>
-                <label class="checkbox-label" style="font-size:10.5px;gap:3px;font-weight:400">
-                  <input type="checkbox" id="f_reg_actual" onchange="update()"> 實支實付
-                </label>
-              </label>
-              <input class="form-input amount" id="f_reg_fee" placeholder="0" type="number" oninput="update()">
-            </div>
+        <div class="form-row">
+          <div class="form-group"><label class="form-label">車價</label><input class="form-input amount" id="f_car_price" placeholder="0" type="number" oninput="update()"></div>
+          <div class="form-group">
+            <label class="form-label" style="display:flex;justify-content:space-between;align-items:center">
+              <span>領牌費</span>
+              <label class="checkbox-label" style="font-size:10px;gap:3px"><input type="checkbox" id="f_reg_actual" onchange="update()"> 實支實付</label>
+            </label>
+            <input class="form-input amount" id="f_reg_fee" placeholder="0" type="number" oninput="update()">
+            <div style="font-size:10px;color:var(--ink-400);margin-top:3px;letter-spacing:0.3px">小客車 <b id="reg_car_amt" style="color:var(--ink-700)">—</b>　小貨車 <b id="reg_truck_amt" style="color:var(--ink-700)">—</b></div>
           </div>
-          <div class="form-row">
-            <div class="form-group">
-              <label class="form-label" style="display:flex;justify-content:space-between;align-items:center">
-                <span>保險費</span>
-                <label class="checkbox-label" style="font-size:10.5px;gap:3px;font-weight:400">
-                  <input type="checkbox" id="f_ins_actual" onchange="update()"> 實支實付
-                </label>
-              </label>
-              <input class="form-input amount" id="f_ins_fee" placeholder="0" type="number" oninput="update()">
-            </div>
-            <div class="form-group">
-              <label class="form-label">選配費用</label>
-              <input class="form-input amount" id="f_opt_fee" placeholder="0" type="number" oninput="update()">
-            </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label" style="display:flex;justify-content:space-between;align-items:center">
+              <span>保險費</span>
+              <label class="checkbox-label" style="font-size:10px;gap:3px"><input type="checkbox" id="f_ins_actual" onchange="update()"> 實支實付</label>
+            </label>
+            <input class="form-input amount" id="f_ins_fee" placeholder="0" type="number" oninput="update()">
           </div>
-          <div class="form-row">
-            <div class="form-group">
-              <label class="form-label">其他</label>
-              <input class="form-input amount" id="f_other_fee" placeholder="0" type="number" oninput="update()">
-            </div>
-            <div></div>
-          </div>
-          <div class="total-display">
-            <span class="total-label">總計</span>
-            <span class="total-value" id="totalDisplay">$ 0</span>
-          </div>
+          <div class="form-group"><label class="form-label">選配費用</label><input class="form-input amount" id="f_opt_fee" placeholder="0" type="number" oninput="update()"></div>
+        </div>
+        <div class="form-row">
+          <div class="form-group"><label class="form-label">促銷優惠（減項）</label><input class="form-input amount" id="f_other_fee" placeholder="0" type="number" oninput="update()"></div>
+          <div></div>
+        </div>
+        <div class="total-display">
+          <span class="total-label">總計</span>
+          <span class="total-value" id="totalDisplay">0</span>
         </div>
       </div>
 
-      <!-- 保險明細 -->
       <div class="form-section">
         <div class="section-header">
-          <span class="section-icon">🛡️</span>
-          <span class="section-title">保險明細</span>
+          <div class="section-title">投保險種</div>
+          <div class="section-sub">Insurance Coverage</div>
         </div>
-        <div class="section-body">
-          <div class="form-row">
-            <div class="form-group">
-              <label class="form-label">1. 強制險</label>
-              <input class="form-input amount" id="i1_amt" placeholder="0" type="number" oninput="update()">
-            </div>
-            <div></div>
-          </div>
-          <div class="form-row full">
-            <div class="form-group">
-              <label class="form-label" style="display:flex;justify-content:space-between;align-items:center">
-                <span>2. 車體險</span>
-                <span style="display:flex;gap:10px">
-                  <label class="checkbox-label" style="font-size:10.5px;gap:3px;font-weight:400">
-                    <input type="radio" name="i2_type" id="i2_type_b" value="乙式" onchange="update()"> 乙式
-                  </label>
-                  <label class="checkbox-label" style="font-size:10.5px;gap:3px;font-weight:400">
-                    <input type="radio" name="i2_type" id="i2_type_c" value="丙式" onchange="update()"> 丙式
-                  </label>
-                </span>
-              </label>
-              <input class="form-input amount" id="i2_amt" placeholder="0" type="number" oninput="update()">
+        <div style="font-size:10.5px;color:var(--ink-500);margin-bottom:8px;letter-spacing:0.3px">勾選需要投保的險種；總保費請填於上方「保險費」欄。</div>
+
+        <div style="display:flex;flex-direction:column;gap:6px">
+          <label class="checkbox-label" style="font-size:12.5px"><input type="checkbox" id="ins_compulsory" onchange="update()"> 1. 強制險</label>
+
+          <div>
+            <label class="checkbox-label" style="font-size:12.5px"><input type="checkbox" id="ins_liability" onchange="update()"> 2. 任意險</label>
+            <div style="margin-left:22px;display:flex;gap:14px;margin-top:3px">
+              <label class="checkbox-label" style="font-size:11px"><input type="checkbox" id="ins_liability_property" onchange="update()"> 財損</label>
+              <label class="checkbox-label" style="font-size:11px"><input type="checkbox" id="ins_liability_injury" onchange="update()"> 體傷</label>
             </div>
           </div>
-          <div class="form-row">
-            <div class="form-group">
-              <label class="form-label">3. 竊盜險</label>
-              <input class="form-input amount" id="i3_amt" placeholder="0" type="number" oninput="update()">
-            </div>
-            <div></div>
-          </div>
-          <div class="form-row full">
-            <div class="form-group">
-              <label class="form-label">4. 意外險（每人）</label>
-              <div class="form-row three">
-                <input class="form-input amount" id="i4_amt" placeholder="金額" type="number" oninput="update()">
-                <input class="form-input" id="i4_accident" placeholder="事故" oninput="update()">
-                <input class="form-input" id="i4_property" placeholder="財損" oninput="update()">
-              </div>
+
+          <div>
+            <label class="checkbox-label" style="font-size:12.5px"><input type="checkbox" id="ins_body" onchange="update()"> 3. 車體險</label>
+            <div style="margin-left:22px;display:flex;gap:14px;margin-top:3px">
+              <label class="checkbox-label" style="font-size:11px"><input type="radio" name="ins_body_type" value="丙式" onchange="update()"> 丙式</label>
+              <label class="checkbox-label" style="font-size:11px"><input type="radio" name="ins_body_type" value="乙式" onchange="update()"> 乙式</label>
             </div>
           </div>
-          <div class="form-row full">
-            <div class="form-group">
-              <label class="form-label">5. 乘客險（每人）</label>
-              <div class="form-row">
-                <input class="form-input amount" id="i5_amt" placeholder="金額" type="number" oninput="update()">
-                <div class="checkbox-group">
-                  <label class="checkbox-label"><input type="checkbox" id="i5_driver" onchange="update()"> 含駕駛</label>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="form-row full">
-            <div class="form-group">
-              <label class="form-label">6. 慰問金（每人）</label>
-              <div class="form-row">
-                <input class="form-input amount" id="i6_amt" placeholder="金額" type="number" oninput="update()">
-                <input class="form-input" id="i6_note" placeholder="住院醫療" oninput="update()">
-              </div>
-            </div>
-          </div>
-          <div class="form-row">
-            <div class="form-group">
-              <label class="form-label">7. 高枕無憂</label>
-              <input class="form-input amount" id="i7_amt" placeholder="0" type="number" oninput="update()">
-            </div>
-            <div></div>
-          </div>
+
+          <label class="checkbox-label" style="font-size:12.5px"><input type="checkbox" id="ins_excess" onchange="update()"> 4. 超額責任險</label>
+          <label class="checkbox-label" style="font-size:12.5px"><input type="checkbox" id="ins_road" onchange="update()"> 5. 道路救援</label>
+          <label class="checkbox-label" style="font-size:12.5px"><input type="checkbox" id="ins_theft" onchange="update()"> 6. 竊盜險</label>
         </div>
       </div>
 
-      <!-- 貸款分期 -->
       <div class="form-section">
         <div class="section-header">
-          <span class="section-icon">🏦</span>
-          <span class="section-title">車價貸款分期明細</span>
+          <div class="section-title">車價貸款分期明細</div>
+          <div class="section-sub">Loan</div>
         </div>
-        <div class="section-body">
-          <div class="form-row">
-            <div class="form-group">
-              <label class="form-label">頭款</label>
-              <input class="form-input amount" id="l_down" placeholder="0" type="number" oninput="update()">
-            </div>
-            <div class="form-group">
-              <label class="form-label">貸款金額</label>
-              <input class="form-input amount" id="l_loan" placeholder="0" type="number" oninput="update()">
-            </div>
+        <div class="form-row">
+          <div class="form-group"><label class="form-label">頭款</label><input class="form-input amount" id="l_down" placeholder="0" type="number" oninput="update()"></div>
+          <div class="form-group"><label class="form-label">貸款金額</label><input class="form-input amount" id="l_loan" placeholder="0" type="number" oninput="update()"></div>
+        </div>
+        <div class="form-row three">
+          <div class="form-group"><label class="form-label">期數</label><input class="form-input amount" id="l_periods" placeholder="0" type="number" oninput="update()"></div>
+          <div class="form-group"><label class="form-label">每期金額</label><input class="form-input amount" id="l_monthly" placeholder="0" type="number" oninput="update()"></div>
+          <div class="form-group"><label class="form-label">動保規費</label><input class="form-input amount" id="l_reg" placeholder="0" type="number" oninput="update()"></div>
+        </div>
+        <div style="margin-top:10px;padding-top:10px;border-top:1px dashed var(--ink-200)">
+          <div class="form-label" style="margin-bottom:6px">變階式繳款（選填）</div>
+          <div class="form-row three" style="margin-bottom:4px">
+            <div class="form-group"><label class="form-label">第一階 期數</label><input class="form-input amount" id="l_step1_p" placeholder="0" type="number" oninput="update()"></div>
+            <div class="form-group"><label class="form-label">每期金額</label><input class="form-input amount" id="l_step1_m" placeholder="0" type="number" oninput="update()"></div>
+            <div></div>
+          </div>
+          <div class="form-row three" style="margin-bottom:4px">
+            <div class="form-group"><label class="form-label">第二階 期數</label><input class="form-input amount" id="l_step2_p" placeholder="0" type="number" oninput="update()"></div>
+            <div class="form-group"><label class="form-label">每期金額</label><input class="form-input amount" id="l_step2_m" placeholder="0" type="number" oninput="update()"></div>
+            <div></div>
           </div>
           <div class="form-row three">
-            <div class="form-group">
-              <label class="form-label">期數</label>
-              <input class="form-input amount" id="l_periods" placeholder="0" type="number" oninput="update()">
-            </div>
-            <div class="form-group">
-              <label class="form-label">每期金額</label>
-              <input class="form-input amount" id="l_monthly" placeholder="0" type="number" oninput="update()">
-            </div>
-            <div class="form-group">
-              <label class="form-label">動保規費</label>
-              <input class="form-input amount" id="l_reg" placeholder="0" type="number" oninput="update()">
-            </div>
+            <div class="form-group"><label class="form-label">第三階 期數</label><input class="form-input amount" id="l_step3_p" placeholder="0" type="number" oninput="update()"></div>
+            <div class="form-group"><label class="form-label">每期金額</label><input class="form-input amount" id="l_step3_m" placeholder="0" type="number" oninput="update()"></div>
+            <div></div>
           </div>
-          <!-- 變階式繳款 -->
-          <div style="margin-top:6px;padding-top:8px;border-top:1px solid #d4c4a8">
-            <div class="form-label" style="margin-bottom:6px;color:#8a6840">變階式繳款（選填）</div>
-            <div class="form-row three" style="margin-bottom:4px">
-              <div class="form-group"><label class="form-label">第一階 期數</label><input class="form-input amount" id="l_step1_p" placeholder="0" type="number" oninput="update()"></div>
-              <div class="form-group"><label class="form-label">每期金額</label><input class="form-input amount" id="l_step1_m" placeholder="0" type="number" oninput="update()"></div>
-              <div></div>
-            </div>
-            <div class="form-row three" style="margin-bottom:4px">
-              <div class="form-group"><label class="form-label">第二階 期數</label><input class="form-input amount" id="l_step2_p" placeholder="0" type="number" oninput="update()"></div>
-              <div class="form-group"><label class="form-label">每期金額</label><input class="form-input amount" id="l_step2_m" placeholder="0" type="number" oninput="update()"></div>
-              <div></div>
-            </div>
-            <div class="form-row three">
-              <div class="form-group"><label class="form-label">第三階 期數</label><input class="form-input amount" id="l_step3_p" placeholder="0" type="number" oninput="update()"></div>
-              <div class="form-group"><label class="form-label">每期金額</label><input class="form-input amount" id="l_step3_m" placeholder="0" type="number" oninput="update()"></div>
-              <div></div>
-            </div>
+          <div class="form-row three">
+            <div class="form-group"><label class="form-label">最後一期 期數</label><input class="form-input amount" id="l_stepF_p" placeholder="1" type="number" oninput="update()"></div>
+            <div class="form-group"><label class="form-label">金額</label><input class="form-input amount" id="l_stepF_m" placeholder="0" type="number" oninput="update()"></div>
+            <div></div>
           </div>
         </div>
       </div>
 
-      <!-- 選用配備 -->
       <div class="form-section">
         <div class="section-header">
-          <span class="section-icon">⚙️</span>
-          <span class="section-title">選用配備費用（12項）</span>
-          <span id="equip_total_badge" style="display:none;margin-left:auto;font-size:11.5px;font-weight:700;color:var(--brown-700);background:var(--cream-200);border:1px solid var(--cream-300);border-radius:20px;padding:2px 10px;white-space:nowrap">小計 $ <span id="equip_total_val">0</span></span>
+          <div class="section-title">選用配備（12 項）</div>
+          <div class="section-sub">Optional Equipment</div>
         </div>
-        <div class="section-body">
-          <div class="equip-grid" id="equipGrid"></div>
-          <div class="form-row full" style="margin-top:10px">
-            <div class="form-group">
-              <label class="form-label">備註</label>
-              <textarea class="form-input" id="f_remark" rows="3" placeholder="備註說明" oninput="update()" style="resize:vertical"></textarea>
-            </div>
-          </div>
+        <div class="equip-grid" id="equipGrid"></div>
+        <div class="form-row full" style="margin-top:14px">
+          <div class="form-group"><label class="form-label">備註</label><textarea class="form-input" id="f_remark" rows="3" placeholder="—" oninput="update()" style="resize:vertical;border-bottom:1px solid var(--ink-200)"></textarea></div>
         </div>
       </div>
-
     </div>
   </div>
 
-  <!-- Right Panel -->
+  <!-- RIGHT PANEL -->
   <div class="right-panel">
     <div class="preview-toolbar">
-      <span class="preview-label">預覽</span>
-      <span style="color:rgba(255,255,255,0.28);font-size:11px;letter-spacing:0.5px">即時同步更新</span>
-      <div class="preview-spacer"></div>
+      <span class="preview-label">A4 Preview</span>
+      <span class="preview-sub">即時同步</span>
     </div>
     <div class="preview-scroll">
       <div class="form-preview" id="formPreview">
 
         <!-- Header -->
-        <div class="fp-header">
-          <div style="display:flex;align-items:center;gap:20px">
-            <!-- Mitsubishi Motors logo -->
-            <img src="Mitsubishi_Motors.png" alt="Mitsubishi Motors" style="height:54px;width:auto;flex-shrink:0;display:block">
+        <header class="doc-header">
+          <div class="doc-brand">
+            <div class="doc-brand-mark">
+              <img src="data:image/png;base64,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" alt="Mitsubishi Motors" style="width:56px;height:56px;object-fit:contain;flex-shrink:0">
+              <div>
+                <div class="doc-brand-name">匯豐汽車</div>
+                <div class="doc-brand-sub">MITSUBISHI MOTORS</div>
+              </div>
+            </div>
+            <div class="doc-title">購車費用明細</div>
+          </div>
+          <div class="doc-meta">
+            <div class="doc-meta-eyebrow">QUOTATION</div>
+            <div class="doc-meta-no" id="pv_stamp_no">—</div>
+            <div class="doc-meta-date" id="pv_stamp_date">—</div>
+          </div>
+        </header>
+
+        <!-- Customer -->
+        <section class="doc-customer">
+          <div class="cust-name-row">
+            <span class="cust-eyebrow">CUSTOMER</span>
+            <span class="cust-name" id="pv_name"></span>
+          </div>
+          <div class="cust-grid">
+            <div class="cust-field">
+              <span class="cust-field-label">車型 / Model</span>
+              <span class="cust-field-val" id="pv_model"></span>
+            </div>
+            <div class="cust-field">
+              <span class="cust-field-label">顏色 / Color</span>
+              <span class="cust-field-val" id="pv_color"></span>
+            </div>
+            <div class="cust-field">
+              <span class="cust-field-label">業務 / Sales</span>
+              <span class="cust-field-val" id="pv_agent"></span>
+            </div>
+          </div>
+          <div class="cust-grid row2">
+            <div class="cust-field">
+              <span class="cust-field-label">住址 / Address</span>
+              <span class="cust-field-val" id="pv_addr"></span>
+            </div>
+            <div class="cust-field">
+              <span class="cust-field-label">電話 / Mobile</span>
+              <span class="cust-field-val" id="pv_mobile"></span>
+            </div>
+          </div>
+        </section>
+
+        <!-- HERO numbers -->
+        <section class="doc-hero">
+          <div class="hero-cell">
+            <div class="hero-label">總價　Total</div>
+            <div class="hero-num-wrap">
+              <span class="hero-currency">NT$</span>
+              <span class="hero-num" id="pv_total"></span>
+            </div>
+            <div class="hero-meta">含車價、領牌、保險、選配，扣除促銷優惠</div>
+          </div>
+          <div class="hero-cell secondary">
+            <div class="hero-label">每月　Monthly</div>
+            <div class="hero-num-wrap">
+              <span class="hero-currency">NT$</span>
+              <span class="hero-num" id="pv_monthly_hero"></span>
+            </div>
+            <div class="hero-meta">分期 <strong id="pv_periods_hero">—</strong> 期 ／ 頭款 NT$ <strong id="pv_down_hero">—</strong></div>
+          </div>
+        </section>
+
+        <!-- COSTS -->
+        <section class="doc-section">
+          <div class="doc-section-head">
             <div>
-              <div class="fp-header-accent"></div>
-              <div class="fp-title">匯豐汽車　購車費用明細</div>
+              <span class="doc-section-title-zh">費用分類</span>
+              <span class="doc-section-en">Pricing breakdown</span>
             </div>
           </div>
-        </div>
-
-        <!-- Client Info Bar -->
-        <div class="fp-info-bar">
-          <div class="fp-basic">
-            <div class="fp-field-row"><span class="fp-field-label">客戶姓名</span><span class="fp-field-val" id="pv_name"></span></div>
-            <div class="fp-field-row"><span class="fp-field-label">業務代表</span><span class="fp-field-val" id="pv_agent"></span></div>
-            <div class="fp-field-row"><span class="fp-field-label">行動電話</span><span class="fp-field-val" id="pv_mobile"></span></div>
-            <div class="fp-field-row"><span class="fp-field-label">車型 / 顏色</span><span class="fp-field-val"><span id="pv_model"></span><span id="pv_color" style="margin-left:8px;color:#64748b"></span></span></div>
+          <div class="row cost-row"><span class="lbl">車　價</span><span class="note">Vehicle</span><span class="amt" id="pv_car_price"></span></div>
+          <div class="row cost-row"><span class="lbl">領　牌　費</span><span class="note">Registration</span><span class="amt" id="pv_reg_fee"></span></div>
+          <div class="row cost-row"><span class="lbl">保　險　費</span><span class="note">Insurance</span><span class="amt" id="pv_ins_fee"></span></div>
+          <div class="row cost-row"><span class="lbl">選　配　費　用</span><span class="note">Options</span><span class="amt" id="pv_opt_fee"></span></div>
+          <div class="row cost-row discount"><span class="lbl">促　銷　優　惠</span><span class="note">Discount</span><span class="amt" id="pv_other_fee"></span></div>
+          <div class="cost-subtotal">
+            <span class="cost-subtotal-label">小計　Subtotal</span>
+            <span class="cost-subtotal-amt"><span style="font-size:14px;color:var(--ink-500);font-weight:500;margin-right:4px">NT$</span><span id="pv_total_sub"></span></span>
           </div>
-          <div class="fp-addr-row"><span class="fp-field-label">住址</span><span class="fp-field-val" id="pv_addr"></span></div>
-        </div>
+        </section>
 
-        <!-- 2×2 Grid: all 4 cards -->
-        <div class="fp-grid">
+        <!-- INSURANCE -->
+        <section class="doc-section">
+          <div class="doc-section-head">
+            <div>
+              <span class="doc-section-title-zh">投保險種</span>
+              <span class="doc-section-en">Insurance coverage</span>
+            </div>
+            <span class="doc-section-en" style="font-variant-numeric:tabular-nums">總保費　NT$ <strong id="pv_ins_total" style="color:var(--ink-900);font-weight:600">—</strong></span>
+          </div>
+          <div id="pv_ins_list" style="display:grid;grid-template-columns:1fr 1fr;column-gap:36px;row-gap:0">
+            <div class="row ins-row" id="pv_ins_compulsory_row"><span class="num-idx">01</span><span class="lbl">強制險</span><span class="note"></span><span class="amt" id="pv_ins_compulsory_mark">✓</span></div>
+            <div class="row ins-row" id="pv_ins_liability_row"><span class="num-idx">02</span><span class="lbl">任意險</span><span class="note" id="pv_ins_liability_note"></span><span class="amt">✓</span></div>
+            <div class="row ins-row" id="pv_ins_body_row"><span class="num-idx">03</span><span class="lbl">車體險</span><span class="note" id="pv_ins_body_note"></span><span class="amt">✓</span></div>
+            <div class="row ins-row" id="pv_ins_excess_row"><span class="num-idx">04</span><span class="lbl">超額責任險</span><span class="note"></span><span class="amt">✓</span></div>
+            <div class="row ins-row" id="pv_ins_road_row"><span class="num-idx">05</span><span class="lbl">道路救援</span><span class="note"></span><span class="amt">✓</span></div>
+            <div class="row ins-row" id="pv_ins_theft_row"><span class="num-idx">06</span><span class="lbl">竊盜險</span><span class="note">自負額10%</span><span class="amt">✓</span></div>
+          </div>
+          <div id="pv_ins_empty" style="display:none;font-size:11px;color:var(--ink-400);padding:6px 0;letter-spacing:0.5px">尚未選擇任何險種</div>
+        </section>
 
-          <!-- Cost Card -->
-          <div class="fp-cost-card">
-            <div class="fp-cost-card-header">費　用　分　類</div>
-            <div class="fp-cost-row"><span class="fp-cost-name">車價</span><span class="fp-cost-amt" id="pv_car_price"></span></div>
-            <div class="fp-cost-row"><span class="fp-cost-name">領牌費</span><span class="fp-cost-amt" id="pv_reg_fee"></span></div>
-            <div class="fp-cost-row"><span class="fp-cost-name">保險費</span><span class="fp-cost-amt" id="pv_ins_fee"></span></div>
-            <div class="fp-cost-row"><span class="fp-cost-name">選配費用</span><span class="fp-cost-amt" id="pv_opt_fee"></span></div>
-            <div class="fp-cost-row"><span class="fp-cost-name">其他</span><span class="fp-cost-amt" id="pv_other_fee"></span></div>
-            <div class="fp-cost-total-row">
-              <span class="fp-cost-total-label">總　計</span>
-              <span class="fp-cost-total-amt" id="pv_total"></span>
+        <!-- LOAN -->
+        <section class="doc-section">
+          <div class="doc-section-head">
+            <div>
+              <span class="doc-section-title-zh">車價貸款分期明細</span>
+              <span class="doc-section-en">Loan schedule</span>
             </div>
           </div>
-
-          <!-- Insurance Card -->
-          <div class="fp-ins-card">
-            <div class="fp-ins-card-header">保　險　明　細</div>
-            <div class="fp-ins-row"><span class="fp-ins-badge">1</span><span class="fp-ins-name">強制險</span><span class="fp-ins-amount" id="pv_i1"></span></div>
-            <div class="fp-ins-row"><span class="fp-ins-badge">2</span><span class="fp-ins-name">車體險</span><span class="fp-ins-amount" id="pv_i2"></span><span class="fp-ins-note" id="pv_i2_note"></span></div>
-            <div class="fp-ins-row"><span class="fp-ins-badge">3</span><span class="fp-ins-name">竊盜險</span><span class="fp-ins-amount" id="pv_i3"></span><span class="fp-ins-note">自負額10%</span></div>
-            <div class="fp-ins-row"><span class="fp-ins-badge">4</span><span class="fp-ins-name">意外險</span><span class="fp-ins-amount" id="pv_i4"></span><span class="fp-ins-note" id="pv_i4_note"></span></div>
-            <div class="fp-ins-row"><span class="fp-ins-badge">5</span><span class="fp-ins-name">乘客險</span><span class="fp-ins-amount" id="pv_i5"></span><span class="fp-ins-note" id="pv_i5_note"></span></div>
-            <div class="fp-ins-row"><span class="fp-ins-badge">6</span><span class="fp-ins-name">慰問金</span><span class="fp-ins-amount" id="pv_i6"></span><span class="fp-ins-note" id="pv_i6_note"></span></div>
-            <div class="fp-ins-row"><span class="fp-ins-badge">7</span><span class="fp-ins-name">高枕無憂</span><span class="fp-ins-amount" id="pv_i7"></span></div>
-          </div>
-
-          <!-- Loan Card -->
-          <div class="fp-bottom-left">
-            <div class="fp-section-title">車　價　貸　款　分　期　明　細</div>
-            <div class="fp-loan-row"><span class="fp-loan-label">頭款</span><span class="fp-loan-val" id="pv_down"></span></div>
-            <div class="fp-loan-row"><span class="fp-loan-label">貸款金額</span><span class="fp-loan-val" id="pv_loan"></span></div>
-            <div class="fp-loan-row">
-              <span class="fp-loan-label">期數 / 期付</span>
-              <span style="font-variant-numeric:tabular-nums;font-weight:700;color:#1e40af">
-                <span id="pv_periods"></span> 期 &nbsp;／&nbsp; <span id="pv_monthly"></span> 元
-              </span>
-            </div>
-            <div class="fp-loan-row"><span class="fp-loan-label">動保規費</span><span class="fp-loan-val" id="pv_reg"></span></div>
-            <div class="fp-loan-step" id="pv_step_block" style="display:none">
-              <div class="fp-loan-step-title">變　階　式　繳　款</div>
-              <div class="fp-loan-row" id="pv_step1_row" style="display:none"><span class="fp-loan-label">第一階</span><span class="fp-loan-val"><span id="pv_step1_p"></span> 期 ／ <span id="pv_step1_m"></span> 元</span></div>
-              <div class="fp-loan-row" id="pv_step2_row" style="display:none"><span class="fp-loan-label">第二階</span><span class="fp-loan-val"><span id="pv_step2_p"></span> 期 ／ <span id="pv_step2_m"></span> 元</span></div>
-              <div class="fp-loan-row" id="pv_step3_row" style="display:none"><span class="fp-loan-label">第三階</span><span class="fp-loan-val"><span id="pv_step3_p"></span> 期 ／ <span id="pv_step3_m"></span> 元</span></div>
+          <div class="loan-grid">
+            <div class="row loan-row"><span class="lbl">頭　款</span><span class="amt-line"><span id="pv_down"></span><span class="unit">元</span></span></div>
+            <div class="row loan-row"><span class="lbl">貸款金額</span><span class="amt-line"><span id="pv_loan"></span><span class="unit">元</span></span></div>
+            <div class="row loan-row"><span class="lbl">期數 / 期付</span><span class="amt-line"><span id="pv_periods"></span><span class="unit">期 ／</span> <span id="pv_monthly"></span><span class="unit">元</span></span></div>
+            <div class="row loan-row"><span class="lbl">動保規費</span><span class="amt-line"><span id="pv_reg"></span><span class="unit">元</span></span></div>
+            <div class="loan-step" id="pv_step_block" style="display:none">
+              <div class="loan-step-title">變階式繳款　Stepped payment</div>
+              <div class="loan-step-rows">
+                <div class="row loan-row" id="pv_step1_row" style="display:none;border:none;padding:3px 0"><span class="lbl">第一階</span><span class="amt-line"><span id="pv_step1_p"></span><span class="unit">期／</span><span id="pv_step1_m"></span></span></div>
+                <div class="row loan-row" id="pv_step2_row" style="display:none;border:none;padding:3px 0"><span class="lbl">第二階</span><span class="amt-line"><span id="pv_step2_p"></span><span class="unit">期／</span><span id="pv_step2_m"></span></span></div>
+                <div class="row loan-row" id="pv_step3_row" style="display:none;border:none;padding:3px 0"><span class="lbl">第三階</span><span class="amt-line"><span id="pv_step3_p"></span><span class="unit">期／</span><span id="pv_step3_m"></span></span></div>
+                <div class="row loan-row" id="pv_stepF_row" style="display:none;border:none;padding:3px 0"><span class="lbl">最後一期</span><span class="amt-line"><span id="pv_stepF_p"></span><span class="unit">期／</span><span id="pv_stepF_m"></span></span></div>
+              </div>
             </div>
           </div>
+        </section>
 
-          <!-- Options Card -->
-          <div class="fp-bottom-right">
-            <div class="fp-section-title">選　用　配　備　費　用</div>
-            <div class="fp-opt-grid" id="pv_opt_grid"></div>
-            <div class="fp-remark-row"><strong>備註：</strong><span id="pv_remark"></span></div>
+        <!-- EQUIPMENT -->
+        <section class="doc-section">
+          <div class="doc-section-head">
+            <div>
+              <span class="doc-section-title-zh">選用配備</span>
+              <span class="doc-section-en">Optional equipment</span>
+            </div>
+            <span class="doc-section-en" style="font-variant-numeric:tabular-nums">小計　NT$ <strong id="pv_eq_total" style="color:var(--ink-900);font-weight:600">0</strong></span>
           </div>
+          <div class="opt-grid" id="pv_opt_grid"></div>
+        </section>
 
-        </div><!-- /fp-grid -->
+        <!-- REMARK -->
+        <section class="doc-remark">
+          <div class="remark-label">備註　Remarks</div>
+          <div class="remark-body" id="pv_remark"></div>
+        </section>
 
-        <!-- Date -->
-        <div class="fp-date-row">
-          中　華　民　國　<span id="pv_year"></span>　年　<span id="pv_month"></span>　月　<span id="pv_day"></span>　日
-        </div>
+        <!-- FOOTER -->
+        <footer class="doc-footer">
+          <div class="sig-row">
+            <div class="sig-cell"><div class="sig-line"></div><div class="sig-label">客戶簽章　Customer</div></div>
+            <div class="sig-cell"><div class="sig-line"></div><div class="sig-label">業務代表　Sales</div></div>
+            <div class="sig-cell"><div class="sig-line"></div><div class="sig-label">主管核章　Manager</div></div>
+          </div>
+          <div class="doc-date" style="display:none">
+            中　華　民　國　<span id="pv_year"></span>　年　<span id="pv_month"></span>　月　<span id="pv_day"></span>　日
+          </div>
+        </footer>
 
       </div>
     </div>
@@ -1190,56 +1189,47 @@
 <div class="modal-overlay" id="searchModal">
   <div class="modal">
     <div class="modal-header">
-      <span class="modal-title">🔍 查詢客戶紀錄</span>
+      <span class="modal-title">查詢客戶紀錄</span>
       <button class="modal-close" onclick="closeSearch()">✕</button>
     </div>
-    <div class="modal-search">
-      <input type="text" id="searchInput" placeholder="搜尋客戶姓名或車型..." oninput="renderList()">
-    </div>
+    <div class="modal-search"><input type="text" id="searchInput" placeholder="搜尋客戶姓名或車型..." oninput="renderList()"></div>
     <div class="modal-list" id="modalList"></div>
   </div>
 </div>
 
-<!-- Toast -->
 <div class="toast" id="toast"></div>
 
 <script>
-// ── Equipment grid init ──
 const EQUIP_COUNT = 12;
 const equipGrid = document.getElementById('equipGrid');
 for (let i = 1; i <= EQUIP_COUNT; i++) {
   equipGrid.innerHTML += `
     <div class="equip-item">
-      <span class="equip-num">${i}.</span>
-      <input class="form-input equip-name" id="eq_name_${i}" placeholder="項目" oninput="update()">
+      <span class="equip-num">${String(i).padStart(2,'0')}</span>
+      <input class="form-input equip-name" id="eq_name_${i}" placeholder="—" oninput="update()">
       <input class="form-input amount equip-price" id="eq_price_${i}" placeholder="0" type="number" oninput="update()">
     </div>`;
 }
-
-// Opt grid in preview
 const pvOptGrid = document.getElementById('pv_opt_grid');
 for (let i = 1; i <= EQUIP_COUNT; i++) {
   pvOptGrid.innerHTML += `
-    <div class="fp-opt-row">
-      <span class="fp-opt-name"><span id="pv_eq_name_${i}">${i}.</span></span>
-      <span class="fp-opt-val" id="pv_eq_price_${i}"></span>
+    <div class="row opt-row">
+      <span class="num-idx">${String(i).padStart(2,'0')}</span>
+      <span class="lbl" id="pv_eq_name_${i}">—</span>
+      <span class="amt" id="pv_eq_price_${i}"></span>
     </div>`;
 }
 
-
-// ── Helpers ──
 function fmt(v) {
   const n = parseFloat(v);
   if (!v && v !== 0) return '';
   if (isNaN(n)) return '';
-  return n.toLocaleString('zh-TW');
+  return n.toLocaleString('en-US');
 }
 function v(id) { return document.getElementById(id)?.value || ''; }
 function set(id, val) { const el = document.getElementById(id); if(el) el.textContent = val; }
 
-// ── Update preview ──
 function update() {
-  // Basic
   set('pv_name', v('f_name'));
   set('pv_agent', v('f_agent'));
   set('pv_mobile', v('f_mobile'));
@@ -1247,7 +1237,6 @@ function update() {
   set('pv_color', v('f_color'));
   set('pv_addr', v('f_addr'));
 
-  // Costs
   const regActual = document.getElementById('f_reg_actual').checked;
   const insActual = document.getElementById('f_ins_actual').checked;
   document.getElementById('f_reg_fee').disabled = regActual;
@@ -1258,43 +1247,68 @@ function update() {
   const ins = insActual ? 0 : (parseFloat(v('f_ins_fee')) || 0);
   const opt = parseFloat(v('f_opt_fee')) || 0;
   const oth = parseFloat(v('f_other_fee')) || 0;
-  const total = car + reg + ins + opt + oth;
+  const total = car + reg + ins + opt - oth;
 
   set('pv_car_price', car ? fmt(car) : '');
   set('pv_reg_fee', regActual ? '實支實付' : (reg ? fmt(reg) : ''));
   set('pv_ins_fee', insActual ? '實支實付' : (ins ? fmt(ins) : ''));
   set('pv_opt_fee', opt ? fmt(opt) : '');
-  set('pv_other_fee', oth ? fmt(oth) : '');
+  set('pv_other_fee', oth ? '－ ' + fmt(oth) : '');
   set('pv_total', total ? fmt(total) : '');
-  document.getElementById('totalDisplay').textContent = '$ ' + total.toLocaleString('zh-TW');
+  set('pv_total_sub', total ? fmt(total) : '0');
+  document.getElementById('totalDisplay').textContent = total.toLocaleString('en-US');
 
-  // Insurance
-  set('pv_i1', fmt(v('i1_amt')));
-  set('pv_i2', fmt(v('i2_amt')));
-  const i2type = document.querySelector('input[name="i2_type"]:checked');
-  set('pv_i2_note', i2type ? i2type.value : '');
-  set('pv_i3', fmt(v('i3_amt')));
-  set('pv_i4', fmt(v('i4_amt')));
-  const i4n = [v('i4_accident') ? '事故'+v('i4_accident') : '', v('i4_property') ? '財損'+v('i4_property') : ''].filter(Boolean).join('　');
-  set('pv_i4_note', i4n ? '每人'+i4n : '每人');
-  set('pv_i5', fmt(v('i5_amt')));
-  set('pv_i5_note', document.getElementById('i5_driver').checked ? '含駕駛' : '');
-  set('pv_i6', fmt(v('i6_amt')));
-  set('pv_i6_note', v('i6_note') ? '每人　'+v('i6_note') : '每人');
-  set('pv_i7', fmt(v('i7_amt')));
+  // —— Insurance coverage (checkbox-based) ——
+  const insChecks = {
+    compulsory: document.getElementById('ins_compulsory').checked,
+    liability:  document.getElementById('ins_liability').checked,
+    body:       document.getElementById('ins_body').checked,
+    excess:     document.getElementById('ins_excess').checked,
+    road:       document.getElementById('ins_road').checked,
+    theft:      document.getElementById('ins_theft').checked,
+  };
+  // sub-options
+  const liabProperty = document.getElementById('ins_liability_property').checked;
+  const liabInjury   = document.getElementById('ins_liability_injury').checked;
+  const bodyTypeEl   = document.querySelector('input[name="ins_body_type"]:checked');
+  const bodyType     = bodyTypeEl ? bodyTypeEl.value : '';
 
-  // Loan
-  set('pv_down', fmt(v('l_down')));
-  set('pv_loan', fmt(v('l_loan')));
-  set('pv_periods', v('l_periods'));
-  set('pv_monthly', fmt(v('l_monthly')));
-  set('pv_reg', fmt(v('l_reg')));
+  const liabSubs = [liabProperty ? '財損' : '', liabInjury ? '體傷' : ''].filter(Boolean).join(' / ');
+  set('pv_ins_liability_note', liabSubs);
+  set('pv_ins_body_note', bodyType);
 
-  // 變階式繳款
+  const showRow = (id, on) => {
+    const el = document.getElementById(id);
+    if (el) el.style.display = on ? '' : 'none';
+  };
+  showRow('pv_ins_compulsory_row', insChecks.compulsory);
+  showRow('pv_ins_liability_row',  insChecks.liability);
+  showRow('pv_ins_body_row',       insChecks.body);
+  showRow('pv_ins_excess_row',     insChecks.excess);
+  showRow('pv_ins_road_row',       insChecks.road);
+  showRow('pv_ins_theft_row',      insChecks.theft);
+
+  const anyIns = Object.values(insChecks).some(Boolean);
+  document.getElementById('pv_ins_list').style.display  = anyIns ? '' : 'none';
+  document.getElementById('pv_ins_empty').style.display = anyIns ? 'none' : '';
+  set('pv_ins_total', ins ? fmt(ins) : (insActual ? '實支實付' : '—'));
+
+  set('pv_down', fmt(v('l_down')) || '—');
+  set('pv_loan', fmt(v('l_loan')) || '—');
+  set('pv_periods', v('l_periods') || '—');
+  set('pv_monthly', fmt(v('l_monthly')) || '—');
+  set('pv_reg', fmt(v('l_reg')) || '—');
+
+  // Hero numbers (monthly + periods + down)
+  set('pv_monthly_hero', v('l_monthly') ? fmt(v('l_monthly')) : '');
+  set('pv_periods_hero', v('l_periods') || '—');
+  set('pv_down_hero', v('l_down') ? fmt(v('l_down')) : '—');
+
   const steps = [
     { p: v('l_step1_p'), m: v('l_step1_m'), rowId: 'pv_step1_row', pId: 'pv_step1_p', mId: 'pv_step1_m' },
     { p: v('l_step2_p'), m: v('l_step2_m'), rowId: 'pv_step2_row', pId: 'pv_step2_p', mId: 'pv_step2_m' },
     { p: v('l_step3_p'), m: v('l_step3_m'), rowId: 'pv_step3_row', pId: 'pv_step3_p', mId: 'pv_step3_m' },
+    { p: v('l_stepF_p'), m: v('l_stepF_m'), rowId: 'pv_stepF_row', pId: 'pv_stepF_p', mId: 'pv_stepF_m' },
   ];
   const hasAnyStep = steps.some(s => s.p || s.m);
   document.getElementById('pv_step_block').style.display = hasAnyStep ? '' : 'none';
@@ -1306,49 +1320,53 @@ function update() {
     set(s.mId, fmt(s.m) || '—');
   });
 
-  // Equipment
   let equipTotal = 0;
   for (let i = 1; i <= EQUIP_COUNT; i++) {
     const name = v(`eq_name_${i}`);
     const price = v(`eq_price_${i}`);
-    set(`pv_eq_name_${i}`, name ? `${i}. ${name}` : `${i}.`);
+    const row = document.getElementById(`pv_eq_name_${i}`)?.closest('.opt-row');
+    if (row) row.style.display = '';
+    set(`pv_eq_name_${i}`, name || '—');
     set(`pv_eq_price_${i}`, fmt(price));
     equipTotal += parseFloat(price) || 0;
   }
-  const badge = document.getElementById('equip_total_badge');
-  if (equipTotal > 0) {
-    document.getElementById('equip_total_val').textContent = equipTotal.toLocaleString('zh-TW');
-    badge.style.display = '';
-  } else {
-    badge.style.display = 'none';
-  }
+  set('pv_eq_total', equipTotal.toLocaleString('en-US'));
+  const equipSection = document.getElementById('pv_opt_grid')?.closest('.doc-section');
+  if (equipSection) equipSection.style.display = '';
 
-  // Remark
-  set('pv_remark', v('f_remark'));
+  const remarkVal = v('f_remark');
+  set('pv_remark', remarkVal);
+  const remarkSection = document.getElementById('pv_remark')?.closest('.doc-remark');
+  if (remarkSection) remarkSection.style.display = '';
 
-  // Date
   const now = new Date();
   const roc = now.getFullYear() - 1911;
+  const pad = n => String(n).padStart(2, '0');
   set('pv_year', roc);
   set('pv_month', now.getMonth() + 1);
   set('pv_day', now.getDate());
+  set('pv_stamp_date', `${now.getFullYear()}.${pad(now.getMonth()+1)}.${pad(now.getDate())}`);
+  const stampEl = document.getElementById('pv_stamp_no');
+  if (stampEl && stampEl.textContent === '—') {
+    stampEl.textContent = `HF-${now.getFullYear()}${pad(now.getMonth()+1)}${pad(now.getDate())}`;
+  }
 }
 
-// ── Gather / Restore data ──
+const ALL_IDS = ['f_name','f_agent','f_mobile','f_model','f_color','f_addr',
+  'f_car_price','f_reg_fee','f_ins_fee','f_opt_fee','f_other_fee',
+  'l_down','l_loan','l_periods','l_monthly','l_reg',
+  'l_step1_p','l_step1_m','l_step2_p','l_step2_m','l_step3_p','l_step3_m','l_stepF_p','l_stepF_m','f_remark'];
+
+const INS_CHECKS = ['ins_compulsory','ins_liability','ins_liability_property','ins_liability_injury','ins_body','ins_excess','ins_road','ins_theft'];
+
 function gatherData() {
   const d = {};
-  const ids = ['f_name','f_agent','f_mobile','f_model','f_color','f_addr',
-    'f_car_price','f_reg_fee','f_ins_fee','f_opt_fee','f_other_fee',
-    'i1_amt','i2_amt','i3_amt','i4_amt','i4_accident','i4_property',
-    'i5_amt','i6_amt','i6_note','i7_amt',
-    'l_down','l_loan','l_periods','l_monthly','l_reg',
-    'l_step1_p','l_step1_m','l_step2_p','l_step2_m','l_step3_p','l_step3_m','f_remark'];
-  ids.forEach(id => d[id] = v(id));
-  d.i5_driver = document.getElementById('i5_driver').checked;
+  ALL_IDS.forEach(id => d[id] = v(id));
+  INS_CHECKS.forEach(id => { d[id] = document.getElementById(id).checked; });
   d.f_reg_actual = document.getElementById('f_reg_actual').checked;
   d.f_ins_actual = document.getElementById('f_ins_actual').checked;
-  const i2checked = document.querySelector('input[name="i2_type"]:checked');
-  d.i2_type = i2checked ? i2checked.value : '';
+  const bt = document.querySelector('input[name="ins_body_type"]:checked');
+  d.ins_body_type = bt ? bt.value : '';
   for (let i = 1; i <= EQUIP_COUNT; i++) {
     d[`eq_name_${i}`] = v(`eq_name_${i}`);
     d[`eq_price_${i}`] = v(`eq_price_${i}`);
@@ -1358,17 +1376,11 @@ function gatherData() {
 }
 
 function restoreData(d) {
-  const ids = ['f_name','f_agent','f_mobile','f_model','f_color','f_addr',
-    'f_car_price','f_reg_fee','f_ins_fee','f_opt_fee','f_other_fee',
-    'i1_amt','i2_amt','i3_amt','i4_amt','i4_accident','i4_property',
-    'i5_amt','i6_amt','i6_note','i7_amt',
-    'l_down','l_loan','l_periods','l_monthly','l_reg',
-    'l_step1_p','l_step1_m','l_step2_p','l_step2_m','l_step3_p','l_step3_m','f_remark'];
-  ids.forEach(id => { const el = document.getElementById(id); if(el) el.value = d[id] || ''; });
-  document.getElementById('i5_driver').checked = !!d.i5_driver;
+  ALL_IDS.forEach(id => { const el = document.getElementById(id); if(el) el.value = d[id] || ''; });
+  INS_CHECKS.forEach(id => { const el = document.getElementById(id); if(el) el.checked = !!d[id]; });
   document.getElementById('f_reg_actual').checked = !!d.f_reg_actual;
   document.getElementById('f_ins_actual').checked = !!d.f_ins_actual;
-  document.querySelectorAll('input[name="i2_type"]').forEach(r => { r.checked = (r.value === d.i2_type); });
+  document.querySelectorAll('input[name="ins_body_type"]').forEach(r => { r.checked = (r.value === d.ins_body_type); });
   for (let i = 1; i <= EQUIP_COUNT; i++) {
     const n = document.getElementById(`eq_name_${i}`); if(n) n.value = d[`eq_name_${i}`] || '';
     const p = document.getElementById(`eq_price_${i}`); if(p) p.value = d[`eq_price_${i}`] || '';
@@ -1376,74 +1388,55 @@ function restoreData(d) {
   update();
 }
 
-// ── New Quote ──
 function newQuote() {
   if (!confirm('清空目前所有資料，建立新報價單？')) return;
-  const ids = ['f_name','f_agent','f_mobile','f_model','f_color','f_addr',
-    'f_car_price','f_reg_fee','f_ins_fee','f_opt_fee','f_other_fee',
-    'i1_amt','i2_amt','i3_amt','i4_amt','i4_accident','i4_property',
-    'i5_amt','i6_amt','i6_note','i7_amt',
-    'l_down','l_loan','l_periods','l_monthly','l_reg',
-    'l_step1_p','l_step1_m','l_step2_p','l_step2_m','l_step3_p','l_step3_m','f_remark'];
-  ids.forEach(id => { const el = document.getElementById(id); if(el) el.value = ''; });
-  document.getElementById('i5_driver').checked = false;
+  ALL_IDS.forEach(id => { const el = document.getElementById(id); if(el) el.value = ''; });
+  INS_CHECKS.forEach(id => { const el = document.getElementById(id); if(el) el.checked = false; });
   document.getElementById('f_reg_actual').checked = false;
   document.getElementById('f_ins_actual').checked = false;
-  document.querySelectorAll('input[name="i2_type"]').forEach(r => { r.checked = false; });
+  document.querySelectorAll('input[name="ins_body_type"]').forEach(r => { r.checked = false; });
   for (let i = 1; i <= EQUIP_COUNT; i++) {
     const n = document.getElementById(`eq_name_${i}`); if(n) n.value = '';
     const p = document.getElementById(`eq_price_${i}`); if(p) p.value = '';
   }
   update();
-  showToast('✅ 已建立新報價單', 'success');
+  showToast('已建立新報價單');
 }
 
-// ── Save ──
 function saveCustomer() {
   const name = v('f_name');
-  if (!name) { showToast('⚠️ 請先填寫客戶姓名', 'error'); return; }
+  if (!name) { showToast('請先填寫客戶姓名'); return; }
   const data = gatherData();
   const key = `hf_${Date.now()}`;
   localStorage.setItem(key, JSON.stringify(data));
-  showToast(`💾 已儲存：${name}`, 'success');
+  showToast(`已儲存：${name}`);
 }
 
-// ── Load all records ──
 function getRecords() {
   const records = [];
   for (let i = 0; i < localStorage.length; i++) {
     const key = localStorage.key(i);
     if (!key.startsWith('hf_') || key === 'hf_serial') continue;
-    try {
-      const d = JSON.parse(localStorage.getItem(key));
-      records.push({ key, data: d });
-    } catch(e) {}
+    try { records.push({ key, data: JSON.parse(localStorage.getItem(key)) }); } catch(e) {}
   }
   return records.sort((a, b) => b.key.localeCompare(a.key));
 }
 
-// ── Search Modal ──
 function openSearch() {
   document.getElementById('searchModal').classList.add('open');
   document.getElementById('searchInput').value = '';
   renderList();
 }
-function closeSearch() {
-  document.getElementById('searchModal').classList.remove('open');
-}
+function closeSearch() { document.getElementById('searchModal').classList.remove('open'); }
 
 function renderList() {
   const q = document.getElementById('searchInput').value.trim().toLowerCase();
   const records = getRecords().filter(r => {
     if (!q) return true;
-    return (r.data.f_name||'').toLowerCase().includes(q) ||
-           (r.data.f_model||'').toLowerCase().includes(q);
+    return (r.data.f_name||'').toLowerCase().includes(q) || (r.data.f_model||'').toLowerCase().includes(q);
   });
   const list = document.getElementById('modalList');
-  if (!records.length) {
-    list.innerHTML = '<div class="modal-empty">📂 尚無符合紀錄</div>';
-    return;
-  }
+  if (!records.length) { list.innerHTML = '<div class="modal-empty">尚無符合紀錄</div>'; return; }
   list.innerHTML = records.map(r => {
     const d = r.data;
     const name = d.f_name || '（未命名）';
@@ -1454,20 +1447,18 @@ function renderList() {
       <div class="modal-item-avatar">${init}</div>
       <div class="modal-item-info">
         <div class="modal-item-name">${name}</div>
-        <div class="modal-item-sub">${model}　｜　${date}　｜　NO. ${d.serial||'—'}</div>
+        <div class="modal-item-sub">${model}　·　${date}</div>
       </div>
-      <button class="modal-item-del" onclick="deleteRecord(event,'${r.key}')">🗑</button>
+      <button class="modal-item-del" onclick="deleteRecord(event,'${r.key}')">✕</button>
     </div>`;
   }).join('');
 }
 
 function loadRecord(key) {
-  const raw = localStorage.getItem(key);
-  if (!raw) return;
-  const d = JSON.parse(raw);
-  restoreData(d);
+  const raw = localStorage.getItem(key); if (!raw) return;
+  restoreData(JSON.parse(raw));
   closeSearch();
-  showToast(`📂 已載入：${d.f_name || '紀錄'}`, 'success');
+  showToast(`已載入紀錄`);
 }
 
 function deleteRecord(e, key) {
@@ -1475,37 +1466,31 @@ function deleteRecord(e, key) {
   if (!confirm('確定刪除這筆紀錄？')) return;
   localStorage.removeItem(key);
   renderList();
-  showToast('🗑️ 已刪除', 'success');
+  showToast('已刪除');
 }
 
-// ── PDF Export ──
 function printOrPDF() {
-  showToast('🖨️ 列印請直接列印；匯出 PDF 請在對話框選「儲存為 PDF」', 'success');
   const name = v('f_name');
   const orig = document.title;
-  document.title = name ? '匯豐汽車-' + name : '匯豐汽車';
-  setTimeout(() => {
-    window.print();
-    document.title = orig;
-  }, 700);
+  document.title = name ? '匯豐汽車-' + name : '匯豐汽車-報價單';
+  setTimeout(() => { window.print(); document.title = orig; }, 400);
 }
 
-// ── Toast ──
-let toastTimer;
-function showToast(msg, type='') {
-  const el = document.getElementById('toast');
-  el.textContent = msg;
-  el.className = 'toast show ' + type;
-  clearTimeout(toastTimer);
-  toastTimer = setTimeout(() => el.classList.remove('show'), 2800);
+
+function calcRegFeeHint() {
+  const today = new Date();
+  const yearEnd = new Date(today.getFullYear(), 11, 31);
+  const msPerDay = 86400000;
+  const daysLeft = Math.round((yearEnd - today) / msPerDay) + 1;
+  const y = today.getFullYear();
+  const totalDays = ((y % 4 === 0 && y % 100 !== 0) || y % 400 === 0) ? 366 : 365;
+  const car   = Math.round(11920 * daysLeft / totalDays);
+  const truck = Math.round(7500  * daysLeft / totalDays);
+  document.getElementById('reg_car_amt').textContent   = car.toLocaleString('en-US');
+  document.getElementById('reg_truck_amt').textContent = truck.toLocaleString('en-US');
 }
 
-// Close modal on overlay click
-document.getElementById('searchModal').addEventListener('click', e => {
-  if (e.target === e.currentTarget) closeSearch();
-});
-
-// Init
+calcRegFeeHint();
 update();
 </script>
 </body>
