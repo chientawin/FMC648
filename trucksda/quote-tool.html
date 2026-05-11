@@ -665,6 +665,7 @@
     line-height: 1.65;
     letter-spacing: 0.3px;
     min-height: 14px;
+    white-space: pre-wrap;
   }
   .remark-body:empty::before {
     content: '—';
@@ -803,6 +804,41 @@
     padding: 50px 20px;
   }
 
+  /* ── SAVE MODAL ── */
+  .save-modal { width: 360px; }
+  .save-modal-body {
+    padding: 28px 28px 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+  }
+  .save-modal-icon {
+    width: 52px; height: 52px;
+    border-radius: 50%;
+    background: var(--ink-900);
+    color: var(--paper);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 24px;
+    flex-shrink: 0;
+  }
+  .save-modal-info { text-align: center; }
+  .save-modal-status {
+    font-size: 10.5px; font-weight: 600; letter-spacing: 3px;
+    color: var(--ink-500); text-transform: uppercase; margin-bottom: 8px;
+  }
+  .save-modal-name {
+    font-family: var(--display);
+    font-size: 22px; font-weight: 600;
+    color: var(--ink-900); letter-spacing: 2px;
+    margin-bottom: 6px;
+  }
+  .save-modal-sub { font-size: 12px; color: var(--ink-500); line-height: 1.7; }
+  .save-modal-footer {
+    padding: 0 28px 22px;
+    display: flex; justify-content: flex-end;
+  }
+
   /* TOAST */
   .toast {
     position: fixed;
@@ -822,6 +858,50 @@
   .toast.show { transform: translateY(0); opacity: 1; }
 
   /* ══════════════════════════════
+     RWD
+  ══════════════════════════════ */
+
+  /* Tablet: compress left panel */
+  @media (max-width: 1100px) {
+    .left-panel { width: 320px; min-width: 280px; }
+  }
+
+  /* Mobile tab strip — hidden on desktop */
+  .mobile-tabs { display: none; flex-shrink: 0; background: var(--paper); border-bottom: 1px solid var(--ink-200); }
+  .mobile-tab {
+    flex: 1; padding: 11px 8px; text-align: center;
+    font-size: 12.5px; font-weight: 600; letter-spacing: 0.5px;
+    color: var(--ink-400); cursor: pointer;
+    border-bottom: 2px solid transparent;
+    transition: color 0.15s, border-color 0.15s;
+    user-select: none;
+  }
+  .mobile-tab.active { color: var(--ink-900); border-bottom-color: var(--ink-900); }
+
+  @media (max-width: 767px) {
+    body { height: 100dvh; }
+    .topbar {
+      padding: 0 12px; gap: 4px;
+      overflow-x: auto; scrollbar-width: none;
+    }
+    .topbar::-webkit-scrollbar { display: none; }
+    .topbar-logo span { display: none; }
+    .btn { padding: 6px 10px; font-size: 11.5px; }
+
+    .mobile-tabs { display: flex; }
+
+    .main { flex-direction: column; }
+    .left-panel { width: 100%; min-width: 0; border-right: none; flex: 1; }
+    .left-panel.tab-hidden { display: none !important; }
+    .right-panel.tab-hidden { display: none !important; }
+    .right-panel { flex: 1; }
+
+    .preview-scroll { padding: 16px 12px; justify-content: center; align-items: flex-start; }
+
+    .form-row.three { grid-template-columns: 1fr 1fr; }
+  }
+
+  /* ══════════════════════════════
      PRINT — true A4
   ══════════════════════════════ */
   @page { size: A4 portrait; margin: 0; }
@@ -831,9 +911,9 @@
       -webkit-print-color-adjust: exact !important;
       print-color-adjust: exact !important;
     }
-    .topbar, .left-panel, .preview-toolbar, .toast { display: none !important; }
+    .topbar, .left-panel, .preview-toolbar, .toast, .mobile-tabs { display: none !important; }
     .main { display: block; width: 210mm; height: auto; min-height: 297mm; overflow: visible; }
-    .right-panel { background: white; width: 210mm; height: auto; min-height: 297mm; overflow: visible; }
+    .right-panel { display: block !important; background: white; width: 210mm; height: auto; min-height: 297mm; overflow: visible; }
     .preview-scroll {
       padding: 0;
       width: 210mm; height: auto; min-height: 297mm;
@@ -865,8 +945,18 @@
   <button class="btn" onclick="saveCustomer()">儲存客戶</button>
   <button class="btn" onclick="openSearch()">查詢客戶</button>
   <div class="topbar-divider"></div>
+  <button class="btn" onclick="exportData()">匯出資料</button>
+  <button class="btn" onclick="document.getElementById('importFile').click()">匯入資料</button>
+  <input type="file" id="importFile" accept=".json" style="display:none" onchange="importData(event)">
+  <div class="topbar-divider"></div>
   <button class="btn btn-primary" onclick="printOrPDF()">列印 / 匯出 PDF</button>
   <div class="topbar-spacer"></div>
+</div>
+
+<!-- Mobile Tab Bar -->
+<div class="mobile-tabs">
+  <div class="mobile-tab active" id="tab-form" onclick="switchTab('form')">表單輸入</div>
+  <div class="mobile-tab" id="tab-preview" onclick="switchTab('preview')">報價預覽</div>
 </div>
 
 <div class="main">
@@ -963,6 +1053,7 @@
           <label class="checkbox-label" style="font-size:12.5px"><input type="checkbox" id="ins_excess" onchange="update()"> 4. 超額責任險<span style="color:var(--ink-400);font-size:10px;margin-left:3px">1,000萬</span></label>
           <label class="checkbox-label" style="font-size:12.5px"><input type="checkbox" id="ins_road" onchange="update()"> 5. 道路救援</label>
           <label class="checkbox-label" style="font-size:12.5px"><input type="checkbox" id="ins_theft" onchange="update()"> 6. 竊盜險</label>
+          <label class="checkbox-label" style="font-size:12.5px"><input type="checkbox" id="ins_peace" onchange="update()"> 7. 高枕無憂專案</label>
         </div>
       </div>
 
@@ -1134,6 +1225,7 @@
             <div class="row ins-row" id="pv_ins_excess_row"><span class="num-idx">04</span><span class="lbl">超額責任險</span><span class="note">1,000萬</span><span class="amt">✓</span></div>
             <div class="row ins-row" id="pv_ins_road_row"><span class="num-idx">05</span><span class="lbl">道路救援</span><span class="note"></span><span class="amt">✓</span></div>
             <div class="row ins-row" id="pv_ins_theft_row"><span class="num-idx">06</span><span class="lbl">竊盜險</span><span class="note">自負額10%</span><span class="amt">✓</span></div>
+            <div class="row ins-row" id="pv_ins_peace_row"><span class="num-idx">07</span><span class="lbl">高枕無憂專案</span><span class="note"></span><span class="amt">✓</span></div>
           </div>
           <div id="pv_ins_empty" style="display:none;font-size:11px;color:var(--ink-400);padding:6px 0;letter-spacing:0.5px">尚未選擇任何險種</div>
         </section>
@@ -1194,6 +1286,27 @@
         </footer>
 
       </div>
+    </div>
+  </div>
+</div>
+
+<!-- Save Confirm Modal -->
+<div class="modal-overlay" id="saveModal">
+  <div class="modal save-modal">
+    <div class="modal-header">
+      <span class="modal-title" id="saveModalTitle">客戶資料</span>
+      <button class="modal-close" onclick="closeSaveModal()">✕</button>
+    </div>
+    <div class="save-modal-body">
+      <div class="save-modal-icon" id="saveModalIcon">✓</div>
+      <div class="save-modal-info">
+        <div class="save-modal-status" id="saveModalStatus"></div>
+        <div class="save-modal-name" id="saveModalName"></div>
+        <div class="save-modal-sub" id="saveModalSub"></div>
+      </div>
+    </div>
+    <div class="save-modal-footer">
+      <button class="btn btn-primary" onclick="closeSaveModal()">確認</button>
     </div>
   </div>
 </div>
@@ -1279,6 +1392,7 @@ function update() {
     excess:     document.getElementById('ins_excess').checked,
     road:       document.getElementById('ins_road').checked,
     theft:      document.getElementById('ins_theft').checked,
+    peace:      document.getElementById('ins_peace').checked,
   };
   // sub-options
   const liabProperty = document.getElementById('ins_liability_property').checked;
@@ -1300,6 +1414,16 @@ function update() {
   showRow('pv_ins_excess_row',     insChecks.excess);
   showRow('pv_ins_road_row',       insChecks.road);
   showRow('pv_ins_theft_row',      insChecks.theft);
+  showRow('pv_ins_peace_row',      insChecks.peace);
+
+  // 依顯示順序重新編號
+  let insIdx = 1;
+  document.querySelectorAll('#pv_ins_list .ins-row').forEach(row => {
+    if (row.style.display !== 'none') {
+      const idx = row.querySelector('.num-idx');
+      if (idx) idx.textContent = String(insIdx++).padStart(2, '0');
+    }
+  });
 
   const anyIns = Object.values(insChecks).some(Boolean);
   document.getElementById('pv_ins_list').style.display  = anyIns ? '' : 'none';
@@ -1375,7 +1499,7 @@ const ALL_IDS = ['f_name','f_agent','f_mobile','f_model','f_color','f_addr',
   'l_down','l_loan','l_periods','l_monthly','l_reg',
   'l_step1_p','l_step1_m','l_step2_p','l_step2_m','l_step3_p','l_step3_m','l_stepF_p','l_stepF_m','f_remark'];
 
-const INS_CHECKS = ['ins_compulsory','ins_liability','ins_liability_property','ins_liability_injury','ins_body','ins_excess','ins_road','ins_theft'];
+const INS_CHECKS = ['ins_compulsory','ins_liability','ins_liability_property','ins_liability_injury','ins_body','ins_excess','ins_road','ins_theft','ins_peace'];
 
 function gatherData() {
   const d = {};
@@ -1425,9 +1549,34 @@ function saveCustomer() {
   const name = v('f_name');
   if (!name) { showToast('請先填寫客戶姓名'); return; }
   const data = gatherData();
-  const key = `hf_${Date.now()}`;
-  localStorage.setItem(key, JSON.stringify(data));
-  showToast(`已儲存：${name}`);
+  const today = new Date().toDateString();
+  const existing = getRecords().find(r => {
+    return (r.data.f_name || '') === name &&
+           (r.data.savedAt ? new Date(r.data.savedAt).toDateString() : '') === today;
+  });
+  if (existing) {
+    localStorage.setItem(existing.key, JSON.stringify(data));
+    openSaveModal(name, data, true);
+  } else {
+    localStorage.setItem(`hf_${Date.now()}`, JSON.stringify(data));
+    openSaveModal(name, data, false);
+  }
+}
+
+function openSaveModal(name, data, isUpdate) {
+  document.getElementById('saveModalTitle').textContent = isUpdate ? '更新完成' : '儲存成功';
+  document.getElementById('saveModalStatus').textContent = isUpdate ? 'Record Updated' : 'Record Saved';
+  document.getElementById('saveModalName').textContent = name;
+  const model = data.f_model || '—';
+  const total = data.f_car_price ? 'NT$ ' + Number(data.f_car_price).toLocaleString('en-US') : '—';
+  const dateStr = new Date().toLocaleDateString('zh-TW');
+  document.getElementById('saveModalSub').innerHTML =
+    `${model}<br>${total}<br><span style="color:var(--ink-400)">${dateStr}</span>`;
+  document.getElementById('saveModal').classList.add('open');
+}
+
+function closeSaveModal() {
+  document.getElementById('saveModal').classList.remove('open');
 }
 
 function getRecords() {
@@ -1487,6 +1636,45 @@ function deleteRecord(e, key) {
   showToast('已刪除');
 }
 
+function exportData() {
+  const records = getRecords();
+  if (!records.length) { showToast('尚無任何客戶資料'); return; }
+  const payload = records.map(r => ({ key: r.key, data: r.data }));
+  const blob = new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  const date = new Date().toLocaleDateString('zh-TW').replace(/\//g, '-');
+  a.href = url;
+  a.download = `匯豐汽車_客戶資料_${date}.json`;
+  a.click();
+  URL.revokeObjectURL(url);
+  showToast(`已匯出 ${records.length} 筆客戶資料`);
+}
+
+function importData(e) {
+  const file = e.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = function(ev) {
+    try {
+      const payload = JSON.parse(ev.target.result);
+      if (!Array.isArray(payload)) throw new Error();
+      let added = 0, updated = 0;
+      payload.forEach(item => {
+        if (!item.key || !item.data) return;
+        const exists = localStorage.getItem(item.key);
+        localStorage.setItem(item.key, JSON.stringify(item.data));
+        exists ? updated++ : added++;
+      });
+      showToast(`匯入完成：新增 ${added} 筆、更新 ${updated} 筆`);
+    } catch {
+      showToast('檔案格式錯誤，請使用本系統匯出的 JSON 檔');
+    }
+    e.target.value = '';
+  };
+  reader.readAsText(file);
+}
+
 function printOrPDF() {
   const name = v('f_name');
   const orig = document.title;
@@ -1539,6 +1727,43 @@ function calcRegFeeHint() {
   document.getElementById('reg_car_amt').textContent   = car.toLocaleString('en-US');
   document.getElementById('reg_truck_amt').textContent = truck.toLocaleString('en-US');
 }
+
+/* ── RWD ── */
+function switchTab(tab) {
+  const isForm = tab === 'form';
+  document.getElementById('tab-form').classList.toggle('active', isForm);
+  document.getElementById('tab-preview').classList.toggle('active', !isForm);
+  document.querySelector('.left-panel').classList.toggle('tab-hidden', !isForm);
+  document.querySelector('.right-panel').classList.toggle('tab-hidden', isForm);
+  if (!isForm) setTimeout(scalePreview, 0);
+}
+
+function scalePreview() {
+  const preview = document.querySelector('.form-preview');
+  if (!preview) return;
+  if (window.innerWidth <= 767) {
+    preview.style.transform = '';
+    preview.style.marginBottom = '';
+    const available = preview.parentElement.clientWidth - 24;
+    const scale = Math.min(1, available / 794);
+    const h = preview.scrollHeight;
+    preview.style.transform = `scale(${scale})`;
+    preview.style.transformOrigin = 'top center';
+    preview.style.marginBottom = `${(h * scale - h)}px`;
+  } else {
+    preview.style.transform = '';
+    preview.style.transformOrigin = '';
+    preview.style.marginBottom = '';
+  }
+}
+
+window.addEventListener('resize', () => {
+  if (window.innerWidth > 767) {
+    document.querySelector('.left-panel').classList.remove('tab-hidden');
+    document.querySelector('.right-panel').classList.remove('tab-hidden');
+  }
+  scalePreview();
+});
 
 calcRegFeeHint();
 update();
